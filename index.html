@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#8ed8f8" />
+  <title>A Little Invitation for Mimz ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sky-glow glow-one"></div>
+  <div class="sky-glow glow-two"></div>
+
+  <main class="card" id="inviteCard">
+    <div class="tiny-heart">♡</div>
+
+    <p class="eyebrow">A little invitation from Jay</p>
+    <h1>Mimz, coffee date?</h1>
+
+    <p class="intro">
+      Nothing too complicated.<br>
+      Just good coffee, good conversation,<br>
+      and hopefully a little time with you.
+    </p>
+
+    <div class="divider"><span>♡</span></div>
+
+    <section class="choices">
+      <label for="date">Pick a date</label>
+      <input id="date" type="date" />
+
+      <label for="time">And a time</label>
+      <input id="time" type="time" />
+    </section>
+
+    <p class="secret-note">The place is a secret for now. 🤫</p>
+
+    <div class="buttons">
+      <button class="yes-btn" id="yesBtn">Yes, let's go ♡</button>
+      <button class="no-btn" id="noBtn">No</button>
+    </div>
+
+    <p class="hint" id="hint">Choose a date and time first.</p>
+  </main>
+
+  <section class="success hidden" id="success">
+    <div class="success-card">
+      <div class="big-heart">♡</div>
+      <p class="eyebrow">It's a date!</p>
+      <h2>See you, Mimz.</h2>
+
+      <p class="success-text">
+        You pick the date.<br>
+        You pick the time.<br>
+        I'll take care of the rest.
+      </p>
+
+      <div class="summary">
+        <div>
+          <span>Date</span>
+          <strong id="chosenDate">—</strong>
+        </div>
+        <div>
+          <span>Time</span>
+          <strong id="chosenTime">—</strong>
+        </div>
+        <div>
+          <span>Place</span>
+          <strong>Secret 🤫</strong>
+        </div>
+      </div>
+
+      <p class="closing">
+        I’m looking forward to spending a little time with you. ♡
+      </p>
+
+      <button class="song-btn" id="songBtn">Love Is — The Ridleys ♫</button>
+      <p class="music-note">Add your own song link in <code>script.js</code> if you want the button to open the song.</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
