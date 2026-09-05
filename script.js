@@ -1,3 +1,25 @@
+/* ========================= */
+/* ELEMENTS */
+/* ========================= */
+
+const page1 =
+  document.getElementById("page1");
+
+const page2 =
+  document.getElementById("page2");
+
+const envelope =
+  document.getElementById("envelope");
+
+const openBtn =
+  document.getElementById("openBtn");
+
+const songBtn =
+  document.getElementById("songBtn");
+
+const song =
+  document.getElementById("song");
+
 const dateInput =
   document.getElementById("date");
 
@@ -13,9 +35,6 @@ const noBtn =
 const hint =
   document.getElementById("hint");
 
-const inviteCard =
-  document.getElementById("inviteCard");
-
 const success =
   document.getElementById("success");
 
@@ -25,14 +44,10 @@ const chosenDate =
 const chosenTime =
   document.getElementById("chosenTime");
 
-const songBtn =
-  document.getElementById("songBtn");
 
-const song =
-  document.getElementById("song");
-
-
-// TODAY
+/* ========================= */
+/* TODAY */
+/* ========================= */
 
 const today = new Date();
 
@@ -51,310 +66,39 @@ dateInput.min =
   `${yyyy}-${mm}-${dd}`;
 
 
-// DATE/TIME MESSAGE
+/* ========================= */
+/* OPEN LETTER */
+/* ========================= */
 
-function updateHint() {
-
-  if (
-    !dateInput.value ||
-    !timeInput.value
-  ) {
-
-    hint.textContent =
-      "Choose a date and time first.";
-
-    return;
-  }
-
-  hint.textContent =
-    "Looks good... now just say yes. ♡";
-}
-
-
-dateInput.addEventListener(
-  "change",
-  updateHint
-);
-
-timeInput.addEventListener(
-  "change",
-  updateHint
-);
-
-
-// YES
-
-yesBtn.addEventListener(
+openBtn.addEventListener(
   "click",
   () => {
 
-    if (
-      !dateInput.value ||
-      !timeInput.value
-    ) {
+    envelope.classList.add("open");
 
-      hint.textContent =
-        "Pick a date and time first, Mimz. ♡";
+    openBtn.textContent =
+      "There's something for you... ♡";
 
-      hint.animate(
-        [
-          {
-            transform:
-              "translateX(0)"
-          },
+    setTimeout(() => {
 
-          {
-            transform:
-              "translateX(-5px)"
-          },
+      page1.classList.remove("active");
 
-          {
-            transform:
-              "translateX(5px)"
-          },
+      page2.classList.add("active");
 
-          {
-            transform:
-              "translateX(0)"
-          }
-        ],
-        {
-          duration: 250
-        }
-      );
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
-      return;
-    }
-
-
-    const selectedDate =
-      new Date(
-        `${dateInput.value}T00:00:00`
-      );
-
-
-    const formattedDate =
-      selectedDate.toLocaleDateString(
-        "en-US",
-        {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-          year: "numeric"
-        }
-      );
-
-
-    const formattedTime =
-      new Date(
-        `1970-01-01T${timeInput.value}`
-      ).toLocaleTimeString(
-        "en-US",
-        {
-          hour: "numeric",
-          minute: "2-digit"
-        }
-      );
-
-
-    chosenDate.textContent =
-      formattedDate;
-
-    chosenTime.textContent =
-      formattedTime;
-
-
-    inviteCard.classList.add(
-      "hidden"
-    );
-
-    success.classList.remove(
-      "hidden"
-    );
-
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-
-    createHeartBurst();
+    }, 1300);
 
   }
 );
 
 
-// HEART ANIMATION
-
-function createHeartBurst() {
-
-  for (
-    let i = 0;
-    i < 18;
-    i++
-  ) {
-
-    const heart =
-      document.createElement("span");
-
-    heart.textContent =
-      "♡";
-
-    heart.style.position =
-      "fixed";
-
-    heart.style.left =
-      `${45 + Math.random() * 10}%`;
-
-    heart.style.top =
-      `${45 + Math.random() * 10}%`;
-
-    heart.style.fontSize =
-      `${14 + Math.random() * 18}px`;
-
-    heart.style.color =
-      "#4baed8";
-
-    heart.style.pointerEvents =
-      "none";
-
-    heart.style.zIndex =
-      "999";
-
-    document.body.appendChild(
-      heart
-    );
-
-
-    heart.animate(
-
-      [
-
-        {
-          transform:
-            "translate(0,0) scale(1)",
-
-          opacity: 1
-
-        },
-
-        {
-
-          transform:
-            `translate(
-              ${(Math.random() - .5) * 300}px,
-              ${-80 - Math.random() * 250}px
-            )
-            scale(.5)`,
-
-          opacity: 0
-
-        }
-
-      ],
-
-      {
-
-        duration:
-          1100 +
-          Math.random() * 500,
-
-        easing:
-          "ease-out"
-
-      }
-
-    ).onfinish = () =>
-      heart.remove();
-
-  }
-
-}
-
-
-// NO BUTTON
-
-let noCount = 0;
-
-
-const noMessages = [
-
-  "Are you sure? 🥺",
-
-  "Think again...",
-
-  "I'll bring good coffee.",
-
-  "Mimz pleaseee ♡",
-
-  "The button is getting shy.",
-
-  "Okay... one more try?"
-
-];
-
-
-noBtn.addEventListener(
-  "mouseenter",
-  dodgeNo
-);
-
-
-noBtn.addEventListener(
-  "touchstart",
-  (event) => {
-
-    event.preventDefault();
-
-    dodgeNo();
-
-  }
-);
-
-
-function dodgeNo() {
-
-  noCount++;
-
-
-  const card =
-    inviteCard.getBoundingClientRect();
-
-
-  const maxX =
-    Math.max(
-      30,
-      Math.min(
-        130,
-        card.width / 3
-      )
-    );
-
-
-  const maxY =
-    55;
-
-
-  noBtn.style.transform =
-    `translate(
-      ${(Math.random() - .5) * 2 * maxX}px,
-      ${(Math.random() - .5) * 2 * maxY}px
-    )`;
-
-
-  hint.textContent =
-    noMessages[
-      Math.min(
-        noCount - 1,
-        noMessages.length - 1
-      )
-    ];
-
-}
-
-
-// MUSIC
+/* ========================= */
+/* MUSIC */
+/* ========================= */
 
 songBtn.addEventListener(
   "click",
@@ -380,16 +124,16 @@ songBtn.addEventListener(
 
     } catch (error) {
 
-      hint.textContent =
-        "Please upload love-is.mp3 to the GitHub repository first.";
+      songBtn.textContent =
+        "♫ Song unavailable";
+
+      console.log(error);
 
     }
 
   }
 );
 
-
-// RESET BUTTON TEXT WHEN SONG ENDS
 
 song.addEventListener(
   "ended",
@@ -400,3 +144,343 @@ song.addEventListener(
 
   }
 );
+
+
+/* ========================= */
+/* DATE / TIME */
+/* ========================= */
+
+function updateHint() {
+
+  if (
+    !dateInput.value ||
+    !timeInput.value
+  ) {
+
+    hint.textContent =
+      "Pick a day and time for us. ♡";
+
+    return;
+
+  }
+
+
+  hint.textContent =
+    "That sounds like a date to me... ♡";
+
+}
+
+
+dateInput.addEventListener(
+  "change",
+  updateHint
+);
+
+timeInput.addEventListener(
+  "change",
+  updateHint
+);
+
+
+/* ========================= */
+/* YES */
+/* ========================= */
+
+yesBtn.addEventListener(
+  "click",
+  () => {
+
+    if (
+      !dateInput.value ||
+      !timeInput.value
+    ) {
+
+      hint.textContent =
+        "You have to choose our day first, Mimz. ♡";
+
+      shake(hint);
+
+      return;
+
+    }
+
+
+    /* Format date */
+
+    const selectedDate =
+      new Date(
+        `${dateInput.value}T00:00:00`
+      );
+
+
+    const formattedDate =
+      selectedDate.toLocaleDateString(
+        "en-US",
+        {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric"
+        }
+      );
+
+
+    /* Format time */
+
+    const formattedTime =
+      new Date(
+        `1970-01-01T${timeInput.value}`
+      ).toLocaleTimeString(
+        "en-US",
+        {
+          hour: "numeric",
+          minute: "2-digit"
+        }
+      );
+
+
+    chosenDate.textContent =
+      formattedDate;
+
+    chosenTime.textContent =
+      formattedTime;
+
+
+    /* Keep music playing */
+
+    if (song.paused) {
+
+      song.play().catch(() => {});
+
+    }
+
+
+    /* Show success */
+
+    success.classList.add("show");
+
+    createHeartBurst();
+
+  }
+);
+
+
+/* ========================= */
+/* SHAKE */
+/* ========================= */
+
+function shake(element) {
+
+  element.animate(
+
+    [
+      {
+        transform: "translateX(0)"
+      },
+
+      {
+        transform: "translateX(-6px)"
+      },
+
+      {
+        transform: "translateX(6px)"
+      },
+
+      {
+        transform: "translateX(-4px)"
+      },
+
+      {
+        transform: "translateX(4px)"
+      },
+
+      {
+        transform: "translateX(0)"
+      }
+
+    ],
+
+    {
+      duration: 350
+    }
+
+  );
+
+}
+
+
+/* ========================= */
+/* MAYBE BUTTON */
+/* ========================= */
+
+let noCount = 0;
+
+
+const noMessages = [
+
+  "Are you sure? 🥺",
+
+  "Maybe coffee will change your mind?",
+
+  "I'll bring your favorite drink. ♡",
+
+  "Mimz pleaseee...",
+
+  "Think about the coffee...",
+
+  "Okay, I'll keep asking nicely. ♡"
+
+];
+
+
+noBtn.addEventListener(
+  "mouseenter",
+  moveNo
+);
+
+
+noBtn.addEventListener(
+  "touchstart",
+  (event) => {
+
+    event.preventDefault();
+
+    moveNo();
+
+  }
+);
+
+
+function moveNo() {
+
+  noCount++;
+
+
+  const x =
+    (Math.random() - .5) * 150;
+
+  const y =
+    (Math.random() - .5) * 80;
+
+
+  noBtn.style.transform =
+    `translate(${x}px, ${y}px)`;
+
+
+  hint.textContent =
+    noMessages[
+      Math.min(
+        noCount - 1,
+        noMessages.length - 1
+      )
+    ];
+
+}
+
+
+/* ========================= */
+/* HEART BURST */
+/* ========================= */
+
+function createHeartBurst() {
+
+  for (
+    let i = 0;
+    i < 35;
+    i++
+  ) {
+
+    const heart =
+      document.createElement("span");
+
+
+    heart.textContent =
+      Math.random() > .5
+        ? "♡"
+        : "✦";
+
+
+    heart.style.position =
+      "fixed";
+
+
+    heart.style.left =
+      "50%";
+
+
+    heart.style.top =
+      "50%";
+
+
+    heart.style.zIndex =
+      "999";
+
+
+    heart.style.pointerEvents =
+      "none";
+
+
+    heart.style.fontSize =
+      `${14 + Math.random() * 22}px`;
+
+
+    heart.style.color =
+      "#69b5d5";
+
+
+    document.body.appendChild(
+      heart
+    );
+
+
+    const x =
+      (Math.random() - .5) * 450;
+
+    const y =
+      (Math.random() - .5) * 500;
+
+
+    heart.animate(
+
+      [
+
+        {
+          transform:
+            "translate(-50%, -50%) scale(1)",
+
+          opacity: 1
+
+        },
+
+        {
+
+          transform:
+            `translate(
+              calc(-50% + ${x}px),
+              calc(-50% + ${y}px)
+            )
+            scale(.3)`,
+
+          opacity: 0
+
+        }
+
+      ],
+
+      {
+
+        duration:
+          1200 +
+          Math.random() * 800,
+
+        easing:
+          "cubic-bezier(.17,.67,.38,1.2)"
+
+      }
+
+    ).onfinish =
+      () => heart.remove();
+
+  }
+
+}
