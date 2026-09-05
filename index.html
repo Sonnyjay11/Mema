@@ -2,206 +2,118 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
-
   <meta
     name="theme-color"
     content="#b9e6f8"
   >
-
   <meta
     name="description"
     content="A little coffee invitation for Carmina ♡"
   >
-
   <title>For Carmina ♡</title>
-
-  <!-- =====================================================
-       FONTS
-  ====================================================== -->
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
     href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
-
   <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
-
-  <!-- =====================================================
-       SKY BACKGROUND
-  ====================================================== -->
-
   <div class="sky">
-
     <div class="sun"></div>
-
     <div class="cloud cloud-a"></div>
     <div class="cloud cloud-b"></div>
     <div class="cloud cloud-c"></div>
-
     <div class="sky-heart sky-heart-a">♡</div>
     <div class="sky-heart sky-heart-b">♡</div>
     <div class="sky-heart sky-heart-c">♡</div>
     <div class="sky-heart sky-heart-d">♡</div>
-
   </div>
-
-
-  <!-- =====================================================
-       AUDIO
-  ====================================================== -->
-
   <audio
     id="song"
     src="Love Is.mp3"
     preload="auto"
     playsinline
   ></audio>
-
-
-  <!-- =====================================================
-       MUSIC PLAYER
-  ====================================================== -->
-
   <button
     id="musicButton"
     class="music-player"
     type="button"
     aria-label="Toggle music"
   >
-
     <span class="music-disc">
       ♫
     </span>
-
     <span class="music-details">
-
       <strong>
         Love Is
       </strong>
-
       <small>
         The Ridleys
       </small>
-
     </span>
-
     <span class="music-bars">
-
       <i></i>
       <i></i>
       <i></i>
       <i></i>
       <i></i>
-
     </span>
-
   </button>
-
-
-  <!-- =====================================================
-       APP
-  ====================================================== -->
-
   <main class="app">
-
-
-    <!-- ===================================================
-         PAGE 1
-    ==================================================== -->
-
     <section
       id="page1"
       class="page page-one active"
       aria-hidden="false"
     >
-
       <div class="intro-card">
-
-
         <!-- small label -->
-
         <div class="eyebrow">
-          made with a little too much effort
+          This is for You
         </div>
-
-
         <!-- title -->
-
         <h1 class="intro-title">
-
           Hi, Carmina
-
           <span class="title-heart">
             ♡
           </span>
-
         </h1>
-
-
         <p class="intro-description">
           I made something for you.
         </p>
-
         <p class="intro-joke">
           Don't judge me HAHAHA.
         </p>
-
-
         <!-- decorative line -->
-
         <div class="soft-divider">
           <span></span>
           <b>✦</b>
           <span></span>
         </div>
-
-
-        <!-- =================================================
-             LETTER
-        ================================================== -->
-
         <div
           id="paperLetter"
           class="paper-letter"
         >
-
           <div class="paper-shadow"></div>
-
           <div class="tape tape-one"></div>
           <div class="tape tape-two"></div>
-
-
           <div class="paper-content">
-
             <div class="paper-small">
               a tiny letter for you ♡
             </div>
-
-
             <p class="letter-greeting">
               Hello, Carmina &lt;3
             </p>
-
-
             <p>
               Pagpasensyahan mo na tong kabaliwan ko
               HAHAHA. Sayang naman yung pinag-aralan ko
               kung hindi ko gagamitin, diba? HAHAHAHA.
             </p>
-
-
             <p>
               Gusto ko lang sana sabihin na
               <strong>thank you</strong> for always being there.
@@ -209,265 +121,162 @@
               and find a way para makapagkita tayo.
               I really appreciate that more than you know. :)
             </p>
-
-
             <p>
               Kaya naisip ko, bakit hindi naman ako gumawa
               ng konting effort para naman sa susunod na
               aya ko sa'yo? HAHAHAHA.
             </p>
-
-
             <p>
               Hope you like this, kahit medyo OA at
               pinag-isipan ko talaga. Eto na lang muna yung
               <strong>booking system</strong> natin.
               HAHAHAHA.
             </p>
-
-
             <p>
               Pagpasensyahan mo na din hindi published.
               Medyo mahal pala, kaya dito na lang muna tayo.
               HAHAHAHA.
             </p>
-
-
             <p>
               Pero ayun... sana magustuhan mo kahit simple lang.
               At sana,
               <strong>makapag-coffee ulit tayo. ☕♡</strong>
             </p>
-
-
             <p class="letter-signature">
               — Jay ♡
             </p>
-
           </div>
-
         </div>
-
-
-        <!-- =================================================
-             OPEN BUTTON
-        ================================================== -->
-
         <button
           id="letterBtn"
           class="open-button"
           type="button"
         >
-
           <span class="button-glow"></span>
-
           <span class="open-icon">
             ♡
           </span>
-
           <span
             id="buttonText"
             class="button-text"
           >
             Buksan mo
           </span>
-
           <span
             id="buttonArrow"
             class="button-arrow"
           >
             →
           </span>
-
         </button>
-
-
         <p
           id="hintText"
           class="hint"
         >
           Promise, mabilis lang. :)
         </p>
-
-
       </div>
-
     </section>
-
-
-
-    <!-- ===================================================
-         PAGE 2
-    ==================================================== -->
 
     <section
       id="page2"
       class="page page-two"
       aria-hidden="true"
     >
-
       <div class="coffee-card">
-
-
         <!-- top -->
-
         <div class="coffee-header">
-
           <span>
             one tiny question...
           </span>
-
           <b>
             ✦
           </b>
-
         </div>
-
-
-        <!-- title -->
-
         <h2 class="coffee-name">
           Mimz...
         </h2>
-
-
         <h3 class="coffee-question">
           Pwede bang coffee ulit? ☕♡
         </h3>
-
-
         <p class="coffee-subtitle">
           Ikaw na pumili ng araw at oras.
           <br>
           Ako na bahala sa coffee. :)
         </p>
-
-
-        <!-- =================================================
-             PHOTO
-        ================================================== -->
-
         <div class="memory-wrapper">
-
           <div class="photo-tape"></div>
-
           <div class="photo-card">
-
             <img
               id="memoryPhoto"
               src="photo.jpg"
               alt="A little memory"
               loading="lazy"
             >
-
             <div
               id="photoFallback"
               class="photo-fallback"
             >
               ♡
             </div>
-
           </div>
-
           <span class="photo-caption">
             maybe another memory soon? ♡
           </span>
-
         </div>
-
-
-        <!-- =================================================
-             DATE
-        ================================================== -->
-
         <div class="input-card">
-
           <div class="input-icon">
             ♡
           </div>
-
           <label for="dateInput">
-
             <strong>
               Pick a day
             </strong>
-
             <small>
               kailan ka free?
             </small>
-
           </label>
-
           <input
             id="dateInput"
             type="date"
           >
-
         </div>
-
-
-        <!-- =================================================
-             TIME
-        ================================================== -->
-
         <div class="input-card">
-
           <div class="input-icon">
             ☕
           </div>
-
           <label for="timeInput">
-
             <strong>
               Pick a time
             </strong>
-
             <small>
               I'll make it work
             </small>
-
           </label>
-
           <input
             id="timeInput"
             type="time"
           >
-
         </div>
-
-
-        <!-- hint -->
-
         <div
           id="selectionHint"
           class="selection-hint"
         >
           Your move. 👀
         </div>
-
-
-        <!-- =================================================
-             BUTTONS
-        ================================================== -->
-
         <div class="choice-area">
-
           <button
             id="yesButton"
             class="yes-button"
             type="button"
           >
-
             <span>
               Sige, coffee tayo
             </span>
-
             <b>
               ☕♡
             </b>
-
           </button>
-
 
           <button
             id="maybeButton"
@@ -476,131 +285,68 @@
           >
             Hmm... 👀
           </button>
-
         </div>
-
-
         <p class="no-pressure">
           walang pressure, promise HAHAHA
         </p>
-
-
       </div>
-
     </section>
-
-
-
-    <!-- ===================================================
-         CONFIRMATION
-    ==================================================== -->
-
     <section
       id="confirmation"
       class="page confirmation-page"
       aria-hidden="true"
     >
-
       <div class="confirmation-card">
-
-
         <div class="celebration-ring">
-
           <div class="coffee-emoji">
             ☕
           </div>
-
         </div>
-
-
         <p class="confirmed-eyebrow">
           IT'S HAPPENING
         </p>
-
-
         <h2>
           Coffee reserved ♡
         </h2>
-
-
         <div class="names">
-
           <span>
-            Carmina
+           Thank You Carmina
           </span>
-
-          <b>
-            +
-          </b>
-
-          <span>
-            Jay
-          </span>
-
         </div>
-
-
-        <!-- details -->
-
         <div class="confirmed-details">
-
           <div class="confirmed-box">
-
             <small>
               DATE
             </small>
-
             <strong id="confirmedDate">
               —
             </strong>
-
           </div>
-
-
           <div class="confirmed-box">
-
             <small>
               TIME
             </small>
-
             <strong id="confirmedTime">
               —
             </strong>
-
           </div>
-
         </div>
-
-
         <p class="thank-you">
           Thank you for saying yes. ♡
         </p>
-
-
         <p class="late-message">
           Don't be late HAHAHA.
         </p>
-
-
         <button
           id="calendarButton"
           class="calendar-button"
           type="button"
         >
-
           <span>
             +
           </span>
-
           Add to Google Calendar
-
         </button>
-
-
-        <!-- =================================================
-             SECRET
-        ================================================== -->
-
         <button
           id="secretHeart"
           class="secret-heart"
@@ -609,47 +355,28 @@
         >
           ♡
         </button>
-
-
         <div
           id="secretMessage"
           class="secret-message"
         >
-
           <strong>
             Secret message unlocked 👀
           </strong>
-
           <span>
             Okay, wala talaga 'to sa booking system.
           </span>
-
           <b>
             Excited lang ako makita ka ulit. HAHAHA. ♡
           </b>
-
         </div>
-
-
       </div>
-
     </section>
-
   </main>
-
-
-  <!-- =====================================================
-       HEART PARTICLES
-  ====================================================== -->
-
   <div
     id="heartContainer"
     class="heart-container"
     aria-hidden="true"
   ></div>
-
-
   <script src="script.js"></script>
-
 </body>
 </html>
