@@ -49,10 +49,18 @@ const chosenTime =
 
 
 /* ========================= */
+/* LETTER STATE */
+/* ========================= */
+
+let letterOpened = false;
+
+
+/* ========================= */
 /* TODAY */
 /* ========================= */
 
-const today = new Date();
+const today =
+  new Date();
 
 const yyyy =
   today.getFullYear();
@@ -70,37 +78,59 @@ dateInput.min =
 
 
 /* ========================= */
-/* OPEN LETTER */
+/* READ ME / CONTINUE */
 /* ========================= */
 
-openBtn.addEventListener(
-  "click",
-  () => {
+openBtn.addEventListener("click", () => {
+
+  /*
+    FIRST CLICK
+    Open the envelope.
+  */
+
+  if (!letterOpened) {
+
+    letterOpened = true;
 
     envelope.classList.add("open");
 
     tapHint.textContent =
-      "I hope you like what's inside... ♡";
+      "Take your time. I meant every word. ♡";
 
     openBtn.textContent =
-      "Keep reading... ♡";
+      "Continue to my question ♡";
+
+    openBtn.classList.add(
+      "continue-btn"
+    );
+
+    return;
+  }
 
 
-    setTimeout(() => {
+  /*
+    SECOND CLICK
+    Go to Page 2.
+  */
 
-      page1.classList.remove("active");
+  if (letterOpened) {
 
-      page2.classList.add("active");
+    page1.classList.remove(
+      "active"
+    );
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+    page2.classList.add(
+      "active"
+    );
 
-    }, 1200);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
 
   }
-);
+
+});
 
 
 /* ========================= */
@@ -135,7 +165,9 @@ songBtn.addEventListener(
         songBtn.textContent =
           "❚❚ Pause our little song";
 
-      } else {
+      }
+
+      else {
 
         song.pause();
 
@@ -144,7 +176,9 @@ songBtn.addEventListener(
 
       }
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(error);
 
@@ -197,6 +231,7 @@ dateInput.addEventListener(
   updateHint
 );
 
+
 timeInput.addEventListener(
   "change",
   updateHint
@@ -204,12 +239,17 @@ timeInput.addEventListener(
 
 
 /* ========================= */
-/* YES */
+/* YES BUTTON */
 /* ========================= */
 
 yesBtn.addEventListener(
   "click",
   () => {
+
+    /*
+      Make sure date and time
+      have been selected.
+    */
 
     if (
       !dateInput.value ||
@@ -222,9 +262,12 @@ yesBtn.addEventListener(
       shake(hint);
 
       return;
-
     }
 
+
+    /* ========================= */
+    /* FORMAT DATE */
+    /* ========================= */
 
     const selectedDate =
       new Date(
@@ -236,13 +279,24 @@ yesBtn.addEventListener(
       selectedDate.toLocaleDateString(
         "en-US",
         {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-          year: "numeric"
+          weekday:
+            "long",
+
+          month:
+            "long",
+
+          day:
+            "numeric",
+
+          year:
+            "numeric"
         }
       );
 
+
+    /* ========================= */
+    /* FORMAT TIME */
+    /* ========================= */
 
     const formattedTime =
       new Date(
@@ -250,8 +304,11 @@ yesBtn.addEventListener(
       ).toLocaleTimeString(
         "en-US",
         {
-          hour: "numeric",
-          minute: "2-digit"
+          hour:
+            "numeric",
+
+          minute:
+            "2-digit"
         }
       );
 
@@ -259,20 +316,33 @@ yesBtn.addEventListener(
     chosenDate.textContent =
       formattedDate;
 
+
     chosenTime.textContent =
       formattedTime;
 
 
-    /* Play music from the button gesture */
+    /*
+      Try to start the song
+      after her button interaction.
+    */
 
     if (song.paused) {
 
-      song.play().catch(() => {});
+      song.play().catch(
+        () => {}
+      );
 
     }
 
 
-    success.classList.add("show");
+    /*
+      Show success screen.
+    */
+
+    success.classList.add(
+      "show"
+    );
+
 
     createHeartBurst();
 
@@ -289,22 +359,42 @@ function shake(element) {
   element.animate(
 
     [
-      { transform: "translateX(0)" },
 
-      { transform: "translateX(-6px)" },
+      {
+        transform:
+          "translateX(0)"
+      },
 
-      { transform: "translateX(6px)" },
+      {
+        transform:
+          "translateX(-6px)"
+      },
 
-      { transform: "translateX(-4px)" },
+      {
+        transform:
+          "translateX(6px)"
+      },
 
-      { transform: "translateX(4px)" },
+      {
+        transform:
+          "translateX(-4px)"
+      },
 
-      { transform: "translateX(0)" }
+      {
+        transform:
+          "translateX(4px)"
+      },
+
+      {
+        transform:
+          "translateX(0)"
+      }
 
     ],
 
     {
-      duration: 350
+      duration:
+        350
     }
 
   );
@@ -316,7 +406,9 @@ function shake(element) {
 /* MAYBE BUTTON */
 /* ========================= */
 
-let noCount = 0;
+let noCount =
+  0;
+
 
 const noMessages = [
 
@@ -357,11 +449,13 @@ function moveNo() {
 
   noCount++;
 
+
   const x =
-    (Math.random() - .5) * 140;
+    (Math.random() - 0.5) * 140;
+
 
   const y =
-    (Math.random() - .5) * 70;
+    (Math.random() - 0.5) * 70;
 
 
   noBtn.style.transform =
@@ -392,33 +486,44 @@ function createHeartBurst() {
   ) {
 
     const heart =
-      document.createElement("span");
+      document.createElement(
+        "span"
+      );
+
 
     heart.textContent =
-      Math.random() > .5
+      Math.random() > 0.5
         ? "♡"
         : "✦";
+
 
     heart.style.position =
       "fixed";
 
+
     heart.style.left =
       "50%";
+
 
     heart.style.top =
       "50%";
 
+
     heart.style.zIndex =
       "999";
+
 
     heart.style.pointerEvents =
       "none";
 
+
     heart.style.fontSize =
       `${14 + Math.random() * 22}px`;
 
+
     heart.style.color =
       "#69b5d5";
+
 
     document.body.appendChild(
       heart
@@ -426,10 +531,11 @@ function createHeartBurst() {
 
 
     const x =
-      (Math.random() - .5) * 450;
+      (Math.random() - 0.5) * 450;
+
 
     const y =
-      (Math.random() - .5) * 500;
+      (Math.random() - 0.5) * 500;
 
 
     heart.animate(
@@ -440,10 +546,12 @@ function createHeartBurst() {
           transform:
             "translate(-50%, -50%) scale(1)",
 
-          opacity: 1
+          opacity:
+            1
         },
 
         {
+
           transform:
             `translate(
               calc(-50% + ${x}px),
@@ -451,7 +559,8 @@ function createHeartBurst() {
             )
             scale(.3)`,
 
-          opacity: 0
+          opacity:
+            0
         }
 
       ],
@@ -468,7 +577,11 @@ function createHeartBurst() {
       }
 
     ).onfinish =
-      () => heart.remove();
+      () => {
+
+        heart.remove();
+
+      };
 
   }
 
