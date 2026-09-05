@@ -1,158 +1,92 @@
-/* =====================================================
+/* =========================================================
    VERSION 7.2
-   AESTHETIC EDITION
-===================================================== */
+   Fast / lightweight / no loading screen
+========================================================= */
 
 
-/* =====================================================
+/* =========================
    ELEMENTS
-===================================================== */
+========================= */
 
-const loadingScreen =
-  document.getElementById("loadingScreen");
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const confirmation = document.getElementById("confirmation");
 
-const song =
-  document.getElementById("song");
+const letterBtn = document.getElementById("letterBtn");
+const paperLetter = document.getElementById("paperLetter");
+const hintText = document.getElementById("hintText");
 
-const musicButton =
-  document.getElementById("musicButton");
+const song = document.getElementById("song");
+const musicButton = document.getElementById("musicButton");
 
-const pageOne =
-  document.getElementById("pageOne");
+const dateInput = document.getElementById("dateInput");
+const timeInput = document.getElementById("timeInput");
 
-const pageTwo =
-  document.getElementById("pageTwo");
+const selectionHint = document.getElementById("selectionHint");
 
-const envelope =
-  document.getElementById("envelope");
+const yesButton = document.getElementById("yesButton");
+const maybeButton = document.getElementById("maybeButton");
 
-const letterBtn =
-  document.getElementById("letterBtn");
+const confirmedDate = document.getElementById("confirmedDate");
+const confirmedTime = document.getElementById("confirmedTime");
 
-const letterBtnText =
-  document.getElementById("letterBtnText");
+const calendarButton = document.getElementById("calendarButton");
 
-const letterBtnIcon =
-  document.getElementById("letterBtnIcon");
+const secretHeart = document.getElementById("secretHeart");
+const secretMessage = document.getElementById("secretMessage");
 
-const paperLetter =
-  document.getElementById("paperLetter");
+const heartContainer = document.getElementById("heartContainer");
 
-const hintText =
-  document.getElementById("hintText");
-
-const transitionScreen =
-  document.getElementById("transitionScreen");
-
-const dateInput =
-  document.getElementById("dateInput");
-
-const timeInput =
-  document.getElementById("timeInput");
-
-const dateHint =
-  document.getElementById("dateHint");
-
-const timeHint =
-  document.getElementById("timeHint");
-
-const yesButton =
-  document.getElementById("yesButton");
-
-const maybeButton =
-  document.getElementById("maybeButton");
-
-const successOverlay =
-  document.getElementById("successOverlay");
-
-const selectedDateDisplay =
-  document.getElementById(
-    "selectedDateDisplay"
-  );
-
-const selectedTimeDisplay =
-  document.getElementById(
-    "selectedTimeDisplay"
-  );
-
-const calendarButton =
-  document.getElementById(
-    "calendarButton"
-  );
-
-const secretHeart =
-  document.getElementById(
-    "secretHeart"
-  );
-
-const secretOverlay =
-  document.getElementById(
-    "secretOverlay"
-  );
-
-const closeSecret =
-  document.getElementById(
-    "closeSecret"
-  );
-
-const photo =
-  document.getElementById("photo");
+const memoryPhoto = document.getElementById("memoryPhoto");
+const photoFallback = document.getElementById("photoFallback");
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+/* =========================
+   STATE
+========================= */
 
 let letterOpened = false;
 
-let musicStarted = false;
-
-let maybeCount = 0;
+let maybeClicks = 0;
 
 let secretClicks = 0;
 
-
-/* =====================================================
-   LOADING SCREEN
-===================================================== */
-
-window.addEventListener(
-  "load",
-  () => {
-
-    /*
-      Small loading screen only.
-
-      IMPORTANT:
-      This does NOT start the music.
-    */
-
-    setTimeout(
-      () => {
-
-        loadingScreen.classList.add(
-          "hide"
-        );
-
-      },
-      650
-    );
-
-  }
-);
+let musicStarted = false;
 
 
-/* =====================================================
+/* =========================
+   SET MIN DATE
+========================= */
+
+function setMinimumDate() {
+
+  const now = new Date();
+
+  const year = now.getFullYear();
+
+  const month = String(
+    now.getMonth() + 1
+  ).padStart(2, "0");
+
+  const day = String(
+    now.getDate()
+  ).padStart(2, "0");
+
+  dateInput.min = `${year}-${month}-${day}`;
+}
+
+setMinimumDate();
+
+
+/* =========================
    MUSIC
-===================================================== */
-
-/*
-  The song intentionally does NOT autoplay.
-
-  It starts when "Buksan mo" is clicked.
-*/
+========================= */
 
 async function startMusic() {
+
+  if (musicStarted) {
+    return;
+  }
 
   try {
 
@@ -162,436 +96,259 @@ async function startMusic() {
 
     musicStarted = true;
 
-    musicButton.classList.add(
-      "playing"
-    );
+    musicButton.classList.add("playing");
 
   } catch (error) {
 
+    /*
+      Some browsers may still block playback.
+
+      Because this function is called directly from
+      the button click, playback normally works.
+    */
+
     musicStarted = false;
-
-    console.log(
-      "Music playback was blocked.",
-      error
-    );
-
   }
-
 }
 
 
-/*
-  Music toggle.
-*/
+/* =========================
+   MUSIC TOGGLE
+========================= */
 
-musicButton.addEventListener(
-  "click",
-  async () => {
+musicButton.addEventListener("click", async () => {
 
-    if (song.paused) {
+  if (song.paused) {
 
-      try {
+    try {
 
-        song.volume = 0.45;
+      song.volume = 0.45;
 
-        await song.play();
+      await song.play();
 
-        musicStarted = true;
+      musicStarted = true;
 
-        musicButton.classList.add(
-          "playing"
-        );
+      musicButton.classList.add("playing");
 
-      } catch (error) {
-
-        console.log(
-          "Unable to play music.",
-          error
-        );
-
-      }
-
-    } else {
-
-      song.pause();
-
-      musicButton.classList.remove(
-        "playing"
-      );
-
+    } catch (error) {
+      // Browser blocked playback.
     }
 
+  } else {
+
+    song.pause();
+
+    musicButton.classList.remove("playing");
   }
-);
+
+});
 
 
-/* =====================================================
-   PAGE 1
-===================================================== */
+/* =========================
+   LETTER BUTTON
+========================= */
 
-letterBtn.addEventListener(
-  "click",
-  async () => {
+letterBtn.addEventListener("click", () => {
 
+  /*
+    FIRST CLICK:
+    Open letter + start music.
+  */
 
-    /* =================================
-       FIRST CLICK
-    ================================= */
+  if (!letterOpened) {
 
-    if (!letterOpened) {
+    letterOpened = true;
 
-      letterOpened = true;
+    // Start music from user gesture.
+    startMusic();
 
+    // Open letter.
+    paperLetter.classList.add("open");
 
-      /*
-        Start music immediately because
-        this click is a direct user action.
-      */
+    // Update button.
+    letterBtn.classList.add("opened");
 
-      await startMusic();
+    letterBtn.innerHTML = `
+      <span>Okay, next...</span>
+      <span>☕</span>
+    `;
 
+    hintText.textContent =
+      "Take your time. ♡";
 
-      /*
-        Envelope animation
-      */
+    createHearts();
 
-      envelope.classList.add(
-        "open"
-      );
-
-
-      /*
-        Small delay before showing
-        the actual letter.
-      */
-
-      setTimeout(
-        () => {
-
-          paperLetter.classList.add(
-            "open"
-          );
-
-        },
-        500
-      );
-
-
-      /*
-        Change button.
-      */
-
-      letterBtn.classList.add(
-        "opened"
-      );
-
-      letterBtnText.textContent =
-        "Okay, next...";
-
-      letterBtnIcon.textContent =
-        "☕";
-
-
-      /*
-        No reading timer.
-
-        She controls when to continue.
-      */
-
-      hintText.textContent =
-        "Basahin mo muna. ♡";
-
-
-      /*
-        Hearts
-      */
-
-      const rect =
-        letterBtn.getBoundingClientRect();
-
-
-      for (
-        let i = 0;
-        i < 7;
-        i++
-      ) {
-
-        setTimeout(
-          () => {
-
-            createHeart(
-              rect.left +
-              rect.width / 2,
-
-              rect.top +
-              rect.height / 2
-            );
-
-          },
-          i * 120
-        );
-
-      }
-
-
-      /*
-        Sparkles around envelope.
-      */
-
-      const envelopeRect =
-        envelope.getBoundingClientRect();
-
-
-      createSparkles(
-        envelopeRect.left +
-        envelopeRect.width / 2,
-
-        envelopeRect.top +
-        envelopeRect.height / 2,
-
-        9
-      );
-
-
-      return;
-
-    }
-
-
-    /* =================================
-       SECOND CLICK
-    ================================= */
-
-    showTransition();
-
+    return;
   }
-);
-
-
-/* =====================================================
-   PAGE TRANSITION
-===================================================== */
-
-function showTransition() {
-
-  transitionScreen.classList.add(
-    "show"
-  );
 
 
   /*
-    Give the transition enough time
-    to feel intentional, but this is
-    NOT a reading timer.
+    SECOND CLICK:
+    Go to coffee invitation.
   */
 
-  setTimeout(
-    () => {
+  showPage2();
 
-      pageOne.classList.remove(
-        "active"
-      );
+});
 
-      pageTwo.classList.add(
-        "active"
-      );
 
-      window.scrollTo(
-        {
-          top: 0,
-          behavior: "smooth"
-        }
-      );
+/* =========================
+   CREATE LITTLE HEARTS
+========================= */
 
-    },
-    900
+function createHearts() {
+
+  const buttonRect =
+    letterBtn.getBoundingClientRect();
+
+  const centerX =
+    buttonRect.left +
+    buttonRect.width / 2;
+
+  const centerY =
+    buttonRect.top +
+    buttonRect.height / 2;
+
+  const hearts = 7;
+
+  for (let i = 0; i < hearts; i++) {
+
+    const heart =
+      document.createElement("span");
+
+    heart.className = "flying-heart";
+
+    heart.textContent =
+      Math.random() > 0.5
+        ? "♡"
+        : "♥";
+
+    heart.style.left =
+      `${centerX}px`;
+
+    heart.style.top =
+      `${centerY}px`;
+
+    const randomX =
+      (Math.random() - 0.5) * 180;
+
+    const randomY =
+      -40 -
+      Math.random() * 100;
+
+    heart.style.setProperty(
+      "--x",
+      `${randomX}px`
+    );
+
+    heart.style.setProperty(
+      "--y",
+      `${randomY}px`
+    );
+
+    heartContainer.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 850);
+  }
+}
+
+
+/* =========================
+   PAGE SWITCH
+========================= */
+
+function switchPage(fromPage, toPage) {
+
+  fromPage.classList.remove("active");
+
+  fromPage.setAttribute(
+    "aria-hidden",
+    "true"
   );
 
+  /*
+    Only a short CSS transition.
 
-  setTimeout(
-    () => {
+    No fake loading screen.
+    No multi-second timer.
+  */
 
-      transitionScreen.classList.remove(
-        "show"
-      );
+  requestAnimationFrame(() => {
 
-    },
-    1550
-  );
+    toPage.classList.add("active");
+
+    toPage.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "auto"
+    });
+
+  });
+}
+
+
+/* =========================
+   SHOW PAGE 2
+========================= */
+
+function showPage2() {
+
+  switchPage(page1, page2);
 
 }
 
 
-/* =====================================================
-   DATE MINIMUM
-===================================================== */
+/* =========================
+   DATE CHANGE
+========================= */
 
-function setMinimumDate() {
+dateInput.addEventListener("change", () => {
 
-  const today =
-    new Date();
-
-  const year =
-    today.getFullYear();
-
-  const month =
-    String(
-      today.getMonth() + 1
-    ).padStart(
-      2,
-      "0"
-    );
-
-  const day =
-    String(
-      today.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  dateInput.min =
-    `${year}-${month}-${day}`;
-
-}
-
-setMinimumDate();
-
-
-/* =====================================================
-   DATE INPUT
-===================================================== */
-
-dateInput.addEventListener(
-  "change",
-  () => {
-
-    if (!dateInput.value) {
-
-      dateHint.classList.remove(
-        "show"
-      );
-
-      return;
-
-    }
-
-
-    const selectedDate =
-      new Date(
-        `${dateInput.value}T00:00:00`
-      );
-
-
-    const formatted =
-      selectedDate.toLocaleDateString(
-        "en-US",
-        {
-          weekday: "long",
-          month: "long",
-          day: "numeric"
-        }
-      );
-
-
-    dateHint.textContent =
-      `Noted. 👀 ${formatted sounds good...`;
-
-
-    /*
-      Fix the template string separately
-      so the display remains valid.
-    */
-
-    dateHint.textContent =
-      `Noted. 👀 ${formatted} sounds good...`;
-
-
-    dateHint.classList.add(
-      "show"
-    );
-
-
-    localStorage.setItem(
-      "coffeeDate",
-      dateInput.value
-    );
-
+  if (!dateInput.value) {
+    return;
   }
-);
+
+  selectionHint.textContent =
+    "Noted. 👀 Mukhang may ganap tayo...";
+
+  selectionHint.style.transform =
+    "translateY(-1px)";
+
+  setTimeout(() => {
+
+    selectionHint.style.transform =
+      "translateY(0)";
+
+  }, 180);
+
+});
 
 
-/* =====================================================
-   TIME INPUT
-===================================================== */
+/* =========================
+   TIME CHANGE
+========================= */
 
-timeInput.addEventListener(
-  "change",
-  () => {
+timeInput.addEventListener("change", () => {
 
-    if (!timeInput.value) {
-
-      timeHint.classList.remove(
-        "show"
-      );
-
-      return;
-
-    }
-
-
-    const [
-      hours,
-      minutes
-    ] =
-      timeInput.value
-        .split(":")
-        .map(Number);
-
-
-    const tempDate =
-      new Date();
-
-    tempDate.setHours(
-      hours,
-      minutes,
-      0,
-      0
-    );
-
-
-    const formatted =
-      tempDate.toLocaleTimeString(
-        "en-US",
-        {
-          hour: "numeric",
-          minute: "2-digit"
-        }
-      );
-
-
-    timeHint.textContent =
-      `Okay, noted na talaga. ☕ ${formatted}. Jay has been informed. HAHAHA.`;
-
-
-    timeHint.classList.add(
-      "show"
-    );
-
-
-    localStorage.setItem(
-      "coffeeTime",
-      timeInput.value
-    );
-
+  if (!timeInput.value) {
+    return;
   }
-);
+
+  selectionHint.textContent =
+    "Okay, noted na talaga. ☕ Jay has been informed. HAHAHA.";
+
+});
 
 
-/* =====================================================
-   MAYBE BUTTON
-===================================================== */
+/* =========================
+   MAYBE / KULIT BUTTON
+========================= */
 
 const maybeMessages = [
 
@@ -607,770 +364,457 @@ const maybeMessages = [
 
 ];
 
+maybeButton.addEventListener("click", () => {
 
-maybeButton.addEventListener(
-  "click",
-  () => {
+  const message =
+    maybeMessages[
+      maybeClicks % maybeMessages.length
+    ];
 
-    maybeButton.textContent =
-      maybeMessages[
-        maybeCount
-      ];
+  maybeButton.textContent = message;
 
+  maybeClicks++;
 
-    maybeCount++;
+  /*
+    Tiny playful movement.
+  */
 
-
-    if (
-      maybeCount >=
-      maybeMessages.length
-    ) {
-
-      maybeCount = 0;
-
-    }
-
-
-    /*
-      Playful little shake.
-    */
-
-    maybeButton.animate(
-      [
-        {
-          transform:
-            "translateX(0)"
-        },
-
-        {
-          transform:
-            "translateX(-5px)"
-        },
-
-        {
-          transform:
-            "translateX(5px)"
-        },
-
-        {
-          transform:
-            "translateX(-3px)"
-        },
-
-        {
-          transform:
-            "translateX(0)"
-        }
-
-      ],
-      {
-        duration: 330
-      }
-    );
-
-  }
-);
-
-
-/* =====================================================
-   YES BUTTON
-===================================================== */
-
-yesButton.addEventListener(
-  "click",
-  () => {
-
-    const selectedDate =
-      dateInput.value;
-
-    const selectedTime =
-      timeInput.value;
-
-
-    /*
-      Require date.
-    */
-
-    if (!selectedDate) {
-
-      dateHint.textContent =
-        "Pili ka muna ng date. 👀";
-
-      dateHint.classList.add(
-        "show"
-      );
-
-      dateInput.focus();
-
-      shakeElement(
-        dateInput
-      );
-
-      return;
-
-    }
-
-
-    /*
-      Require time.
-    */
-
-    if (!selectedTime) {
-
-      timeHint.textContent =
-        "Pili ka rin ng time. ☕";
-
-      timeHint.classList.add(
-        "show"
-      );
-
-      timeInput.focus();
-
-      shakeElement(
-        timeInput
-      );
-
-      return;
-
-    }
-
-
-    /*
-      Save booking.
-    */
-
-    localStorage.setItem(
-      "coffeeDate",
-      selectedDate
-    );
-
-    localStorage.setItem(
-      "coffeeTime",
-      selectedTime
-    );
-
-
-    /*
-      Display booking.
-    */
-
-    selectedDateDisplay.textContent =
-      formatDate(
-        selectedDate
-      );
-
-    selectedTimeDisplay.textContent =
-      formatTime(
-        selectedTime
-      );
-
-
-    /*
-      Show confirmation.
-    */
-
-    successOverlay.classList.add(
-      "show"
-    );
-
-
-    /*
-      Celebration hearts.
-    */
-
-    for (
-      let i = 0;
-      i < 12;
-      i++
-    ) {
-
-      setTimeout(
-        () => {
-
-          createHeart(
-            window.innerWidth / 2,
-            window.innerHeight / 2
-          );
-
-        },
-        i * 100
-      );
-
-    }
-
-
-    /*
-      Celebration sparkles.
-    */
-
-    createSparkles(
-      window.innerWidth / 2,
-      window.innerHeight / 2,
-      14
-    );
-
-  }
-);
-
-
-/* =====================================================
-   DATE FORMAT
-===================================================== */
-
-function formatDate(
-  value
-) {
-
-  const date =
-    new Date(
-      `${value}T00:00:00`
-    );
-
-
-  return date.toLocaleDateString(
-    "en-US",
-    {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      year: "numeric"
-    }
-  );
-
-}
-
-
-/* =====================================================
-   TIME FORMAT
-===================================================== */
-
-function formatTime(
-  value
-) {
-
-  const [
-    hours,
-    minutes
-  ] =
-    value
-      .split(":")
-      .map(Number);
-
-
-  const date =
-    new Date();
-
-
-  date.setHours(
-    hours,
-    minutes,
-    0,
-    0
-  );
-
-
-  return date.toLocaleTimeString(
-    "en-US",
-    {
-      hour: "numeric",
-      minute: "2-digit"
-    }
-  );
-
-}
-
-
-/* =====================================================
-   GOOGLE CALENDAR
-===================================================== */
-
-function formatGoogleDate(
-  date
-) {
-
-  return date
-    .toISOString()
-    .replace(
-      /[-:]/g,
-      ""
-    )
-    .replace(
-      /\.\d{3}/,
-      ""
-    );
-
-}
-
-
-calendarButton.addEventListener(
-  "click",
-  () => {
-
-    const selectedDate =
-      dateInput.value;
-
-    const selectedTime =
-      timeInput.value;
-
-
-    if (
-      !selectedDate ||
-      !selectedTime
-    ) {
-
-      return;
-
-    }
-
-
-    const start =
-      new Date(
-        `${selectedDate}T${selectedTime}:00`
-      );
-
-
-    const end =
-      new Date(
-        start.getTime() +
-        90 * 60 * 1000
-      );
-
-
-    const startString =
-      formatGoogleDate(
-        start
-      );
-
-    const endString =
-      formatGoogleDate(
-        end
-      );
-
-
-    const title =
-      encodeURIComponent(
-        "Coffee with Carmina ☕♡"
-      );
-
-
-    const details =
-      encodeURIComponent(
-        "Coffee with Jay ♡\n\nDon't be late HAHAHA."
-      );
-
-
-    const location =
-      encodeURIComponent(
-        "Coffee date ☕"
-      );
-
-
-    const calendarURL =
-      `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startString}/${endString}&details=${details}&location=${location}`;
-
-
-    /*
-      Opens Google Calendar in a NEW TAB.
-
-      GitHub Pages stays open.
-    */
-
-    window.open(
-      calendarURL,
-      "_blank",
-      "noopener,noreferrer"
-    );
-
-  }
-);
-
-
-/* =====================================================
-   SECRET EASTER EGG
-===================================================== */
-
-secretHeart.addEventListener(
-  "click",
-  () => {
-
-    secretClicks++;
-
-
-    /*
-      Three clicks.
-    */
-
-    if (
-      secretClicks >= 3
-    ) {
-
-      secretOverlay.classList.add(
-        "show"
-      );
-
-
-      createSparkles(
-        window.innerWidth / 2,
-        window.innerHeight / 2,
-        10
-      );
-
-
-      secretClicks = 0;
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   CLOSE SECRET
-===================================================== */
-
-closeSecret.addEventListener(
-  "click",
-  () => {
-
-    secretOverlay.classList.remove(
-      "show"
-    );
-
-  }
-);
-
-
-/*
-  Close by clicking outside.
-*/
-
-secretOverlay.addEventListener(
-  "click",
-  (event) => {
-
-    if (
-      event.target ===
-      secretOverlay
-    ) {
-
-      secretOverlay.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   PHOTO FALLBACK
-===================================================== */
-
-photo.addEventListener(
-  "error",
-  () => {
-
-    photo.style.display =
-      "none";
-
-
-    const frame =
-      photo.parentElement;
-
-
-    frame.style.minHeight =
-      "220px";
-
-
-    frame.style.display =
-      "flex";
-
-    frame.style.alignItems =
-      "center";
-
-    frame.style.justifyContent =
-      "center";
-
-
-    frame.insertAdjacentHTML(
-      "beforeend",
-
-      `
-        <div
-          style="
-            font-family: Caveat, cursive;
-            font-size: 26px;
-            color: #648393;
-          "
-        >
-          our little memory ♡
-        </div>
-      `
-
-    );
-
-  }
-);
-
-
-/* =====================================================
-   CREATE HEART
-===================================================== */
-
-function createHeart(
-  x,
-  y
-) {
-
-  const heart =
-    document.createElement(
-      "div"
-    );
-
-
-  heart.className =
-    "created-heart";
-
-
-  heart.textContent =
-    Math.random() > 0.3
-      ? "♡"
-      : "♥";
-
-
-  heart.style.left =
-    `${x}px`;
-
-  heart.style.top =
-    `${y}px`;
-
-
-  const randomX =
-    `${(Math.random() - 0.5) * 130}px`;
-
-  const randomY =
-    `${-60 - Math.random() * 100}px`;
-
-
-  heart.style.setProperty(
-    "--x",
-    randomX
-  );
-
-  heart.style.setProperty(
-    "--y",
-    randomY
-  );
-
-
-  document.body.appendChild(
-    heart
-  );
-
-
-  setTimeout(
-    () => {
-
-      heart.remove();
-
-    },
-    1400
-  );
-
-}
-
-
-/* =====================================================
-   CREATE SPARKLES
-===================================================== */
-
-function createSparkles(
-  x,
-  y,
-  amount = 8
-) {
-
-  const symbols = [
-    "✦",
-    "✧",
-    "·",
-    "✦"
-  ];
-
-
-  for (
-    let i = 0;
-    i < amount;
-    i++
-  ) {
-
-    const sparkle =
-      document.createElement(
-        "div"
-      );
-
-
-    sparkle.className =
-      "sparkle";
-
-
-    sparkle.textContent =
-      symbols[
-        Math.floor(
-          Math.random() *
-          symbols.length
-        )
-      ];
-
-
-    sparkle.style.left =
-      `${x}px`;
-
-    sparkle.style.top =
-      `${y}px`;
-
-
-    const randomX =
-      `${(Math.random() - 0.5) * 180}px`;
-
-    const randomY =
-      `${(Math.random() - 0.5) * 150}px`;
-
-
-    sparkle.style.setProperty(
-      "--x",
-      randomX
-    );
-
-    sparkle.style.setProperty(
-      "--y",
-      randomY
-    );
-
-
-    document.body.appendChild(
-      sparkle
-    );
-
-
-    setTimeout(
-      () => {
-
-        sparkle.remove();
-
-      },
-      1100
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   SHAKE ELEMENT
-===================================================== */
-
-function shakeElement(
-  element
-) {
-
-  element.animate(
+  maybeButton.animate(
     [
       {
-        transform:
-          "translateX(0)"
+        transform: "translateX(0)"
       },
-
       {
-        transform:
-          "translateX(-5px)"
+        transform: "translateX(-3px)"
       },
-
       {
-        transform:
-          "translateX(5px)"
+        transform: "translateX(3px)"
       },
-
       {
-        transform:
-          "translateX(-3px)"
-      },
-
-      {
-        transform:
-          "translateX(0)"
+        transform: "translateX(0)"
       }
     ],
     {
-      duration: 300
+      duration: 220,
+      easing: "ease-out"
     }
   );
+
+});
+
+
+/* =========================
+   CHECK DATE/TIME
+========================= */
+
+function validateSelection() {
+
+  const selectedDate =
+    dateInput.value;
+
+  const selectedTime =
+    timeInput.value;
+
+  if (!selectedDate) {
+
+    selectionHint.textContent =
+      "Pili ka muna ng araw. 👀";
+
+    dateInput.focus();
+
+    return false;
+  }
+
+  if (!selectedTime) {
+
+    selectionHint.textContent =
+      "Okay, pero anong oras? HAHAHA.";
+
+    timeInput.focus();
+
+    return false;
+  }
+
+  return true;
+}
+
+
+/* =========================
+   YES BUTTON
+========================= */
+
+yesButton.addEventListener("click", () => {
+
+  if (!validateSelection()) {
+    return;
+  }
+
+  showConfirmation();
+
+});
+
+
+/* =========================
+   SHOW CONFIRMATION
+========================= */
+
+function showConfirmation() {
+
+  const selectedDate =
+    dateInput.value;
+
+  const selectedTime =
+    timeInput.value;
+
+
+  /*
+    Format date for display.
+  */
+
+  const dateObject =
+    new Date(
+      `${selectedDate}T12:00:00`
+    );
+
+  const formattedDate =
+    dateObject.toLocaleDateString(
+      "en-US",
+      {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      }
+    );
+
+
+  /*
+    Format time for display.
+  */
+
+  const timeObject =
+    new Date(
+      `2000-01-01T${selectedTime}:00`
+    );
+
+  const formattedTime =
+    timeObject.toLocaleTimeString(
+      "en-US",
+      {
+        hour: "numeric",
+        minute: "2-digit"
+      }
+    );
+
+
+  confirmedDate.textContent =
+    formattedDate;
+
+  confirmedTime.textContent =
+    formattedTime;
+
+
+  /*
+    Switch page.
+  */
+
+  page2.classList.remove("active");
+
+  page2.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  requestAnimationFrame(() => {
+
+    confirmation.classList.add("active");
+
+    confirmation.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "auto"
+    });
+
+  });
+
+
+  createConfirmationHearts();
 
 }
 
 
-/* =====================================================
-   RESTORE SAVED DATA
-===================================================== */
+/* =========================
+   CONFIRMATION HEARTS
+========================= */
 
-window.addEventListener(
-  "load",
-  () => {
+function createConfirmationHearts() {
 
-    const savedDate =
-      localStorage.getItem(
-        "coffeeDate"
-      );
+  const hearts = 10;
 
-    const savedTime =
-      localStorage.getItem(
-        "coffeeTime"
-      );
+  for (let i = 0; i < hearts; i++) {
+
+    const heart =
+      document.createElement("span");
+
+    heart.className =
+      "flying-heart";
+
+    heart.textContent =
+      Math.random() > 0.5
+        ? "♡"
+        : "♥";
+
+    heart.style.left =
+      `${45 + Math.random() * 10}%`;
+
+    heart.style.top =
+      `${55 + Math.random() * 5}%`;
+
+    heart.style.setProperty(
+      "--x",
+      `${(Math.random() - 0.5) * 260}px`
+    );
+
+    heart.style.setProperty(
+      "--y",
+      `${-100 - Math.random() * 180}px`
+    );
+
+    heartContainer.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 850);
+  }
+
+}
 
 
-    if (savedDate) {
+/* =========================
+   GOOGLE CALENDAR
+========================= */
 
-      dateInput.value =
-        savedDate;
+function formatGoogleDate(date) {
 
-    }
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(2, "0");
+
+  const hours =
+    String(
+      date.getHours()
+    ).padStart(2, "0");
+
+  const minutes =
+    String(
+      date.getMinutes()
+    ).padStart(2, "0");
+
+  const seconds =
+    String(
+      date.getSeconds()
+    ).padStart(2, "0");
+
+  return (
+    `${year}${month}${day}` +
+    `T${hours}${minutes}${seconds}`
+  );
+}
 
 
-    if (savedTime) {
+calendarButton.addEventListener("click", () => {
 
-      timeInput.value =
-        savedTime;
+  const selectedDate =
+    dateInput.value;
 
-    }
+  const selectedTime =
+    timeInput.value;
+
+  if (
+    !selectedDate ||
+    !selectedTime
+  ) {
+    return;
+  }
+
+
+  const start =
+    new Date(
+      `${selectedDate}T${selectedTime}:00`
+    );
+
+
+  const end =
+    new Date(
+      start.getTime() +
+      90 * 60 * 1000
+    );
+
+
+  const startString =
+    formatGoogleDate(start);
+
+  const endString =
+    formatGoogleDate(end);
+
+
+  const title =
+    encodeURIComponent(
+      "Coffee with Carmina ☕♡"
+    );
+
+
+  const details =
+    encodeURIComponent(
+      "Coffee with Jay ♡\n\n" +
+      "Don't be late HAHAHA."
+    );
+
+
+  const location =
+    encodeURIComponent(
+      "Coffee date ☕"
+    );
+
+
+  const calendarURL =
+    "https://calendar.google.com/calendar/render" +
+    "?action=TEMPLATE" +
+    `&text=${title}` +
+    `&dates=${startString}/${endString}` +
+    `&details=${details}` +
+    `&location=${location}`;
+
+
+  /*
+    Opens Google Calendar in a NEW TAB.
+
+    This keeps the GitHub Pages website open.
+  */
+
+  window.open(
+    calendarURL,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+});
+
+
+/* =========================
+   SECRET EASTER EGG
+========================= */
+
+secretHeart.addEventListener("click", () => {
+
+  secretClicks++;
+
+  if (secretClicks >= 3) {
+
+    secretMessage.classList.add("show");
+
+    secretHeart.textContent = "♥";
+
+    secretClicks = 0;
 
   }
-);
+
+});
 
 
-/* =====================================================
-   EXTRA TOUCH:
-   ESCAPE KEY FOR SECRET
-===================================================== */
+/* =========================
+   PHOTO FALLBACK
+========================= */
 
-document.addEventListener(
-  "keydown",
-  (event) => {
+memoryPhoto.addEventListener("error", () => {
+
+  memoryPhoto.style.display =
+    "none";
+
+  photoFallback.style.display =
+    "grid";
+
+});
+
+
+/* =========================
+   KEYBOARD SUPPORT
+========================= */
+
+document.addEventListener("keydown", (event) => {
+
+  /*
+    Enter / Space can operate the main
+    invitation button when focused.
+  */
+
+  if (
+    event.key === "Enter" ||
+    event.key === " "
+  ) {
+
+    const activeElement =
+      document.activeElement;
 
     if (
-      event.key === "Escape"
+      activeElement === letterBtn ||
+      activeElement === yesButton ||
+      activeElement === maybeButton
     ) {
-
-      secretOverlay.classList.remove(
-        "show"
-      );
-
-      successOverlay.classList.remove(
-        "show"
-      );
-
+      return;
     }
-
   }
+
+});
+
+
+/* =========================
+   IMPORTANT:
+   NO PAGE LOAD AUTOPLAY
+========================= */
+
+/*
+  Deliberately no:
+
+  window.addEventListener("load", ...)
+
+  and no:
+
+  song.play()
+
+  on page load.
+
+  Music starts only from the user's
+  click on "Buksan mo ♡".
+*/
+
+
+/* =========================
+   INITIAL STATE
+========================= */
+
+page1.classList.add("active");
+
+page1.setAttribute(
+  "aria-hidden",
+  "false"
 );
+
+page2.classList.remove("active");
+
+confirmation.classList.remove("active");
+
+song.volume = 0.45;
