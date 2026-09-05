@@ -8,9 +8,9 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
 
-  <meta name="theme-color" content="#9ed8f4">
+  <meta name="theme-color" content="#8fd3ff">
 
-  <title>A Little Coffee Invitation ♡</title>
+  <title>For Carmina ♡</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,54 +25,49 @@
 
 <body>
 
-  <!-- =========================================
+  <!-- =========================
        BACKGROUND
-  ========================================== -->
+  ========================== -->
 
   <div class="background">
 
     <div class="sun"></div>
 
-    <div class="cloud cloud-1">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
+    <div class="cloud cloud-three"></div>
 
-    <div class="cloud cloud-2">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <div class="flower flower-one">✿</div>
+    <div class="flower flower-two">✿</div>
+    <div class="flower flower-three">✿</div>
 
-    <div class="cloud cloud-3">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <div class="leaf leaf-one">♡</div>
+    <div class="leaf leaf-two">♡</div>
 
-    <div class="floating-flower flower-1">✿</div>
-    <div class="floating-flower flower-2">✿</div>
-    <div class="floating-flower flower-3">✿</div>
-
-    <div class="leaf leaf-1">❧</div>
-    <div class="leaf leaf-2">❧</div>
-
-    <div class="background-heart heart-1">♡</div>
-    <div class="background-heart heart-2">♡</div>
-    <div class="background-heart heart-3">♡</div>
-    <div class="background-heart heart-4">♡</div>
+    <div class="floating-heart heart-one">♡</div>
+    <div class="floating-heart heart-two">♡</div>
+    <div class="floating-heart heart-three">♡</div>
+    <div class="floating-heart heart-four">♡</div>
 
     <div class="woven-pattern"></div>
 
   </div>
 
 
-  <!-- =========================================
+  <!-- =========================
        MUSIC
-  ========================================== -->
+  ========================== -->
 
-  <button id="musicButton" class="music-button" aria-label="Toggle music">
+  <audio id="song" loop preload="auto">
+    <source src="Love Is.mp3" type="audio/mpeg">
+  </audio>
+
+  <button
+    id="musicButton"
+    class="music-pill"
+    type="button"
+    aria-label="Music controls"
+  >
 
     <span class="music-icon">♫</span>
 
@@ -81,7 +76,8 @@
       <span class="music-artist">The Ridleys</span>
     </span>
 
-    <span class="music-bars">
+    <span class="music-wave">
+      <i></i>
       <i></i>
       <i></i>
       <i></i>
@@ -90,417 +86,336 @@
 
   </button>
 
-  <audio id="song" loop preload="auto">
-    <source src="Love Is.mp3" type="audio/mpeg">
-  </audio>
+
+  <!-- =========================
+       PAGE 1
+  ========================== -->
+
+  <main id="pageOne" class="page active">
+
+    <section class="intro-card">
+
+      <div class="tiny-label">
+        a little something ♡
+      </div>
+
+      <h1>
+        Hi, Carmina
+        <span>♡</span>
+      </h1>
+
+      <p class="intro-text">
+        I made something for you...
+      </p>
+
+      <p class="intro-small">
+        Don't judge me HAHAHA.
+      </p>
 
 
-  <!-- =========================================
-       MAIN
-  ========================================== -->
+      <!-- LETTER -->
 
-  <main>
+      <div id="paperLetter" class="paper-letter">
 
-    <!-- =======================================
-         PAGE 1
-    ======================================== -->
+        <div class="paper-decoration top-left">♡</div>
+        <div class="paper-decoration bottom-right">♡</div>
 
-    <section id="page1" class="page active">
+        <div class="letter-content">
 
-      <div class="intro-card">
+          <p class="letter-line">
+            Hello, Carmina &lt;3
+          </p>
 
-        <div class="tiny-flower top-left">✿</div>
-        <div class="tiny-flower top-right">✿</div>
+          <p class="letter-line">
+            Pagpasensyahan mo na tong kabaliwan ko HAHAHA.
+            Sayang naman yung pinag-aralan ko kung hindi ko gagamitin,
+            diba? HAHAHAHA.
+          </p>
 
-        <div class="intro-label">
-          a little something for you
-        </div>
+          <p class="letter-line">
+            Gusto ko lang sana sabihin na
+            <strong>thank you</strong> for always being there.
+            Kahit na sobrang busy mo, you still make time and find a way
+            para makapagkita tayo.
+            I really appreciate that more than you know. :)
+          </p>
 
-        <h1>
-          Hi, Carmina
-          <span>♡</span>
-        </h1>
+          <p class="letter-line">
+            Kaya naisip ko, bakit hindi naman ako gumawa
+            ng konting effort para naman sa susunod na aya ko sa'yo?
+            HAHAHAHA.
+          </p>
 
-        <p class="intro-subtitle">
-          I made something for you...
-        </p>
+          <p class="letter-line">
+            Hope you like this, kahit medyo OA at pinag-isipan ko talaga.
+            Eto na lang muna yung <strong>booking system</strong> natin.
+            HAHAHAHA.
+          </p>
 
-        <p class="intro-tease">
-          Don't judge me HAHAHA.
-        </p>
+          <p class="letter-line">
+            Pagpasensyahan mo na din hindi published.
+            Medyo mahal pala, kaya dito na lang muna tayo.
+            HAHAHAHA.
+          </p>
 
+          <p class="letter-line">
+            Pero ayun... sana magustuhan mo kahit simple lang.
+            At sana,
+            <strong>makapag-coffee ulit tayo. ☕♡</strong>
+          </p>
 
-        <!-- LETTER -->
-
-        <div id="letterArea" class="letter-area">
-
-          <div class="paper-letter" id="paperLetter">
-
-            <div class="paper-tape tape-left"></div>
-            <div class="paper-tape tape-right"></div>
-
-            <div class="paper-stamp">
-              ♡
-            </div>
-
-            <div class="letter-content">
-
-              <p class="letter-line">
-                Hello, Carmina &lt;3
-              </p>
-
-              <p class="letter-line">
-                Pagpasensyahan mo na tong kabaliwan ko HAHAHA.
-                Sayang naman yung pinag-aralan ko kung hindi ko
-                gagamitin, diba? HAHAHAHA.
-              </p>
-
-              <p class="letter-line">
-                Gusto ko lang sana sabihin na
-                <strong>thank you</strong> for always being there.
-                Kahit na sobrang busy mo, you still make time
-                and find a way para makapagkita tayo.
-                I really appreciate that more than you know. :)
-              </p>
-
-              <p class="letter-line">
-                Kaya naisip ko, bakit hindi naman ako gumawa
-                ng konting effort para naman sa susunod na
-                aya ko sa'yo? HAHAHAHA.
-              </p>
-
-              <p class="letter-line">
-                Hope you like this, kahit medyo OA at
-                pinag-isipan ko talaga. Eto na lang muna yung
-                <strong>booking system</strong> natin. HAHAHAHA.
-              </p>
-
-              <p class="letter-line">
-                Pagpasensyahan mo na din hindi published.
-                Medyo mahal pala, kaya dito na lang muna tayo.
-                HAHAHAHA.
-              </p>
-
-              <p class="letter-line">
-                Pero ayun... sana magustuhan mo kahit simple lang.
-                At sana,
-                <strong>makapag-coffee ulit tayo. ☕♡</strong>
-              </p>
-
-              <p class="letter-signature">
-                — Jay ♡
-              </p>
-
-            </div>
-
-          </div>
+          <p class="letter-signature">
+            — Jay <span id="secretHeart">♡</span>
+          </p>
 
         </div>
-
-
-        <!-- OPEN BUTTON -->
-
-        <button id="letterBtn" class="main-button">
-          <span>Buksan mo</span>
-          <span>♡</span>
-        </button>
-
-        <p id="hintText" class="hint-text">
-          may konting effort 'to ha 👀
-        </p>
 
       </div>
 
-    </section>
 
+      <!-- BUTTON -->
 
-    <!-- =======================================
-         TRANSITION
-    ======================================== -->
+      <button id="letterBtn" class="main-button" type="button">
 
-    <section id="transitionScreen" class="transition-screen">
-
-      <div class="transition-content">
-
-        <div class="transition-cup">
-          ☕
-        </div>
-
-        <p>
-          Preparing your coffee invitation...
-        </p>
-
-        <span>
-          wait lang HAHAHA
+        <span id="letterBtnText">
+          Buksan mo
         </span>
 
-      </div>
-
-    </section>
-
-
-    <!-- =======================================
-         PAGE 2
-    ======================================== -->
-
-    <section id="page2" class="page">
-
-      <div class="booking-card">
-
-        <div class="booking-top-decoration">
-          <span>✿</span>
-          <span>♡</span>
-          <span>✿</span>
-        </div>
-
-        <div class="booking-label">
-          okay... booking system na talaga
-        </div>
-
-        <h2>
-          Mimz...
-        </h2>
-
-        <h3>
-          Pwede bang coffee ulit?
-          <span>☕♡</span>
-        </h3>
-
-        <p class="booking-description">
-          Ikaw na pumili ng araw at oras.
-          <br>
-          Ako na bahala sa coffee. :)
-        </p>
-
-
-        <!-- PHOTO -->
-
-        <div class="photo-frame">
-
-          <div class="photo-tape"></div>
-
-          <img
-            id="photo"
-            src="photo.jpg"
-            alt="A little memory"
-          >
-
-          <div class="photo-caption">
-            coffee ulit? ♡
-          </div>
-
-        </div>
-
-
-        <!-- DATE -->
-
-        <div class="input-group">
-
-          <label for="dateInput">
-            <span>📅</span>
-            Choose a date
-          </label>
-
-          <div class="input-wrapper">
-
-            <input
-              type="date"
-              id="dateInput"
-            >
-
-          </div>
-
-          <p id="dateHint" class="input-hint"></p>
-
-        </div>
-
-
-        <!-- TIME -->
-
-        <div class="input-group">
-
-          <label for="timeInput">
-            <span>🕐</span>
-            Choose a time
-          </label>
-
-          <div class="input-wrapper">
-
-            <input
-              type="time"
-              id="timeInput"
-            >
-
-          </div>
-
-          <p id="timeHint" class="input-hint"></p>
-
-        </div>
-
-
-        <!-- ACTIONS -->
-
-        <div class="booking-actions">
-
-          <button
-            id="yesButton"
-            class="yes-button"
-          >
-            <span>Sige, coffee tayo</span>
-            <span>☕♡</span>
-          </button>
-
-          <button
-            id="maybeButton"
-            class="maybe-button"
-          >
-            Hmm... 👀
-          </button>
-
-        </div>
-
-
-        <p class="booking-footer">
-          Hindi naman ako nagmamadali...
-          <br>
-          basta ikaw. ♡
-        </p>
-
-
-        <!-- SECRET HEART -->
-
-        <button
-          id="secretHeart"
-          class="secret-heart"
-          aria-label="Secret"
-        >
+        <span>
           ♡
-        </button>
+        </span>
 
-      </div>
+      </button>
+
+
+      <p id="hintText" class="hint-text">
+        may konting effort 'to ha 👀
+      </p>
 
     </section>
 
   </main>
 
 
-  <!-- =========================================
-       SUCCESS OVERLAY
-  ========================================== -->
+  <!-- =========================
+       TRANSITION
+  ========================== -->
 
-  <div id="successOverlay" class="success-overlay">
+  <div id="transitionScreen" class="transition-screen">
 
-    <div class="success-card">
+    <div class="transition-content">
 
-      <div class="success-confetti">
-        ♡　✦　☕　✦　♡
-      </div>
-
-      <div class="success-icon">
+      <div class="transition-cup">
         ☕
       </div>
 
-      <p class="success-label">
-        coffee reservation
+      <p>
+        Preparing your coffee invitation...
       </p>
 
-      <h2>
-        COFFEE RESERVED
-      </h2>
+      <span>
+        ♡
+      </span>
 
-      <p class="success-subtitle">
-        Okay... deal. ♡
-      </p>
-
-
-      <div class="reservation-info">
-
-        <div class="reservation-person">
-          <span>♡</span>
-          <strong>Carmina + Jay</strong>
-        </div>
-
-        <div class="reservation-detail">
-
-          <div>
-            <span>📅</span>
-            <p id="confirmedDate">
-              —
-            </p>
-          </div>
-
-          <div>
-            <span>🕐</span>
-            <p id="confirmedTime">
-              —
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="success-message">
-
-        <p>
-          Thank you for saying yes. ♡
-        </p>
-
-        <p>
-          See you soon.
-          <br>
-          Don't be late HAHAHA.
-        </p>
-
-      </div>
-
-
-      <!-- CALENDAR BUTTON -->
-
-      <button
-        id="calendarButton"
-        class="calendar-button"
-      >
-        <span>＋</span>
-        Add to Calendar ♡
-      </button>
-
-
-      <p class="calendar-note">
-        opens Google Calendar in a new tab
-      </p>
-
-
-      <button
-        id="closeSuccess"
-        class="close-success"
-      >
-        close
-      </button>
-
-    </div>
-
-    <div class="success-hearts">
-      <span>♡</span>
-      <span>♡</span>
-      <span>♡</span>
-      <span>♡</span>
-      <span>♡</span>
     </div>
 
   </div>
 
 
-  <!-- =========================================
-       SECRET MESSAGE
-  ========================================== -->
+  <!-- =========================
+       PAGE 2
+  ========================== -->
 
-  <div id="secretMessage" class="secret-message">
+  <main id="pageTwo" class="page page-two">
+
+    <section class="booking-card">
+
+      <div class="booking-top">
+
+        <span class="booking-label">
+          okay... here's the actual booking system 👀
+        </span>
+
+        <div class="booking-heart">
+          ♡
+        </div>
+
+      </div>
+
+
+      <h2>
+        Mimz...
+      </h2>
+
+      <h3>
+        Pwede bang coffee ulit? ☕♡
+      </h3>
+
+      <p class="booking-message">
+        Ikaw na pumili ng araw at oras.
+        Ako na bahala sa coffee. :)
+      </p>
+
+
+      <!-- PHOTO -->
+
+      <div class="photo-frame">
+
+        <div class="photo-tape"></div>
+
+        <img
+          id="photo"
+          src="photo.jpg"
+          alt="A little memory"
+        >
+
+        <div class="photo-caption">
+          coffee sounds nice, no? ♡
+        </div>
+
+      </div>
+
+
+      <!-- DATE -->
+
+      <div class="input-group">
+
+        <label for="dateInput">
+          Kailan ka free? 👀
+        </label>
+
+        <input
+          id="dateInput"
+          type="date"
+        >
+
+        <p id="dateHint" class="input-hint"></p>
+
+      </div>
+
+
+      <!-- TIME -->
+
+      <div class="input-group">
+
+        <label for="timeInput">
+          Anong oras? ☕
+        </label>
+
+        <input
+          id="timeInput"
+          type="time"
+        >
+
+        <p id="timeHint" class="input-hint"></p>
+
+      </div>
+
+
+      <!-- ACTIONS -->
+
+      <div class="booking-actions">
+
+        <button
+          id="yesButton"
+          class="yes-button"
+          type="button"
+        >
+          Sige, coffee tayo ☕♡
+        </button>
+
+        <button
+          id="maybeButton"
+          class="maybe-button"
+          type="button"
+        >
+          Hmm... 👀
+        </button>
+
+      </div>
+
+
+      <p class="booking-footer">
+        no pressure... pero sana yes HAHAHA.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       SUCCESS
+  ========================== -->
+
+  <div id="successOverlay" class="overlay">
+
+    <div class="success-card">
+
+      <div class="success-cup">
+        ☕
+      </div>
+
+      <div class="success-label">
+        BOOKING CONFIRMED
+      </div>
+
+      <h2>
+        Coffee reserved ♡
+      </h2>
+
+      <div class="success-names">
+        Carmina + Jay
+      </div>
+
+      <div class="success-details">
+
+        <div>
+          <span>DATE</span>
+          <strong id="selectedDateDisplay">—</strong>
+        </div>
+
+        <div>
+          <span>TIME</span>
+          <strong id="selectedTimeDisplay">—</strong>
+        </div>
+
+      </div>
+
+      <p class="success-message">
+        Thank you for saying yes. ♡
+      </p>
+
+      <p class="success-small">
+        Don't be late HAHAHA.
+      </p>
+
+      <button
+        id="calendarButton"
+        class="calendar-button"
+        type="button"
+      >
+        Add to Calendar ♡
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SECRET MESSAGE
+  ========================== -->
+
+  <div id="secretOverlay" class="overlay secret-overlay">
 
     <div class="secret-card">
 
-      <span class="secret-small">
+      <div class="secret-star">
+        ✦
+      </div>
+
+      <span>
         Secret message unlocked 👀
       </span>
 
@@ -513,18 +428,17 @@
         HAHAHA. ♡
       </strong>
 
-      <button id="closeSecret">
-        okay okay HAHAHA
+      <button
+        id="closeSecret"
+        type="button"
+      >
+        okay na, secret lang talaga
       </button>
 
     </div>
 
   </div>
 
-
-  <!-- =========================================
-       JAVASCRIPT
-  ========================================== -->
 
   <script src="script.js"></script>
 
