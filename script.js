@@ -1,735 +1,358 @@
-/* =====================================================
-   ELEMENTS
-===================================================== */
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
 
-const song =
-  document.getElementById("song");
+const letterBtn = document.getElementById("letterBtn");
+const paperLetter = document.getElementById("paperLetter");
 
-const musicButton =
-  document.getElementById("musicButton");
+const hintText = document.getElementById("hintText");
 
-const musicIcon =
-  document.getElementById("musicIcon");
+const musicButton = document.getElementById("musicButton");
+const song = document.getElementById("song");
 
-const musicLabel =
-  document.getElementById("musicLabel");
+const dateInput = document.getElementById("date");
+const timeInput = document.getElementById("time");
 
+const dateHint = document.getElementById("dateHint");
 
-const page1 =
-  document.getElementById("page1");
+const yesBtn = document.getElementById("yesBtn");
+const maybeBtn = document.getElementById("maybeBtn");
 
-const page2 =
-  document.getElementById("page2");
+const successOverlay =
+  document.getElementById("successOverlay");
 
-
-const paperLetter =
-  document.getElementById("paperLetter");
-
-const letterButton =
-  document.getElementById("letterButton");
-
-const letterHint =
-  document.getElementById("letterHint");
+const chosenDate =
+  document.getElementById("chosenDate");
 
 
-const dateInput =
-  document.getElementById("date");
-
-const timeInput =
-  document.getElementById("time");
-
-const messageInput =
-  document.getElementById("message");
-
-const characterCount =
-  document.getElementById("characterCount");
-
-const bookingHint =
-  document.getElementById("bookingHint");
-
-
-const confirmButton =
-  document.getElementById("confirmButton");
-
-
-const confirmation =
-  document.getElementById("confirmation");
-
-const ticketDate =
-  document.getElementById("ticketDate");
-
-const ticketTime =
-  document.getElementById("ticketTime");
-
-const ticketMessage =
-  document.getElementById("ticketMessage");
-
-const closeButton =
-  document.getElementById("closeButton");
-
-
-/* =====================================================
-   STATE
-===================================================== */
+/* =================================
+   LETTER
+================================= */
 
 let letterOpened = false;
+
+letterBtn.addEventListener("click", function () {
+
+  /* FIRST CLICK */
+
+  if (!letterOpened) {
+
+    letterOpened = true;
+
+    paperLetter.classList.add("open");
+
+    letterBtn.textContent =
+      "May itatanong ako sa'yo →";
+
+    hintText.textContent =
+      "Basahin mo muna... promise, hindi mahaba ♡";
+
+    return;
+  }
+
+
+  /* SECOND CLICK */
+
+  goToPageTwo();
+
+});
+
+
+/* =================================
+   GO TO PAGE 2
+================================= */
+
+function goToPageTwo() {
+
+  page1.classList.remove("active");
+
+  page2.classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  startMusic();
+
+}
+
+
+/* =================================
+   MUSIC
+================================= */
 
 let musicPlaying = false;
 
 
-/* =====================================================
-   MUSIC
-===================================================== */
+function startMusic() {
 
-musicButton.addEventListener(
-  "click",
-  async () => {
+  song.play()
+    .then(() => {
 
-    if (song.paused) {
+      musicPlaying = true;
 
-      try {
+      musicButton.innerHTML =
+        "♫ <span>Love Is playing...</span>";
 
-        await song.play();
-
-        musicPlaying = true;
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
-
-    } else {
-
-      song.pause();
+    })
+    .catch(() => {
 
       musicPlaying = false;
 
-    }
+    });
 
-    updateMusic();
-
-  }
-);
+}
 
 
-function updateMusic() {
+musicButton.addEventListener("click", function () {
 
   if (musicPlaying) {
 
-    musicButton.classList.add(
-      "playing"
-    );
+    song.pause();
 
-    musicIcon.textContent =
-      "♫";
+    musicPlaying = false;
 
-    musicLabel.textContent =
-      "Love Is";
+    musicButton.innerHTML =
+      "♫ <span>Love Is</span>";
 
   } else {
 
-    musicButton.classList.remove(
-      "playing"
-    );
+    song.play()
+      .then(() => {
 
-    musicIcon.textContent =
-      "▶";
+        musicPlaying = true;
 
-    musicLabel.textContent =
-      "Music";
+        musicButton.innerHTML =
+          "♫ <span>Love Is playing...</span>";
 
-  }
+      })
+      .catch(() => {
 
-}
+        alert(
+          "Tap the button again to play the song ♡"
+        );
 
-
-/* =====================================================
-   LETTER
-===================================================== */
-
-letterButton.addEventListener(
-  "click",
-  () => {
-
-    if (!letterOpened) {
-
-      openLetter();
-
-    } else {
-
-      goToDatePage();
-
-    }
+      });
 
   }
-);
+
+});
 
 
-function openLetter() {
-
-  paperLetter.classList.add(
-    "open"
-  );
-
-  letterOpened = true;
-
-
-  letterButton.textContent =
-    "May itatanong ako sa'yo →";
-
-
-  letterHint.textContent =
-    "Basahin mo muna... ♡";
-
-
-  setTimeout(() => {
-
-    paperLetter.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-  }, 350);
-
-}
-
-
-/* =====================================================
-   PAGE 2
-===================================================== */
-
-function goToDatePage() {
-
-  page1.classList.remove(
-    "active"
-  );
-
-
-  setTimeout(() => {
-
-    page2.classList.add(
-      "active"
-    );
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  }, 180);
-
-}
-
-
-/* =====================================================
-   MINIMUM DATE
-===================================================== */
+/* =================================
+   DATE
+================================= */
 
 function setMinimumDate() {
 
-  const today =
-    new Date();
+  const today = new Date();
 
   const year =
     today.getFullYear();
 
   const month =
-    String(
-      today.getMonth() + 1
-    ).padStart(2, "0");
+    String(today.getMonth() + 1)
+      .padStart(2, "0");
 
   const day =
-    String(
-      today.getDate()
-    ).padStart(2, "0");
-
+    String(today.getDate())
+      .padStart(2, "0");
 
   dateInput.min =
     `${year}-${month}-${day}`;
-
 }
 
 setMinimumDate();
 
 
-/* =====================================================
-   SAVE DATE / TIME
-===================================================== */
+/* =================================
+   DATE / TIME CHANGE
+================================= */
 
-dateInput.addEventListener(
-  "change",
-  () => {
+dateInput.addEventListener("change", function () {
 
-    localStorage.setItem(
-      "coffeeDate",
-      dateInput.value
-    );
+  if (dateInput.value) {
 
-
-    if (dateInput.value) {
-
-      bookingHint.textContent =
-        "Okay... may napili ka nang araw. 👀";
-
-    }
+    dateHint.textContent =
+      "Okay, may napili ka na. 👀";
 
   }
-);
+
+});
 
 
-timeInput.addEventListener(
-  "change",
-  () => {
+timeInput.addEventListener("change", function () {
 
-    localStorage.setItem(
-      "coffeeTime",
-      timeInput.value
-    );
+  if (timeInput.value) {
 
-
-    if (
-      dateInput.value &&
-      timeInput.value
-    ) {
-
-      bookingHint.textContent =
-        "Noted... parang legit na 'to. ☕";
-
-    }
+    dateHint.textContent =
+      "Noted... mukhang seryoso na 'to HAHAHA.";
 
   }
-);
+
+});
 
 
-/* =====================================================
-   MESSAGE
-===================================================== */
+/* =================================
+   YES BUTTON
+================================= */
 
-messageInput.addEventListener(
-  "input",
-  () => {
+yesBtn.addEventListener("click", function () {
 
-    characterCount.textContent =
-      messageInput.value.length;
+  const date = dateInput.value;
 
-
-    localStorage.setItem(
-      "coffeeMessage",
-      messageInput.value
-    );
-
-  }
-);
+  const time = timeInput.value;
 
 
-/* =====================================================
-   RESTORE
-===================================================== */
+  if (!date || !time) {
 
-function restoreSavedData() {
+    dateHint.textContent =
+      "Pili ka muna ng date at time please ♡";
 
-  const savedDate =
-    localStorage.getItem(
-      "coffeeDate"
-    );
+    dateHint.style.color =
+      "#568fa8";
 
-  const savedTime =
-    localStorage.getItem(
-      "coffeeTime"
-    );
-
-  const savedMessage =
-    localStorage.getItem(
-      "coffeeMessage"
-    );
-
-
-  if (savedDate) {
-
-    dateInput.value =
-      savedDate;
+    return;
 
   }
 
 
-  if (savedTime) {
+  const dateObject =
+    new Date(`${date}T${time}`);
 
-    timeInput.value =
-      savedTime;
 
-  }
-
-
-  if (savedMessage) {
-
-    messageInput.value =
-      savedMessage;
-
-    characterCount.textContent =
-      savedMessage.length;
-
-  }
-
-
-  if (
-    savedDate &&
-    savedTime
-  ) {
-
-    bookingHint.textContent =
-      "May napili ka na pala. 👀";
-
-  }
-
-}
-
-restoreSavedData();
-
-
-/* =====================================================
-   CONFIRM DATE
-===================================================== */
-
-confirmButton.addEventListener(
-  "click",
-  () => {
-
-    const date =
-      dateInput.value;
-
-    const time =
-      timeInput.value;
-
-
-    /* No date */
-
-    if (!date) {
-
-      bookingHint.textContent =
-        "Pili ka muna ng date please. ♡";
-
-      dateInput.focus();
-
-      shakeElement(
-        dateInput
-      );
-
-      return;
-
-    }
-
-
-    /* No time */
-
-    if (!time) {
-
-      bookingHint.textContent =
-        "Okay na yung date... oras naman. 👀";
-
-      timeInput.focus();
-
-      shakeElement(
-        timeInput
-      );
-
-      return;
-
-    }
-
-
-    /* Build date */
-
-    const selected =
-      new Date(
-        `${date}T${time}`
-      );
-
-
-    /* Date formatting */
-
-    const formattedDate =
-      selected.toLocaleDateString(
-        "en-PH",
-        {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-          year: "numeric"
-        }
-      );
-
-
-    /* Time formatting */
-
-    const formattedTime =
-      selected.toLocaleTimeString(
-        "en-PH",
-        {
-          hour: "numeric",
-          minute: "2-digit"
-        }
-      );
-
-
-    ticketDate.textContent =
-      formattedDate;
-
-
-    ticketTime.textContent =
-      formattedTime;
-
-
-    /* Message */
-
-    const message =
-      messageInput.value.trim();
-
-
-    if (message) {
-
-      ticketMessage.innerHTML =
-        `"${escapeHTML(message)}" ♡`;
-
-    } else {
-
-      ticketMessage.textContent =
-        "No message needed. I'll see you there. ♡";
-
-    }
-
-
-    /* Save confirmation */
-
-    localStorage.setItem(
-      "coffeeConfirmed",
-      "true"
-    );
-
-
-    /* Show ticket */
-
-    confirmation.classList.add(
-      "show"
-    );
-
-
-    /* Celebration */
-
-    createHearts();
-
-  }
-);
-
-
-/* =====================================================
-   SHAKE
-===================================================== */
-
-function shakeElement(element) {
-
-  element.animate(
-    [
+  const formattedDate =
+    dateObject.toLocaleDateString(
+      "en-PH",
       {
-        transform:
-          "translateX(0)"
-      },
-
-      {
-        transform:
-          "translateX(-5px)"
-      },
-
-      {
-        transform:
-          "translateX(5px)"
-      },
-
-      {
-        transform:
-          "translateX(-4px)"
-      },
-
-      {
-        transform:
-          "translateX(4px)"
-      },
-
-      {
-        transform:
-          "translateX(0)"
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
       }
-    ],
-    {
-      duration: 350
-    }
-  );
-
-}
-
-
-/* =====================================================
-   SAFE HTML
-===================================================== */
-
-function escapeHTML(text) {
-
-  const div =
-    document.createElement(
-      "div"
     );
 
-  div.textContent =
-    text;
 
-  return div.innerHTML;
+  const formattedTime =
+    dateObject.toLocaleTimeString(
+      "en-PH",
+      {
+        hour: "numeric",
+        minute: "2-digit"
+      }
+    );
 
-}
+
+  chosenDate.innerHTML =
+    `${formattedDate}<br>at ${formattedTime}`;
 
 
-/* =====================================================
-   HEART CELEBRATION
-===================================================== */
+  successOverlay.classList.add("show");
+
+  createHearts();
+
+});
+
+
+/* =================================
+   MAYBE BUTTON
+================================= */
+
+const maybeMessages = [
+  "Sure ka ba? 👀",
+  "Pag-isipan mo muna HAHAHA",
+  "May free coffee dito oh ☕",
+  "Hindi kita pine-pressure... 👀",
+  "One coffee lang naman... ♡"
+];
+
+let maybeIndex = 0;
+
+
+maybeBtn.addEventListener("click", function () {
+
+  maybeBtn.textContent =
+    maybeMessages[maybeIndex];
+
+  maybeIndex++;
+
+  if (maybeIndex >= maybeMessages.length) {
+    maybeIndex = 0;
+  }
+
+});
+
+
+/* =================================
+   HEART ANIMATION
+================================= */
 
 function createHearts() {
 
-  const symbols = [
+  const hearts = [
     "♡",
     "♥",
-    "✿",
-    "✧",
     "♡",
-    "☕"
+    "✿",
+    "♡",
+    "♥",
+    "♡"
   ];
 
 
-  for (
-    let i = 0;
-    i < 28;
-    i++
-  ) {
+  hearts.forEach(function (symbol, index) {
 
     const heart =
-      document.createElement(
-        "div"
-      );
-
+      document.createElement("div");
 
     heart.textContent =
-      symbols[
-        Math.floor(
-          Math.random() *
-          symbols.length
-        )
-      ];
-
+      symbol;
 
     heart.style.position =
       "fixed";
 
     heart.style.left =
-      Math.random() * 100 + "vw";
+      Math.random() * 100 + "%";
 
-    heart.style.top =
-      (70 + Math.random() * 25) +
-      "vh";
+    heart.style.bottom =
+      "-30px";
+
+    heart.style.fontSize =
+      (18 + Math.random() * 18) + "px";
+
+    heart.style.color =
+      "#72b5cc";
 
     heart.style.zIndex =
-      "800";
+      "200";
 
     heart.style.pointerEvents =
       "none";
 
-    heart.style.fontSize =
-      (14 + Math.random() * 20) +
-      "px";
+    heart.style.transition =
+      "transform 3s ease, opacity 3s ease";
 
-    heart.style.color =
-      "rgba(255,255,255,.9)";
+    document.body.appendChild(heart);
 
 
-    heart.animate(
-      [
-        {
-          opacity: 0,
+    setTimeout(function () {
 
-          transform:
-            "translateY(0) scale(.5)"
-        },
+      heart.style.transform =
+        `translateY(-${300 + Math.random() * 300}px)
+         rotate(${Math.random() * 80 - 40}deg)`;
 
-        {
-          opacity: 1
-        },
+      heart.style.opacity =
+        "0";
 
-        {
-          opacity: 0,
-
-          transform:
-            "translateY(-300px) rotate(25deg) scale(1.2)"
-        }
-      ],
-      {
-        duration:
-          2200 +
-          Math.random() * 1200,
-
-        delay:
-          Math.random() * 500,
-
-        easing:
-          "ease-out"
-      }
-    );
+    }, index * 120);
 
 
-    document.body.appendChild(
-      heart
-    );
+    setTimeout(function () {
 
+      heart.remove();
 
-    setTimeout(
-      () => heart.remove(),
-      4000
-    );
+    }, 3500);
 
-  }
+  });
 
 }
-
-
-/* =====================================================
-   CLOSE TICKET
-===================================================== */
-
-closeButton.addEventListener(
-  "click",
-  () => {
-
-    confirmation.classList.remove(
-      "show"
-    );
-
-  }
-);
-
-
-/* =====================================================
-   ESCAPE
-===================================================== */
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-
-    if (
-      event.key === "Escape"
-    ) {
-
-      confirmation.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
