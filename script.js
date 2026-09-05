@@ -14,6 +14,9 @@ const envelope =
 const openBtn =
   document.getElementById("openBtn");
 
+const tapHint =
+  document.getElementById("tapHint");
+
 const songBtn =
   document.getElementById("songBtn");
 
@@ -76,8 +79,12 @@ openBtn.addEventListener(
 
     envelope.classList.add("open");
 
+    tapHint.textContent =
+      "I hope you like what's inside... ♡";
+
     openBtn.textContent =
-      "There's something for you... ♡";
+      "Keep reading... ♡";
+
 
     setTimeout(() => {
 
@@ -90,7 +97,7 @@ openBtn.addEventListener(
         behavior: "smooth"
       });
 
-    }, 1300);
+    }, 1200);
 
   }
 );
@@ -99,6 +106,21 @@ openBtn.addEventListener(
 /* ========================= */
 /* MUSIC */
 /* ========================= */
+
+song.addEventListener(
+  "error",
+  () => {
+
+    songBtn.textContent =
+      "♫ Check song file";
+
+    console.log(
+      "Could not load: Love Is.mp3"
+    );
+
+  }
+);
+
 
 songBtn.addEventListener(
   "click",
@@ -124,10 +146,10 @@ songBtn.addEventListener(
 
     } catch (error) {
 
+      console.error(error);
+
       songBtn.textContent =
         "♫ Song unavailable";
-
-      console.log(error);
 
     }
 
@@ -158,10 +180,9 @@ function updateHint() {
   ) {
 
     hint.textContent =
-      "Pick a day and time for us. ♡";
+      "Choose a day and time for us. ♡";
 
     return;
-
   }
 
 
@@ -196,7 +217,7 @@ yesBtn.addEventListener(
     ) {
 
       hint.textContent =
-        "You have to choose our day first, Mimz. ♡";
+        "Choose our day and time first, Mimz. ♡";
 
       shake(hint);
 
@@ -204,8 +225,6 @@ yesBtn.addEventListener(
 
     }
 
-
-    /* Format date */
 
     const selectedDate =
       new Date(
@@ -224,8 +243,6 @@ yesBtn.addEventListener(
         }
       );
 
-
-    /* Format time */
 
     const formattedTime =
       new Date(
@@ -246,7 +263,7 @@ yesBtn.addEventListener(
       formattedTime;
 
 
-    /* Keep music playing */
+    /* Play music from the button gesture */
 
     if (song.paused) {
 
@@ -254,8 +271,6 @@ yesBtn.addEventListener(
 
     }
 
-
-    /* Show success */
 
     success.classList.add("show");
 
@@ -274,29 +289,17 @@ function shake(element) {
   element.animate(
 
     [
-      {
-        transform: "translateX(0)"
-      },
+      { transform: "translateX(0)" },
 
-      {
-        transform: "translateX(-6px)"
-      },
+      { transform: "translateX(-6px)" },
 
-      {
-        transform: "translateX(6px)"
-      },
+      { transform: "translateX(6px)" },
 
-      {
-        transform: "translateX(-4px)"
-      },
+      { transform: "translateX(-4px)" },
 
-      {
-        transform: "translateX(4px)"
-      },
+      { transform: "translateX(4px)" },
 
-      {
-        transform: "translateX(0)"
-      }
+      { transform: "translateX(0)" }
 
     ],
 
@@ -315,14 +318,13 @@ function shake(element) {
 
 let noCount = 0;
 
-
 const noMessages = [
 
   "Are you sure? 🥺",
 
   "Maybe coffee will change your mind?",
 
-  "I'll bring your favorite drink. ♡",
+  "I'll bring good coffee. ♡",
 
   "Mimz pleaseee...",
 
@@ -355,12 +357,11 @@ function moveNo() {
 
   noCount++;
 
-
   const x =
-    (Math.random() - .5) * 150;
+    (Math.random() - .5) * 140;
 
   const y =
-    (Math.random() - .5) * 80;
+    (Math.random() - .5) * 70;
 
 
   noBtn.style.transform =
@@ -393,40 +394,31 @@ function createHeartBurst() {
     const heart =
       document.createElement("span");
 
-
     heart.textContent =
       Math.random() > .5
         ? "♡"
         : "✦";
 
-
     heart.style.position =
       "fixed";
-
 
     heart.style.left =
       "50%";
 
-
     heart.style.top =
       "50%";
-
 
     heart.style.zIndex =
       "999";
 
-
     heart.style.pointerEvents =
       "none";
-
 
     heart.style.fontSize =
       `${14 + Math.random() * 22}px`;
 
-
     heart.style.color =
       "#69b5d5";
-
 
     document.body.appendChild(
       heart
@@ -449,11 +441,9 @@ function createHeartBurst() {
             "translate(-50%, -50%) scale(1)",
 
           opacity: 1
-
         },
 
         {
-
           transform:
             `translate(
               calc(-50% + ${x}px),
@@ -462,7 +452,6 @@ function createHeartBurst() {
             scale(.3)`,
 
           opacity: 0
-
         }
 
       ],
