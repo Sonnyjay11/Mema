@@ -1,14 +1,6 @@
 /* =====================================================
-   VERSION 5.0
-   Minimal Filipino Manliligaw Dating Website
-
-   Files required:
-
-   index.html
-   style.css
-   script.js
-   Love Is.mp3
-   photo.jpg
+   VERSION 6.0
+   Para Kay Carmina ♡
 ===================================================== */
 
 
@@ -31,17 +23,20 @@ const paperLetter =
 const hintText =
   document.getElementById("hintText");
 
+
+/* MUSIC */
+
 const musicButton =
   document.getElementById("musicButton");
 
 const musicText =
   document.getElementById("musicText");
 
-const musicDot =
-  document.getElementById("musicDot");
-
 const song =
   document.getElementById("song");
+
+
+/* DATE */
 
 const dateInput =
   document.getElementById("date");
@@ -52,11 +47,17 @@ const timeInput =
 const dateHint =
   document.getElementById("dateHint");
 
+
+/* BUTTONS */
+
 const yesBtn =
   document.getElementById("yesBtn");
 
 const maybeBtn =
   document.getElementById("maybeBtn");
+
+
+/* SUCCESS */
 
 const successOverlay =
   document.getElementById("successOverlay");
@@ -64,14 +65,30 @@ const successOverlay =
 const chosenDate =
   document.getElementById("chosenDate");
 
+const calendarBtn =
+  document.getElementById("calendarBtn");
+
+const closeSuccess =
+  document.getElementById("closeSuccess");
+
+
+/* SECRET */
+
+const secretMessage =
+  document.getElementById("secretMessage");
+
 
 /* =====================================================
-   STATE
+   VARIABLES
 ===================================================== */
 
 let letterOpened = false;
 
 let musicPlaying = false;
+
+let maybeIndex = 0;
+
+let selectedDateTime = null;
 
 
 /* =====================================================
@@ -82,11 +99,6 @@ letterBtn.addEventListener(
   "click",
   function () {
 
-    /*
-      First click:
-      Open letter.
-    */
-
     if (!letterOpened) {
 
       letterOpened = true;
@@ -94,26 +106,28 @@ letterBtn.addEventListener(
       paperLetter.classList.add("open");
 
       letterBtn.textContent =
-        "May itatanong ako sa'yo →";
+        "Okay... may tanong ako →";
 
       hintText.textContent =
-        "Basahin mo muna... malapit ka na sa plot twist HAHAHA.";
-
-      /*
-        User interaction also gives the browser
-        permission to play audio in many cases.
-      */
+        "Basahin mo muna... bawal mag-skip HAHAHA.";
 
       startMusic();
+
+      setTimeout(
+        function () {
+
+          paperLetter.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        },
+        250
+      );
 
       return;
     }
 
-
-    /*
-      Second click:
-      Go to invitation.
-    */
 
     goToPageTwo();
 
@@ -129,11 +143,6 @@ function goToPageTwo() {
 
   page1.classList.remove("active");
 
-  /*
-    Small delay makes the transition
-    feel less abrupt.
-  */
-
   setTimeout(
     function () {
 
@@ -145,9 +154,8 @@ function goToPageTwo() {
       });
 
     },
-    80
+    120
   );
-
 
   startMusic();
 
@@ -159,12 +167,11 @@ function goToPageTwo() {
 ===================================================== */
 
 /*
-  Attempt autoplay after loading.
+  Browsers may block autoplay.
 
-  Modern browsers may block autoplay with sound.
-
-  If blocked, the visible music button allows
-  the visitor to start the song manually.
+  We try to play automatically,
+  but the music button remains available
+  as the fallback.
 */
 
 window.addEventListener(
@@ -177,16 +184,12 @@ window.addEventListener(
         startMusic();
 
       },
-      400
+      500
     );
 
   }
 );
 
-
-/*
-  Start music.
-*/
 
 function startMusic() {
 
@@ -194,16 +197,16 @@ function startMusic() {
     return;
   }
 
-  song.volume = 0.75;
+  song.volume = 0.72;
 
   const playPromise =
     song.play();
 
-
-  if (playPromise !== undefined) {
+  if (
+    playPromise !== undefined
+  ) {
 
     playPromise
-
       .then(
         function () {
 
@@ -213,15 +216,8 @@ function startMusic() {
 
         }
       )
-
       .catch(
         function () {
-
-          /*
-            Autoplay blocked.
-
-            This is normal browser behavior.
-          */
 
           musicPlaying = false;
 
@@ -234,10 +230,6 @@ function startMusic() {
 
 }
 
-
-/*
-  Update music button.
-*/
 
 function updateMusicButton() {
 
@@ -250,6 +242,11 @@ function updateMusicButton() {
     musicText.textContent =
       "Love Is • Playing";
 
+    musicButton.setAttribute(
+      "aria-label",
+      "Pause Love Is"
+    );
+
   } else {
 
     musicButton.classList.remove(
@@ -259,14 +256,15 @@ function updateMusicButton() {
     musicText.textContent =
       "Play Love Is";
 
+    musicButton.setAttribute(
+      "aria-label",
+      "Play Love Is"
+    );
+
   }
 
 }
 
-
-/*
-  Music button.
-*/
 
 musicButton.addEventListener(
   "click",
@@ -276,19 +274,13 @@ musicButton.addEventListener(
 
       song.pause();
 
-      musicPlaying = false;
-
-      updateMusicButton();
-
       return;
+
     }
 
-
-    song.volume = 0.75;
-
+    song.volume = 0.72;
 
     song.play()
-
       .then(
         function () {
 
@@ -298,7 +290,6 @@ musicButton.addEventListener(
 
         }
       )
-
       .catch(
         function () {
 
@@ -306,20 +297,12 @@ musicButton.addEventListener(
 
           updateMusicButton();
 
-          alert(
-            "Tap the music button again to play Love Is ♡"
-          );
-
         }
       );
 
   }
 );
 
-
-/*
-  Keep UI synchronized with audio.
-*/
 
 song.addEventListener(
   "play",
@@ -349,12 +332,7 @@ song.addEventListener(
    DATE
 ===================================================== */
 
-
-/*
-  Prevent choosing dates in the past.
-*/
-
-function setMinimumDate() {
+function getTodayString() {
 
   const today =
     new Date();
@@ -378,23 +356,25 @@ function setMinimumDate() {
       "0"
     );
 
-
-  dateInput.min =
-    `${year}-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 
 }
+
+
+function setMinimumDate() {
+
+  dateInput.min =
+    getTodayString();
+
+}
+
 
 setMinimumDate();
 
 
 /* =====================================================
-   SAVE DATE / TIME
+   LOCAL STORAGE
 ===================================================== */
-
-
-/*
-  Restore previously selected date.
-*/
 
 const savedDate =
   localStorage.getItem(
@@ -414,6 +394,7 @@ if (savedDate) {
 
 }
 
+
 if (savedTime) {
 
   timeInput.value =
@@ -422,9 +403,20 @@ if (savedTime) {
 }
 
 
-/*
-  Save date.
-*/
+if (
+  savedDate &&
+  savedTime
+) {
+
+  dateHint.textContent =
+    "May napili na pala... 👀";
+
+}
+
+
+/* =====================================================
+   DATE CHANGE
+===================================================== */
 
 dateInput.addEventListener(
   "change",
@@ -434,23 +426,22 @@ dateInput.addEventListener(
       return;
     }
 
-
     localStorage.setItem(
       "carminaDate",
       dateInput.value
     );
 
-
-    dateHint.textContent =
-      "Ay may napili na... 👀";
+    animateHint(
+      "Ay may napili na... 👀"
+    );
 
   }
 );
 
 
-/*
-  Save time.
-*/
+/* =====================================================
+   TIME CHANGE
+===================================================== */
 
 timeInput.addEventListener(
   "change",
@@ -460,22 +451,39 @@ timeInput.addEventListener(
       return;
     }
 
-
     localStorage.setItem(
       "carminaTime",
       timeInput.value
     );
 
-
-    dateHint.textContent =
-      "Noted... mukhang may pag-asa ako HAHAHA.";
+    animateHint(
+      "Noted... mukhang may pag-asa ako HAHAHA."
+    );
 
   }
 );
 
 
+function animateHint(message) {
+
+  dateHint.classList.remove(
+    "changed"
+  );
+
+  void dateHint.offsetWidth;
+
+  dateHint.textContent =
+    message;
+
+  dateHint.classList.add(
+    "changed"
+  );
+
+}
+
+
 /* =====================================================
-   DATE VALIDATION
+   VALIDATE DATE + TIME
 ===================================================== */
 
 function validateDateTime() {
@@ -489,8 +497,11 @@ function validateDateTime() {
 
   if (!date) {
 
-    dateHint.textContent =
-      "Pili ka muna ng araw, binibini ♡";
+    animateHint(
+      "Pili ka muna ng araw, binibini ♡"
+    );
+
+    dateInput.focus();
 
     return false;
 
@@ -499,8 +510,38 @@ function validateDateTime() {
 
   if (!time) {
 
-    dateHint.textContent =
-      "Okay lang kahit oras naman muna... 👀";
+    animateHint(
+      "Okay lang... oras naman muna 👀"
+    );
+
+    timeInput.focus();
+
+    return false;
+
+  }
+
+
+  /*
+    Prevent past date/time.
+  */
+
+  const selected =
+    new Date(
+      `${date}T${time}`
+    );
+
+  const now =
+    new Date();
+
+
+  if (
+    selected.getTime() <
+    now.getTime()
+  ) {
+
+    animateHint(
+      "Uy, past na 'yan HAHAHA. Pumili tayo ng future."
+    );
 
     return false;
 
@@ -520,12 +561,16 @@ yesBtn.addEventListener(
   "click",
   function () {
 
-    /*
-      Make sure date and time exist.
-    */
+    if (
+      !validateDateTime()
+    ) {
 
-    if (!validateDateTime()) {
+      shakeButton(
+        yesBtn
+      );
+
       return;
+
     }
 
 
@@ -536,22 +581,14 @@ yesBtn.addEventListener(
       timeInput.value;
 
 
-    /*
-      Create JavaScript date.
-    */
-
-    const dateObject =
+    selectedDateTime =
       new Date(
         `${date}T${time}`
       );
 
 
-    /*
-      Format date.
-    */
-
     const formattedDate =
-      dateObject.toLocaleDateString(
+      selectedDateTime.toLocaleDateString(
         "en-PH",
         {
           weekday: "long",
@@ -562,12 +599,8 @@ yesBtn.addEventListener(
       );
 
 
-    /*
-      Format time.
-    */
-
     const formattedTime =
-      dateObject.toLocaleTimeString(
+      selectedDateTime.toLocaleTimeString(
         "en-PH",
         {
           hour: "numeric",
@@ -575,10 +608,6 @@ yesBtn.addEventListener(
         }
       );
 
-
-    /*
-      Display chosen date.
-    */
 
     chosenDate.innerHTML =
       `
@@ -588,13 +617,10 @@ yesBtn.addEventListener(
       `;
 
 
-    /*
-      Show success overlay.
-    */
-
     successOverlay.classList.add(
       "show"
     );
+
 
     successOverlay.setAttribute(
       "aria-hidden",
@@ -602,14 +628,60 @@ yesBtn.addEventListener(
     );
 
 
-    /*
-      Celebrate.
-    */
+    document.body.style.overflow =
+      "hidden";
+
 
     createHearts();
 
   }
 );
+
+
+/* =====================================================
+   BUTTON SHAKE
+===================================================== */
+
+function shakeButton(button) {
+
+  button.animate(
+    [
+      {
+        transform:
+          "translateX(0)"
+      },
+
+      {
+        transform:
+          "translateX(-5px)"
+      },
+
+      {
+        transform:
+          "translateX(5px)"
+      },
+
+      {
+        transform:
+          "translateX(-4px)"
+      },
+
+      {
+        transform:
+          "translateX(4px)"
+      },
+
+      {
+        transform:
+          "translateX(0)"
+      }
+    ],
+    {
+      duration: 350
+    }
+  );
+
+}
 
 
 /* =====================================================
@@ -620,7 +692,7 @@ const maybeMessages = [
 
   "Sure ka ba? 👀",
 
-  "Pwede mo pag-isipan... hindi naman ako aalis HAHAHA",
+  "Pwede mo pag-isipan... HAHAHA",
 
   "Coffee lang naman oh ☕",
 
@@ -628,19 +700,39 @@ const maybeMessages = [
 
   "Libre ko na coffee mo oh",
 
-  "Sige lang... hintayin kita HAHAHA",
+  "Sige lang, hintayin kita HAHAHA",
 
   "Last na talaga... coffee tayo? ♡"
 
 ];
 
 
-let maybeIndex = 0;
-
-
 maybeBtn.addEventListener(
   "click",
   function () {
+
+    maybeBtn.animate(
+      [
+        {
+          transform:
+            "scale(1)"
+        },
+
+        {
+          transform:
+            "scale(0.96)"
+        },
+
+        {
+          transform:
+            "scale(1)"
+        }
+      ],
+      {
+        duration: 220
+      }
+    );
+
 
     maybeBtn.textContent =
       maybeMessages[
@@ -661,25 +753,73 @@ maybeBtn.addEventListener(
     }
 
 
-    /*
-      Also change the hint.
-    */
-
-    dateHint.textContent =
-      "No pressure... pero sana yes. ♡";
+    animateHint(
+      "No pressure... pero sana yes. ♡"
+    );
 
   }
 );
 
 
 /* =====================================================
-   FLOATING HEARTS
+   SUCCESS CLOSE
+===================================================== */
+
+closeSuccess.addEventListener(
+  "click",
+  function () {
+
+    closeSuccessOverlay();
+
+  }
+);
+
+
+function closeSuccessOverlay() {
+
+  successOverlay.classList.remove(
+    "show"
+  );
+
+  successOverlay.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+  "keydown",
+  function (event) {
+
+    if (
+      event.key === "Escape" &&
+      successOverlay.classList.contains("show")
+    ) {
+
+      closeSuccessOverlay();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   CREATE FLOATING HEARTS
 ===================================================== */
 
 function createHearts() {
 
   const symbols = [
-
     "♡",
     "♥",
     "♡",
@@ -688,8 +828,9 @@ function createHearts() {
     "♥",
     "♡",
     "✿",
+    "♡",
+    "♥",
     "♡"
-
   ];
 
 
@@ -714,26 +855,27 @@ function createHearts() {
 
 
       heart.style.left =
-        Math.random() *
-          100 +
-        "%";
+        Math.random() * 100 + "%";
 
 
       heart.style.bottom =
-        "-30px";
+        "-35px";
+
+
+      heart.style.fontFamily =
+        "Caveat, cursive";
 
 
       heart.style.fontSize =
         (
           18 +
-          Math.random() *
-          18
+          Math.random() * 20
         ) +
         "px";
 
 
       heart.style.color =
-        "#72b5cc";
+        "rgba(112, 184, 210, 0.85)";
 
 
       heart.style.zIndex =
@@ -745,7 +887,10 @@ function createHearts() {
 
 
       heart.style.transition =
-        "transform 3s ease, opacity 3s ease";
+        `
+          transform 3.5s ease,
+          opacity 3.5s ease
+        `;
 
 
       document.body.appendChild(
@@ -760,14 +905,18 @@ function createHearts() {
             `
               translateY(
                 -${
-                  300 +
-                  Math.random() * 300
+                  350 +
+                  Math.random() * 450
                 }px
               )
-
+              translateX(
+                ${
+                  Math.random() * 100 - 50
+                }px
+              )
               rotate(
                 ${
-                  Math.random() * 80 - 40
+                  Math.random() * 100 - 50
                 }deg
               )
             `;
@@ -777,7 +926,7 @@ function createHearts() {
             "0";
 
         },
-        index * 120
+        index * 130
       );
 
 
@@ -787,7 +936,7 @@ function createHearts() {
           heart.remove();
 
         },
-        3500
+        4300
       );
 
     }
@@ -797,33 +946,368 @@ function createHearts() {
 
 
 /* =====================================================
-   KEYBOARD SUPPORT
+   SAVE TO CALENDAR
 ===================================================== */
 
-document.addEventListener(
-  "keydown",
-  function (event) {
-
-    /*
-      Escape closes success overlay
-      if needed.
-    */
+calendarBtn.addEventListener(
+  "click",
+  function () {
 
     if (
-      event.key === "Escape" &&
-      successOverlay.classList.contains("show")
+      !selectedDateTime
+    ) {
+      return;
+    }
+
+
+    const start =
+      formatCalendarDate(
+        selectedDateTime
+      );
+
+
+    /*
+      Default coffee duration:
+      1 hour 30 minutes.
+    */
+
+    const endDate =
+      new Date(
+        selectedDateTime.getTime() +
+        90 * 60 * 1000
+      );
+
+
+    const end =
+      formatCalendarDate(
+        endDate
+      );
+
+
+    const title =
+      "Coffee with Jay ☕";
+
+
+    const description =
+      "Coffee with Jay. See you soon ♡";
+
+
+    const ics =
+      [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Coffee Invitation//EN",
+        "BEGIN:VEVENT",
+        `DTSTART:${start}`,
+        `DTEND:${end}`,
+        `SUMMARY:${escapeICS(title)}`,
+        `DESCRIPTION:${escapeICS(description)}`,
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+
+
+    const blob =
+      new Blob(
+        [ics],
+        {
+          type:
+            "text/calendar;charset=utf-8"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    link.href =
+      url;
+
+    link.download =
+      "coffee-with-jay.ics";
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+      url
+    );
+
+
+    calendarBtn.innerHTML =
+      `
+        <span>✓</span>
+        Calendar saved ♡
+      `;
+
+  }
+);
+
+
+/* =====================================================
+   CALENDAR DATE FORMAT
+===================================================== */
+
+function formatCalendarDate(
+  date
+) {
+
+  const year =
+    date.getFullYear();
+
+
+  const month =
+    String(
+      date.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const hours =
+    String(
+      date.getHours()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const minutes =
+    String(
+      date.getMinutes()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const seconds =
+    String(
+      date.getSeconds()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  return (
+    `${year}${month}${day}` +
+    `T${hours}${minutes}${seconds}`
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE ICS
+===================================================== */
+
+function escapeICS(
+  text
+) {
+
+  return text
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+    .replace(
+      /;/g,
+      "\\;"
+    )
+    .replace(
+      /,/g,
+      "\\,"
+    )
+    .replace(
+      /\n/g,
+      "\\n"
+    );
+
+}
+
+
+/* =====================================================
+   SECRET EASTER EGG
+===================================================== */
+
+/*
+  Click the "Carmina" title three times.
+*/
+
+const carminaTitle =
+  document.querySelector(
+    "h1 span"
+  );
+
+
+let titleClicks = 0;
+
+
+carminaTitle.addEventListener(
+  "click",
+  function () {
+
+    titleClicks++;
+
+
+    if (
+      titleClicks >= 3
     ) {
 
-      successOverlay.classList.remove(
+      showSecret();
+
+      titleClicks = 0;
+
+    }
+
+  }
+);
+
+
+function showSecret() {
+
+  secretMessage.classList.add(
+    "show"
+  );
+
+  secretMessage.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  setTimeout(
+    function () {
+
+      secretMessage.classList.remove(
         "show"
       );
 
-      successOverlay.setAttribute(
+      secretMessage.setAttribute(
         "aria-hidden",
         "true"
       );
 
-    }
+    },
+    3500
+  );
+
+}
+
+
+/* =====================================================
+   PHOTO FALLBACK
+===================================================== */
+
+const photo =
+  document.querySelector(
+    ".photo-frame img"
+  );
+
+
+photo.addEventListener(
+  "error",
+  function () {
+
+    photo.style.display =
+      "none";
+
+    photo.parentElement.style.background =
+      `
+        linear-gradient(
+          135deg,
+          #dff5fb,
+          #fff8e9
+        )
+      `;
+
+    photo.parentElement.style.minHeight =
+      "210px";
+
+    photo.parentElement.style.display =
+      "flex";
+
+    photo.parentElement.style.alignItems =
+      "center";
+
+    photo.parentElement.style.justifyContent =
+      "center";
+
+    photo.parentElement.innerHTML =
+      `
+        <div
+          style="
+            text-align:center;
+            padding:30px;
+            font-family:Caveat,cursive;
+            color:#477f99;
+            font-size:22px;
+          "
+        >
+          ♡
+          <br>
+          our little memory
+          <br>
+          <span
+            style="
+              font-family:'DM Sans',sans-serif;
+              font-size:10px;
+              opacity:.6;
+            "
+          >
+            add photo.jpg
+          </span>
+        </div>
+      `;
+
+  }
+);
+
+
+/* =====================================================
+   AUDIO ERROR
+===================================================== */
+
+song.addEventListener(
+  "error",
+  function () {
+
+    musicText.textContent =
+      "Add Love Is.mp3";
+
+    musicButton.classList.remove(
+      "playing"
+    );
 
   }
 );
