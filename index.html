@@ -5,117 +5,181 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#dff5ff">
 
-  <title>A Little Invitation ♡</title>
+  <title>Something For Mimz ♡</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- BACKGROUND DECORATIONS -->
+  <!-- Floating decorations -->
+  <div class="floating heart h1">♡</div>
+  <div class="floating heart h2">♡</div>
+  <div class="floating heart h3">♡</div>
+  <div class="floating heart h4">♡</div>
 
-  <div class="decor heart1">♡</div>
-  <div class="decor heart2">♡</div>
-  <div class="decor heart3">♡</div>
-
-  <div class="decor star1">✦</div>
-  <div class="decor star2">✦</div>
+  <div class="floating star s1">✦</div>
+  <div class="floating star s2">✦</div>
+  <div class="floating star s3">✧</div>
 
 
-  <main>
+  <!-- ========================= -->
+  <!-- PAGE 1 -->
+  <!-- ========================= -->
 
-    <!-- INVITATION -->
+  <main id="page1" class="page active">
 
-    <section class="card" id="inviteCard">
+    <div class="letter-card">
 
-      <div class="small-text">
+      <p class="tiny-text">
         A little something for you...
-      </div>
+      </p>
 
       <h1>
         Hey, Mimz ♡
       </h1>
 
+      <div class="envelope" id="envelope">
 
-      <!-- PHOTO -->
+        <div class="envelope-back"></div>
 
-      <div class="photo-container">
+        <div class="letter-paper">
 
-        <img
-          src="photo.jpg"
-          alt="A special photo"
-        >
+          <div class="letter-content">
+
+            <p>Dear Mimz,</p>
+
+            <p>
+              I don't really know how to put this
+              into the perfect words...
+            </p>
+
+            <p>
+              But somewhere along the way,
+              talking to you became one of the
+              little things I look forward to.
+            </p>
+
+            <p>
+              And I thought maybe...
+              instead of just thinking about it,
+              I should finally ask.
+            </p>
+
+            <p class="letter-sign">
+              — Jay ♡
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="envelope-flap"></div>
 
       </div>
 
 
-      <!-- MESSAGE -->
+      <button id="openBtn" class="main-btn">
+        Open this for me ♡
+      </button>
 
-      <div class="message">
 
-        <p class="intro">
-          I have a little question for you.
-        </p>
-
-        <p>
-          Would you let me take you out for
-          a simple coffee date?
-        </p>
-
-        <p class="sweet">
-          Just you, me, good coffee,<br>
-          and hopefully a really nice day.
-        </p>
-
-      </div>
+      <p class="tap-hint">
+        There's something I'd like to ask you.
+      </p>
 
 
       <!-- MUSIC -->
 
-      <div class="music-player">
+      <div class="music-area">
 
-        <button
-          class="music-btn"
-          id="songBtn"
-        >
+        <button id="songBtn" class="music-btn">
           ♫ Play our little song
         </button>
 
-        <audio
-          id="song"
-          preload="metadata"
-        >
-          <source
-            src="love is.mp3"
-            type="audio/mpeg"
-          >
+        <audio id="song" preload="metadata">
+          <source src="love-is.mp3" type="audio/mpeg">
         </audio>
 
-        <div class="song-name">
+        <p>
           Love Is — The Ridleys
-        </div>
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+
+  <!-- ========================= -->
+  <!-- PAGE 2 -->
+  <!-- ========================= -->
+
+  <main id="page2" class="page">
+
+    <div class="date-card">
+
+      <p class="tiny-text">
+        One last thing...
+      </p>
+
+
+      <div class="big-heart">
+        ♡
+      </div>
+
+
+      <h1>
+        So, Mimz...
+      </h1>
+
+
+      <p class="question">
+        Would you let me take you
+        on a little coffee date?
+      </p>
+
+
+      <p class="romantic-text">
+        Nothing fancy.
+        Just you, me, good coffee,
+        random conversations,
+        and a little time together.
+      </p>
+
+
+      <div class="photo-frame">
+
+        <img
+          src="photo.jpg"
+          alt="A special memory"
+        >
 
       </div>
 
 
-      <div class="divider"></div>
+      <div class="divider">
+        ♡
+      </div>
+
+
+      <h2>
+        You choose the day.
+      </h2>
+
+      <p class="instruction">
+        I'll take care of the rest.
+      </p>
 
 
       <!-- DATE -->
 
-      <h2>
-        Pick our date ♡
-      </h2>
-
-      <p class="instruction">
-        You get to choose the day and time.
-      </p>
-
-
-      <div class="input-group">
+      <div class="selection">
 
         <label for="date">
-          DATE
+          OUR DAY
         </label>
 
         <input
@@ -126,10 +190,12 @@
       </div>
 
 
-      <div class="input-group">
+      <!-- TIME -->
+
+      <div class="selection">
 
         <label for="time">
-          TIME
+          OUR TIME
         </label>
 
         <input
@@ -140,129 +206,94 @@
       </div>
 
 
-      <p
-        id="hint"
-        class="hint"
-      >
-        Choose a date and time first.
+      <p id="hint" class="hint">
+        Pick a day and time for us. ♡
       </p>
 
 
-      <!-- BUTTONS -->
+      <div class="answer-buttons">
 
-      <div class="buttons">
-
-        <button
-          id="yesBtn"
-          class="yes-btn"
-        >
+        <button id="yesBtn" class="yes-btn">
           Yes, I'd love to ♡
         </button>
 
-
-        <button
-          id="noBtn"
-          class="no-btn"
-        >
-          Maybe not...
+        <button id="noBtn" class="no-btn">
+          Maybe...
         </button>
 
       </div>
 
 
-      <p class="footer">
+      <p class="signature">
         — Jay
       </p>
 
-    </section>
+    </div>
+
+  </main>
 
 
 
-    <!-- SUCCESS -->
+  <!-- ========================= -->
+  <!-- SUCCESS -->
+  <!-- ========================= -->
 
-    <section
-      class="card success hidden"
-      id="success"
-    >
+  <div id="success" class="success-overlay">
+
+    <div class="success-card">
 
       <div class="success-heart">
         ♡
       </div>
 
-
-      <div class="small-text">
-        It's a date.
-      </div>
-
+      <p class="tiny-text">
+        You just made someone very happy.
+      </p>
 
       <h1>
-        You said yes! ♡
+        It's a date. ♡
       </h1>
 
 
-      <div class="photo-container success-photo">
-
-        <img
-          src="photo.jpg"
-          alt="Our special photo"
-        >
-
-      </div>
-
-
-      <p class="success-message">
-        I honestly couldn't be happier.
+      <p class="success-text">
+        I can't wait to spend that little
+        piece of time with you.
       </p>
 
 
-      <!-- SELECTED DATE -->
-
-      <div class="date-box">
+      <div class="chosen-box">
 
         <div>
-
-          <span>
-            DATE
-          </span>
-
+          <span>OUR DAY</span>
           <strong id="chosenDate"></strong>
-
         </div>
 
-
         <div>
-
-          <span>
-            TIME
-          </span>
-
+          <span>OUR TIME</span>
           <strong id="chosenTime"></strong>
-
         </div>
 
       </div>
 
 
-      <p class="final-message">
-
-        I'll take care of the coffee.<br>
-
-        You just have to show up. ♡
-
+      <p class="final-note">
+        I'll bring the coffee.<br>
+        You just have to bring yourself.
       </p>
 
 
-      <p class="signature">
+      <p class="final-love">
+        See you soon, Mimz. ♡
+      </p>
 
-        Can't wait, Mimz.<br>
 
+      <p class="final-sign">
         — Jay
-
       </p>
 
-    </section>
+    </div>
 
-  </main>
+  </div>
 
 
   <script src="script.js"></script>
