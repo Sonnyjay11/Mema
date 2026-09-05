@@ -331,10 +331,7 @@ function createHearts() {
 
     heart.style.transition =
       "transform 3s ease, opacity 3s ease";
-
     document.body.appendChild(heart);
-
-
     setTimeout(function () {
 
       heart.style.transform =
