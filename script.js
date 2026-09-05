@@ -1,6 +1,6 @@
-/* ========================= */
+/* ================================= */
 /* ELEMENTS */
-/* ========================= */
+/* ================================= */
 
 const page1 =
   document.getElementById("page1");
@@ -8,14 +8,14 @@ const page1 =
 const page2 =
   document.getElementById("page2");
 
-const envelope =
-  document.getElementById("envelope");
+const letter =
+  document.getElementById("letter");
 
-const openBtn =
-  document.getElementById("openBtn");
+const letterBtn =
+  document.getElementById("letterBtn");
 
-const tapHint =
-  document.getElementById("tapHint");
+const letterHint =
+  document.getElementById("letterHint");
 
 const songBtn =
   document.getElementById("songBtn");
@@ -29,14 +29,14 @@ const dateInput =
 const timeInput =
   document.getElementById("time");
 
+const hint =
+  document.getElementById("hint");
+
 const yesBtn =
   document.getElementById("yesBtn");
 
 const noBtn =
   document.getElementById("noBtn");
-
-const hint =
-  document.getElementById("hint");
 
 const success =
   document.getElementById("success");
@@ -48,105 +48,149 @@ const chosenTime =
   document.getElementById("chosenTime");
 
 
-/* ========================= */
-/* LETTER STATE */
-/* ========================= */
+/* ================================= */
+/* STATE */
+/* ================================= */
 
 let letterOpened = false;
 
+let noCount = 0;
 
-/* ========================= */
+
+/* ================================= */
 /* TODAY */
-/* ========================= */
+/* ================================= */
 
-const today =
-  new Date();
+function setMinimumDate() {
 
-const yyyy =
-  today.getFullYear();
+  const today =
+    new Date();
 
-const mm =
-  String(today.getMonth() + 1)
-    .padStart(2, "0");
+  const year =
+    today.getFullYear();
 
-const dd =
-  String(today.getDate())
-    .padStart(2, "0");
+  const month =
+    String(
+      today.getMonth() + 1
+    ).padStart(2, "0");
 
-dateInput.min =
-  `${yyyy}-${mm}-${dd}`;
+  const day =
+    String(
+      today.getDate()
+    ).padStart(2, "0");
+
+  dateInput.min =
+    `${year}-${month}-${day}`;
+
+}
+
+setMinimumDate();
 
 
-/* ========================= */
-/* READ ME / CONTINUE */
-/* ========================= */
+/* ================================= */
+/* LETTER */
+/* ================================= */
 
-openBtn.addEventListener("click", () => {
+letterBtn.addEventListener(
+  "click",
+  function () {
 
-  /*
-    FIRST CLICK
-    Open the envelope.
-  */
+    /*
+      FIRST CLICK:
+      Reveal the letter.
+    */
 
-  if (!letterOpened) {
+    if (!letterOpened) {
 
-    letterOpened = true;
+      letterOpened = true;
 
-    envelope.classList.add("open");
+      letter.classList.add(
+        "revealed"
+      );
 
-    tapHint.textContent =
-      "Take your time. I meant every word. ♡";
+      letterBtn.textContent =
+        "May itatanong ako sa'yo →";
 
-    openBtn.textContent =
-      "Continue to my question ♡";
+      letterBtn.classList.add(
+        "continue"
+      );
 
-    openBtn.classList.add(
-      "continue-btn"
-    );
+      letterHint.textContent =
+        "Basahin mo muna. Take your time. ♡";
 
-    return;
+      /*
+        Scroll slightly so the
+        complete letter is visible
+        on smaller screens.
+      */
+
+      setTimeout(
+        function () {
+
+          letter.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        },
+        250
+      );
+
+      return;
+    }
+
+
+    /*
+      SECOND CLICK:
+      Go to Page 2.
+
+      There is NO timer.
+      There is NO automatic
+      page transition.
+    */
+
+    if (letterOpened) {
+
+      goToPageTwo();
+
+    }
+
   }
+);
 
 
-  /*
-    SECOND CLICK
-    Go to Page 2.
-  */
+/* ================================= */
+/* PAGE 2 */
+/* ================================= */
 
-  if (letterOpened) {
+function goToPageTwo() {
 
-    page1.classList.remove(
-      "active"
-    );
+  page1.classList.remove(
+    "active"
+  );
 
-    page2.classList.add(
-      "active"
-    );
+  page2.classList.add(
+    "active"
+  );
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 
-  }
-
-});
+}
 
 
-/* ========================= */
+/* ================================= */
 /* MUSIC */
-/* ========================= */
+/* ================================= */
 
 song.addEventListener(
   "error",
-  () => {
+  function () {
 
     songBtn.textContent =
       "♫ Check song file";
-
-    console.log(
-      "Could not load: Love Is.mp3"
-    );
 
   }
 );
@@ -154,7 +198,7 @@ song.addEventListener(
 
 songBtn.addEventListener(
   "click",
-  async () => {
+  async function () {
 
     try {
 
@@ -180,7 +224,7 @@ songBtn.addEventListener(
 
     catch (error) {
 
-      console.error(error);
+      console.log(error);
 
       songBtn.textContent =
         "♫ Song unavailable";
@@ -193,7 +237,7 @@ songBtn.addEventListener(
 
 song.addEventListener(
   "ended",
-  () => {
+  function () {
 
     songBtn.textContent =
       "♫ Play our little song";
@@ -202,11 +246,11 @@ song.addEventListener(
 );
 
 
-/* ========================= */
+/* ================================= */
 /* DATE / TIME */
-/* ========================= */
+/* ================================= */
 
-function updateHint() {
+function updateDateHint() {
 
   if (
     !dateInput.value ||
@@ -214,41 +258,41 @@ function updateHint() {
   ) {
 
     hint.textContent =
-      "Choose a day and time for us. ♡";
+      "Pili ka muna ng araw at oras. ♡";
 
     return;
+
   }
 
 
   hint.textContent =
-    "That sounds like a date to me... ♡";
+    "Okay... parang magandang date 'yan. ♡";
 
 }
 
 
 dateInput.addEventListener(
   "change",
-  updateHint
+  updateDateHint
 );
 
 
 timeInput.addEventListener(
   "change",
-  updateHint
+  updateDateHint
 );
 
 
-/* ========================= */
-/* YES BUTTON */
-/* ========================= */
+/* ================================= */
+/* YES */
+/* ================================= */
 
 yesBtn.addEventListener(
   "click",
-  () => {
+  function () {
 
     /*
-      Make sure date and time
-      have been selected.
+      Require both selections.
     */
 
     if (
@@ -257,17 +301,18 @@ yesBtn.addEventListener(
     ) {
 
       hint.textContent =
-        "Choose our day and time first, Mimz. ♡";
+        "Pili ka muna ng araw at oras, Mimz. ♡";
 
       shake(hint);
 
       return;
+
     }
 
 
-    /* ========================= */
+    /* ================================= */
     /* FORMAT DATE */
-    /* ========================= */
+    /* ================================= */
 
     const selectedDate =
       new Date(
@@ -294,9 +339,9 @@ yesBtn.addEventListener(
       );
 
 
-    /* ========================= */
+    /* ================================= */
     /* FORMAT TIME */
-    /* ========================= */
+    /* ================================= */
 
     const formattedTime =
       new Date(
@@ -322,14 +367,15 @@ yesBtn.addEventListener(
 
 
     /*
-      Try to start the song
-      after her button interaction.
+      Try playing the song because
+      this action came from a
+      user tap/click.
     */
 
     if (song.paused) {
 
       song.play().catch(
-        () => {}
+        function () {}
       );
 
     }
@@ -350,16 +396,14 @@ yesBtn.addEventListener(
 );
 
 
-/* ========================= */
+/* ================================= */
 /* SHAKE */
-/* ========================= */
+/* ================================= */
 
 function shake(element) {
 
   element.animate(
-
     [
-
       {
         transform:
           "translateX(0)"
@@ -389,26 +433,19 @@ function shake(element) {
         transform:
           "translateX(0)"
       }
-
     ],
-
     {
       duration:
         350
     }
-
   );
 
 }
 
 
-/* ========================= */
+/* ================================= */
 /* MAYBE BUTTON */
-/* ========================= */
-
-let noCount =
-  0;
-
+/* ================================= */
 
 const noMessages = [
 
@@ -422,40 +459,47 @@ const noMessages = [
 
   "Think about the coffee...",
 
-  "Okay, I'll keep asking nicely. ♡"
+  "Sige, pag-isipan mo muna. ♡"
 
 ];
 
 
 noBtn.addEventListener(
   "mouseenter",
-  moveNo
+  moveMaybeButton
 );
 
 
+/*
+  Works on phones/tablets.
+*/
+
 noBtn.addEventListener(
   "touchstart",
-  (event) => {
+  function (event) {
 
     event.preventDefault();
 
-    moveNo();
+    moveMaybeButton();
 
+  },
+  {
+    passive: false
   }
 );
 
 
-function moveNo() {
+function moveMaybeButton() {
 
   noCount++;
 
 
   const x =
-    (Math.random() - 0.5) * 140;
+    (Math.random() - 0.5) * 130;
 
 
   const y =
-    (Math.random() - 0.5) * 70;
+    (Math.random() - 0.5) * 60;
 
 
   noBtn.style.transform =
@@ -473,15 +517,23 @@ function moveNo() {
 }
 
 
-/* ========================= */
+/* ================================= */
 /* HEART BURST */
-/* ========================= */
+/* ================================= */
 
 function createHeartBurst() {
 
+  const symbols = [
+    "♡",
+    "♡",
+    "✦",
+    "✧"
+  ];
+
+
   for (
     let i = 0;
-    i < 35;
+    i < 30;
     i++
   ) {
 
@@ -492,37 +544,34 @@ function createHeartBurst() {
 
 
     heart.textContent =
-      Math.random() > 0.5
-        ? "♡"
-        : "✦";
+      symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
 
 
     heart.style.position =
       "fixed";
 
-
     heart.style.left =
       "50%";
-
 
     heart.style.top =
       "50%";
 
-
     heart.style.zIndex =
       "999";
-
 
     heart.style.pointerEvents =
       "none";
 
-
     heart.style.fontSize =
-      `${14 + Math.random() * 22}px`;
-
+      `${14 + Math.random() * 20}px`;
 
     heart.style.color =
-      "#69b5d5";
+      "#69b4d2";
 
 
     document.body.appendChild(
@@ -531,15 +580,16 @@ function createHeartBurst() {
 
 
     const x =
-      (Math.random() - 0.5) * 450;
+      (Math.random() - 0.5) *
+      430;
 
 
     const y =
-      (Math.random() - 0.5) * 500;
+      (Math.random() - 0.5) *
+      500;
 
 
     heart.animate(
-
       [
 
         {
@@ -548,6 +598,7 @@ function createHeartBurst() {
 
           opacity:
             1
+
         },
 
         {
@@ -557,19 +608,19 @@ function createHeartBurst() {
               calc(-50% + ${x}px),
               calc(-50% + ${y}px)
             )
-            scale(.3)`,
+            scale(.25)`,
 
           opacity:
             0
+
         }
 
       ],
-
       {
 
         duration:
-          1200 +
-          Math.random() * 800,
+          1000 +
+          Math.random() * 700,
 
         easing:
           "cubic-bezier(.17,.67,.38,1.2)"
@@ -577,7 +628,7 @@ function createHeartBurst() {
       }
 
     ).onfinish =
-      () => {
+      function () {
 
         heart.remove();
 
