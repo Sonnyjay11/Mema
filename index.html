@@ -4,15 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#dff5ff">
-
   <title>Something For Mimz ♡</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Floating decorations -->
   <div class="floating heart h1">♡</div>
   <div class="floating heart h2">♡</div>
   <div class="floating heart h3">♡</div>
@@ -23,69 +20,90 @@
   <div class="floating star s3">✧</div>
 
 
-  <!-- ========================= -->
-  <!-- PAGE 1 -->
-  <!-- ========================= -->
+  <!-- ================= PAGE 1 ================= -->
 
   <main id="page1" class="page active">
 
     <div class="letter-card">
 
       <p class="tiny-text">
-        A little something for you...
+        A little secret from Jay
       </p>
 
       <h1>
-        Hey, Mimz ♡
+        For Mimz, with love ♡
       </h1>
 
-      <div class="envelope" id="envelope">
+      <p class="opening-text">
+        Before you continue...
+        there's something I wanted you to read.
+      </p>
 
-        <div class="envelope-back"></div>
 
-        <div class="letter-paper">
+      <!-- SAFE IPAD ENVELOPE -->
 
-          <div class="letter-content">
+      <div class="envelope-wrapper">
 
-            <p>Dear Mimz,</p>
+        <div id="envelope" class="envelope">
 
-            <p>
-              I don't really know how to put this
-              into the perfect words...
-            </p>
+          <div class="envelope-body">
 
-            <p>
-              But somewhere along the way,
-              talking to you became one of the
-              little things I look forward to.
-            </p>
+            <div class="envelope-letter">
 
-            <p>
-              And I thought maybe...
-              instead of just thinking about it,
-              I should finally ask.
-            </p>
+              <div class="letter-content">
 
-            <p class="letter-sign">
-              — Jay ♡
-            </p>
+                <p class="letter-dear">
+                  Dear Mimz,
+                </p>
+
+                <p>
+                  I don't know exactly when it happened,
+                  but somehow talking to you became
+                  one of my favorite parts of the day.
+                </p>
+
+                <p>
+                  Maybe it's the little conversations,
+                  the random moments, or simply
+                  having you around.
+                </p>
+
+                <p>
+                  I just know that I'd really like
+                  to spend a little more time with you.
+                </p>
+
+                <p class="letter-question">
+                  So I have a little something
+                  to ask you...
+                </p>
+
+                <p class="letter-sign">
+                  — Jay ♡
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="envelope-front"></div>
+
+            <div class="envelope-flap"></div>
 
           </div>
 
         </div>
 
-        <div class="envelope-flap"></div>
-
       </div>
 
 
       <button id="openBtn" class="main-btn">
-        Open this for me ♡
+        Open my little letter ♡
       </button>
 
 
-      <p class="tap-hint">
-        There's something I'd like to ask you.
+      <p id="tapHint" class="tap-hint">
+        Tap the envelope first...
       </p>
 
 
@@ -98,7 +116,7 @@
         </button>
 
         <audio id="song" preload="metadata">
-          <source src="love-is.mp3" type="audio/mpeg">
+          <source src="Love Is.mp3" type="audio/mpeg">
         </audio>
 
         <p>
@@ -113,40 +131,35 @@
 
 
 
-  <!-- ========================= -->
-  <!-- PAGE 2 -->
-  <!-- ========================= -->
+  <!-- ================= PAGE 2 ================= -->
 
   <main id="page2" class="page">
 
     <div class="date-card">
 
       <p class="tiny-text">
-        One last thing...
+        And now, my question...
       </p>
-
 
       <div class="big-heart">
         ♡
       </div>
 
-
       <h1>
         So, Mimz...
       </h1>
-
 
       <p class="question">
         Would you let me take you
         on a little coffee date?
       </p>
 
-
       <p class="romantic-text">
-        Nothing fancy.
-        Just you, me, good coffee,
+        Just you and me.
+        Good coffee, quiet moments,
         random conversations,
-        and a little time together.
+        and hopefully a memory
+        we'll both want to keep.
       </p>
 
 
@@ -161,20 +174,18 @@
 
 
       <div class="divider">
-        ♡
+        ♡ · ♡ · ♡
       </div>
 
 
       <h2>
-        You choose the day.
+        You choose when. ♡
       </h2>
 
       <p class="instruction">
-        I'll take care of the rest.
+        I'll take care of everything else.
       </p>
 
-
-      <!-- DATE -->
 
       <div class="selection">
 
@@ -189,8 +200,6 @@
 
       </div>
 
-
-      <!-- TIME -->
 
       <div class="selection">
 
@@ -207,7 +216,7 @@
 
 
       <p id="hint" class="hint">
-        Pick a day and time for us. ♡
+        Choose a day and time for us. ♡
       </p>
 
 
@@ -225,6 +234,7 @@
 
 
       <p class="signature">
+        With a little hope,<br>
         — Jay
       </p>
 
@@ -234,9 +244,7 @@
 
 
 
-  <!-- ========================= -->
-  <!-- SUCCESS -->
-  <!-- ========================= -->
+  <!-- ================= SUCCESS ================= -->
 
   <div id="success" class="success-overlay">
 
@@ -247,17 +255,16 @@
       </div>
 
       <p class="tiny-text">
-        You just made someone very happy.
+        I was hoping you'd say that...
       </p>
 
       <h1>
         It's a date. ♡
       </h1>
 
-
       <p class="success-text">
-        I can't wait to spend that little
-        piece of time with you.
+        You just made this little invitation
+        worth every word.
       </p>
 
 
@@ -278,14 +285,12 @@
 
       <p class="final-note">
         I'll bring the coffee.<br>
-        You just have to bring yourself.
+        You just bring yourself.
       </p>
-
 
       <p class="final-love">
-        See you soon, Mimz. ♡
+        I can't wait to see you, Mimz. ♡
       </p>
-
 
       <p class="final-sign">
         — Jay
