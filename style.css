@@ -4,1028 +4,1129 @@
   padding: 0;
 }
 
-:root {
-  --sky: #a9dff1;
-  --sky-light: #eaf8fc;
-  --blue: #6fb7d2;
-  --deep-blue: #477f99;
-  --paper: #fffdf7;
-  --cream: #fff8e9;
-  --brown: #70594c;
-  --soft-brown: #92776a;
-  --white: rgba(255,255,255,0.8);
-}
-
-html,
-body {
-  width: 100%;
-  min-height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: "DM Sans", sans-serif;
-  color: var(--brown);
+  background: #bfe5f3;
+  color: #315565;
+  min-height: 100vh;
   overflow-x: hidden;
-  background:
-    linear-gradient(
-      135deg,
-      #bde9f6 0%,
-      #e9f8fb 45%,
-      #fdf8ed 100%
-    );
 }
 
 
-/* =================================
+/* =====================================================
    BACKGROUND
-================================= */
+===================================================== */
 
 .background {
   position: fixed;
   inset: 0;
+  z-index: -10;
   overflow: hidden;
-  pointer-events: none;
-  z-index: -1;
+  background:
+    linear-gradient(
+      180deg,
+      #a9ddf1 0%,
+      #ccebf5 55%,
+      #edf8fa 100%
+    );
 }
 
-
-/* soft sun */
+.sky-glow {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,.3);
+  border-radius: 50%;
+  filter: blur(80px);
+}
 
 .sun {
   position: absolute;
-  width: 320px;
-  height: 320px;
+  width: 120px;
+  height: 120px;
+  top: 8%;
+  right: 12%;
   border-radius: 50%;
-  right: -110px;
-  top: -100px;
+  background: rgba(255,245,190,.8);
+  box-shadow: 0 0 80px rgba(255,245,190,.7);
+}
 
-  background: rgba(255, 245, 205, 0.55);
+.cloud {
+  position: absolute;
+  width: 180px;
+  height: 55px;
+  background: rgba(255,255,255,.55);
+  border-radius: 50px;
+  filter: blur(1px);
+}
 
-  filter: blur(3px);
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 75px;
+  height: 75px;
+  left: 25px;
+  bottom: 10px;
+}
+
+.cloud::after {
+  width: 95px;
+  height: 95px;
+  right: 20px;
+  bottom: 5px;
+}
+
+.cloud-one {
+  top: 18%;
+  left: -40px;
+  animation: cloudMove 28s linear infinite;
+}
+
+.cloud-two {
+  top: 38%;
+  right: -80px;
+  transform: scale(.7);
+  animation: cloudMoveReverse 35s linear infinite;
+}
+
+@keyframes cloudMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(110vw);
+  }
+}
+
+@keyframes cloudMoveReverse {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-110vw);
+  }
 }
 
 
-/* Filipino capiz-window inspired shape */
+/* =====================================================
+   CAPIZ WINDOW
+===================================================== */
 
 .capiz-window {
   position: absolute;
-  width: 420px;
-  height: 420px;
-
-  left: -190px;
-  bottom: -170px;
-
-  border-radius: 50%;
-
-  border: 3px solid rgba(255,255,255,0.45);
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.2),
-      rgba(255,255,255,0.03)
-    );
-
-  box-shadow:
-    0 0 60px rgba(255,255,255,0.3);
+  width: 280px;
+  height: 280px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 10px solid rgba(255,255,255,.25);
+  border-radius: 8px;
+  opacity: .35;
 }
 
 .window-line {
   position: absolute;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,.35);
 }
 
 .window-line.vertical {
-  width: 2px;
+  width: 5px;
   height: 100%;
   left: 50%;
+  transform: translateX(-50%);
 }
 
 .window-line.horizontal {
   width: 100%;
-  height: 2px;
+  height: 5px;
   top: 50%;
+  transform: translateY(-50%);
 }
 
 
-/* subtle Filipino woven / banig-inspired texture */
+/* =====================================================
+   BANIG TEXTURE
+===================================================== */
 
 .woven-pattern {
   position: absolute;
   inset: 0;
-
-  opacity: 0.12;
-
+  opacity: .08;
   background-image:
     repeating-linear-gradient(
       45deg,
-      transparent 0px,
-      transparent 10px,
-      rgba(72, 125, 145, 0.25) 11px,
+      #ffffff 0,
+      #ffffff 1px,
+      transparent 1px,
       transparent 12px
     ),
     repeating-linear-gradient(
       -45deg,
-      transparent 0px,
-      transparent 10px,
-      rgba(72, 125, 145, 0.18) 11px,
+      #ffffff 0,
+      #ffffff 1px,
+      transparent 1px,
       transparent 12px
     );
 }
 
 
-/* Sampaguita-inspired flowers */
+/* =====================================================
+   FLOWERS / LEAVES
+===================================================== */
+
+.sampaguita,
+.petal,
+.leaf {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+}
 
 .sampaguita {
-  position: absolute;
-
-  font-family: serif;
-
-  color: rgba(255,255,255,0.7);
-
-  font-size: 40px;
-
-  filter: blur(0.2px);
-
-  animation: floating 7s ease-in-out infinite;
+  color: rgba(255,255,255,.7);
+  font-size: 30px;
 }
 
 .flower-one {
-  top: 15%;
   left: 8%;
+  bottom: 15%;
 }
 
 .flower-two {
-  top: 68%;
   right: 8%;
-  font-size: 28px;
-  animation-delay: 1.5s;
+  bottom: 25%;
 }
 
 .flower-three {
-  top: 38%;
-  right: 4%;
-  font-size: 20px;
-  animation-delay: 3s;
+  right: 15%;
+  top: 12%;
 }
 
-
-/* leaves */
-
 .leaf {
-  position: absolute;
-
+  color: rgba(65,125,110,.25);
   font-size: 70px;
-
-  color: rgba(90, 150, 125, 0.15);
-
-  transform: rotate(-20deg);
 }
 
 .leaf-one {
   left: -15px;
-  top: 35%;
+  bottom: 5%;
+  transform: rotate(-30deg);
 }
 
 .leaf-two {
-  right: -10px;
-  bottom: 20%;
-  transform: rotate(160deg);
+  right: -15px;
+  top: 55%;
+  transform: rotate(30deg);
 }
 
+.petal {
+  color: rgba(255,255,255,.65);
+  animation: floatPetal 7s ease-in-out infinite;
+}
 
-@keyframes floating {
+.petal-one {
+  left: 10%;
+  top: 30%;
+}
 
-  0%,
-  100% {
+.petal-two {
+  left: 85%;
+  top: 25%;
+  animation-delay: 1s;
+}
+
+.petal-three {
+  left: 20%;
+  top: 75%;
+  animation-delay: 2s;
+}
+
+.petal-four {
+  left: 75%;
+  top: 65%;
+  animation-delay: 3s;
+}
+
+.petal-five {
+  left: 50%;
+  top: 15%;
+  animation-delay: 4s;
+}
+
+@keyframes floatPetal {
+  0%, 100% {
     transform: translateY(0) rotate(0deg);
   }
 
   50% {
-    transform: translateY(-12px) rotate(4deg);
+    transform: translateY(-25px) rotate(20deg);
   }
 }
 
 
-/* =================================
+/* =====================================================
+   ENTRY
+===================================================== */
+
+.entry-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+  background:
+    linear-gradient(
+      180deg,
+      #a9ddf1,
+      #e8f7fa
+    );
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
+}
+
+.entry-screen.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entry-content {
+  max-width: 430px;
+  animation: entryAppear 1s ease;
+}
+
+@keyframes entryAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.entry-small {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: .65;
+  margin-bottom: 18px;
+}
+
+.entry-content h1 {
+  font-family: "Caveat", cursive;
+  font-size: clamp(55px, 14vw, 90px);
+  line-height: .8;
+  font-weight: 600;
+  color: #315565;
+}
+
+.entry-content h1 span {
+  color: #467f96;
+}
+
+.entry-message {
+  margin-top: 35px;
+  line-height: 1.8;
+  color: #547481;
+}
+
+.entry-message strong {
+  color: #3d7085;
+}
+
+.enter-button {
+  margin-top: 35px;
+  border: none;
+  background: white;
+  color: #42768c;
+  padding: 16px 28px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(54,108,128,.15);
+  transition: .25s ease;
+}
+
+.enter-button:hover {
+  transform: translateY(-3px);
+}
+
+.enter-button:active {
+  transform: scale(.96);
+}
+
+.entry-note {
+  margin-top: 18px;
+  font-size: 11px;
+  opacity: .5;
+}
+
+.entry-flower {
+  position: absolute;
+  top: 10%;
+  right: 12%;
+  font-size: 35px;
+  color: rgba(255,255,255,.7);
+}
+
+
+/* =====================================================
    MUSIC
-================================= */
+===================================================== */
 
 .music-button {
   position: fixed;
-
   top: 18px;
   right: 18px;
-
-  z-index: 20;
-
-  border: 1px solid rgba(255,255,255,0.7);
-
-  background: rgba(255,255,255,0.65);
-
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(255,255,255,.7);
+  background: rgba(255,255,255,.65);
   backdrop-filter: blur(12px);
-
-  padding: 10px 15px;
-
-  border-radius: 30px;
-
-  color: var(--deep-blue);
-
-  font-weight: 600;
-
+  color: #3c6d7e;
+  border-radius: 100px;
+  padding: 9px 13px;
+  font-size: 12px;
   cursor: pointer;
-
-  box-shadow:
-    0 5px 20px rgba(76, 125, 145, 0.12);
-
-  transition: 0.25s ease;
+  box-shadow: 0 5px 20px rgba(60,110,125,.1);
 }
 
-.music-button:hover {
-  transform: translateY(-2px);
-  background: white;
+.music-button.playing #musicIcon {
+  animation: musicBounce .7s ease-in-out infinite alternate;
+}
+
+@keyframes musicBounce {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-3px);
+  }
 }
 
 
-/* =================================
-   PAGE SYSTEM
-================================= */
+/* =====================================================
+   PAGES
+===================================================== */
 
 .page {
   display: none;
-
-  width: 100%;
   min-height: 100vh;
-
-  padding: 70px 20px 40px;
-
-  justify-content: center;
+  padding: 90px 20px 50px;
   align-items: center;
+  justify-content: center;
 }
 
 .page.active {
   display: flex;
+  animation: pageIn .7s ease;
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
-/* =================================
-   PAGE 1
-================================= */
+/* =====================================================
+   INTRO CARD
+===================================================== */
 
 .intro-card {
-  width: min(620px, 100%);
-
+  width: min(700px, 100%);
   text-align: center;
-
-  padding: 38px 30px 30px;
-
-  border-radius: 28px;
-
-  background:
-    rgba(255,255,255,0.5);
-
-  backdrop-filter: blur(15px);
-
-  border: 1px solid rgba(255,255,255,0.7);
-
-  box-shadow:
-    0 30px 80px rgba(69, 124, 148, 0.16);
+  padding: 20px;
 }
-
 
 .small-label {
-  font-size: 11px;
-
-  letter-spacing: 2px;
-
   text-transform: uppercase;
-
-  color: var(--blue);
-
-  font-weight: 700;
-
-  margin-bottom: 15px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #6b909d;
 }
 
-
-.tiny-flower {
-  font-size: 20px;
-
-  color: var(--blue);
-
-  margin-bottom: 5px;
+.tiny-flower,
+.date-top-flower {
+  color: #6da7ba;
+  font-size: 27px;
+  margin: 15px 0;
 }
 
-
-h1 {
+.intro-card h1 {
   font-family: "Caveat", cursive;
-
-  font-size: clamp(55px, 12vw, 82px);
-
-  line-height: 0.9;
-
+  font-size: clamp(55px, 12vw, 80px);
+  line-height: .8;
   font-weight: 600;
-
-  color: var(--deep-blue);
 }
 
-h1 span {
-  color: #568fa8;
+.intro-card h1 span {
+  color: #4d879d;
 }
-
 
 .intro-text {
-  margin-top: 22px;
-
-  line-height: 1.7;
-
-  color: var(--soft-brown);
-
-  font-size: 15px;
+  margin-top: 25px;
+  color: #688793;
 }
 
 
-/* =================================
+/* =====================================================
    PAPER LETTER
-================================= */
+===================================================== */
 
 .paper-wrapper {
-  width: 100%;
-
-  margin-top: 28px;
-
-  overflow: hidden;
-
-  border-radius: 12px;
+  max-width: 620px;
+  margin: 35px auto 0;
 }
-
 
 .paper-letter {
   position: relative;
-
   max-height: 0;
-
-  opacity: 0;
-
   overflow: hidden;
-
+  opacity: 0;
   transform: translateY(25px);
-
-  transition:
-    max-height 0.8s ease,
-    opacity 0.5s ease,
-    transform 0.6s ease;
-
+  padding: 0 35px;
   text-align: left;
-
-  padding: 0 30px;
-
   background:
-
-    repeating-linear-gradient(
-      0deg,
-      rgba(120,90,60,0.025) 0px,
-      rgba(120,90,60,0.025) 1px,
-      transparent 1px,
-      transparent 30px
-    ),
-
     linear-gradient(
-      135deg,
-      #fffef9,
-      #fffaf0
+      rgba(255,255,255,.92),
+      rgba(251,249,241,.96)
     );
-
+  border-radius: 3px;
   box-shadow:
-    0 15px 35px rgba(90,70,50,0.12);
-
-  border: 1px solid rgba(160,130,100,0.12);
-
-  border-radius: 8px;
+    0 20px 45px rgba(50,100,115,.14),
+    0 2px 5px rgba(50,100,115,.1);
+  transition:
+    max-height 1.2s ease,
+    opacity .8s ease,
+    transform .8s ease,
+    padding .8s ease;
 }
-
 
 .paper-letter.open {
   max-height: 1000px;
-
   opacity: 1;
-
   transform: translateY(0);
-
-  padding: 42px 30px 35px;
+  padding: 45px 35px;
 }
 
+.paper-letter::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(90,130,140,.12);
+  pointer-events: none;
+}
 
 .paper-letter p {
-  font-family: "Caveat", cursive;
-
-  font-size: 22px;
-
-  line-height: 1.45;
-
+  position: relative;
   margin-bottom: 18px;
-
-  color: #66564c;
+  font-family: "Caveat", cursive;
+  font-size: 21px;
+  line-height: 1.4;
+  color: #4e6871;
 }
-
 
 .paper-letter strong {
-  font-weight: 700;
-
-  color: #4e7f94;
+  color: #39758b;
 }
-
 
 .letter-greeting {
-  font-size: 28px !important;
-
-  font-weight: 600;
-
-  color: var(--deep-blue) !important;
+  font-size: 27px !important;
+  color: #376d80 !important;
 }
 
+.letter-divider {
+  text-align: center;
+  color: #75aabd;
+  margin: 25px 0 10px;
+}
 
 .letter-signature {
   text-align: right;
-
-  font-size: 29px !important;
-
-  margin-top: 25px;
+  font-size: 28px !important;
+  margin-bottom: 0 !important;
 }
-
-
-/* paper tape */
 
 .paper-tape {
   position: absolute;
-
-  width: 90px;
+  width: 70px;
   height: 25px;
-
-  background: rgba(167, 215, 226, 0.55);
-
-  top: 10px;
-
-  transform: rotate(-5deg);
+  top: 12px;
+  background: rgba(180,220,226,.5);
 }
 
 .tape-left {
-  left: 25px;
+  left: 40px;
+  transform: rotate(-5deg);
 }
 
 .tape-right {
-  right: 25px;
-
+  right: 40px;
   transform: rotate(5deg);
 }
 
 
-/* =================================
-   BUTTON
-================================= */
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.main-button,
+.yes-button,
+.maybe-button,
+.close-ticket {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: .25s ease;
+}
 
 .main-button {
-  margin-top: 25px;
-
-  border: none;
-
-  background:
-    linear-gradient(
-      135deg,
-      #77bad3,
-      #5fa5c1
-    );
-
+  margin-top: 28px;
+  padding: 15px 30px;
+  border-radius: 100px;
+  background: #477f93;
   color: white;
-
-  padding: 14px 25px;
-
-  border-radius: 40px;
-
-  font-size: 14px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 10px 25px rgba(77, 139, 164, 0.25);
-
-  transition: 0.25s ease;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(65,120,140,.2);
 }
 
 .main-button:hover {
   transform: translateY(-3px);
-
-  box-shadow:
-    0 15px 30px rgba(77, 139, 164, 0.3);
 }
-
 
 .hint {
-  margin-top: 13px;
-
+  margin-top: 12px;
   font-size: 11px;
-
-  color: rgba(112,89,76,0.55);
+  color: #7c9ca7;
 }
 
 
-/* =================================
-   PAGE 2
-================================= */
+/* =====================================================
+   DATE CARD
+===================================================== */
 
 .date-card {
-  width: min(580px, 100%);
-
+  width: min(650px, 100%);
   text-align: center;
-
-  padding: 40px 28px 30px;
-
-  border-radius: 30px;
-
-  background:
-    rgba(255,255,255,0.68);
-
-  backdrop-filter: blur(18px);
-
-  border: 1px solid rgba(255,255,255,0.75);
-
-  box-shadow:
-    0 30px 90px rgba(69,124,148,0.18);
+  padding: 20px;
 }
-
-
-.date-top-flower {
-  color: var(--blue);
-
-  font-size: 24px;
-
-  margin-bottom: 5px;
-}
-
 
 .date-card h2 {
   font-family: "Caveat", cursive;
-
-  color: var(--deep-blue);
-
-  font-size: 58px;
-
-  margin-top: 5px;
+  font-size: 48px;
+  color: #3f7488;
 }
-
 
 .big-question {
-  font-family: "Caveat", cursive;
-
-  font-size: 38px;
-
-  line-height: 1.05;
-
-  margin-top: 10px;
-
-  color: var(--brown);
+  margin-top: 12px;
+  font-size: clamp(23px, 5vw, 32px);
+  line-height: 1.35;
+  color: #416a78;
 }
-
 
 .big-question span {
-  color: var(--deep-blue);
-
-  font-weight: 700;
+  font-family: "Caveat", cursive;
+  font-size: 1.35em;
+  color: #39758b;
 }
-
 
 .question-subtext {
-  margin-top: 20px;
-
+  margin-top: 15px;
   line-height: 1.7;
+  color: #6c8993;
+}
 
-  font-size: 14px;
-
-  color: var(--soft-brown);
+.question-subtext strong {
+  color: #477c8d;
 }
 
 
-/* =================================
+/* =====================================================
    PHOTO
-================================= */
+===================================================== */
 
 .photo-frame {
-  position: relative;
-
-  width: min(310px, 90%);
-
-  margin: 30px auto 25px;
-
-  padding: 10px 10px 22px;
-
-  background: #fffdf8;
-
-  box-shadow:
-    0 15px 35px rgba(80,65,55,0.16);
-
-  transform: rotate(-1.5deg);
+  width: min(330px, 90%);
+  margin: 28px auto;
+  padding: 10px 10px 18px;
+  background: #fff;
+  box-shadow: 0 15px 35px rgba(55,100,115,.12);
+  transform: rotate(-1deg);
 }
 
-
 .photo-frame img {
-  display: block;
-
   width: 100%;
-
+  display: block;
   aspect-ratio: 4 / 3;
-
   object-fit: cover;
 }
 
-
 .photo-frame p {
+  margin-top: 12px;
   font-family: "Caveat", cursive;
-
-  font-size: 19px;
-
-  margin-top: 5px;
-
-  color: var(--soft-brown);
+  font-size: 20px;
+  color: #5d7780;
 }
-
 
 .photo-tape {
   position: absolute;
-
-  width: 85px;
-  height: 23px;
-
-  background: rgba(169,219,231,0.65);
-
+  width: 65px;
+  height: 20px;
   top: -10px;
-
   left: 50%;
-
   transform: translateX(-50%) rotate(2deg);
-
-  z-index: 2;
+  background: rgba(181,220,225,.6);
 }
 
 
-/* =================================
-   BOOKING
-================================= */
+/* =====================================================
+   KULIT BOX
+===================================================== */
 
-.booking-area {
+.kilig-box {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 470px;
+  margin: 20px auto;
+  padding: 12px 18px;
+  border-radius: 15px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.7);
+  color: #557681;
+  font-size: 13px;
+}
 
-  flex-direction: column;
+.kilig-box span {
+  font-size: 19px;
+}
 
-  gap: 8px;
-
-  margin: 25px auto;
-
-  width: min(350px, 100%);
-
-  text-align: left;
+.kilig-box p {
+  transition: opacity .2s ease;
 }
 
 
-.booking-area label {
-  font-size: 12px;
+/* =====================================================
+   BOOKING
+===================================================== */
 
+.booking-section {
+  max-width: 470px;
+  margin: 28px auto;
+  padding: 24px;
+  background: rgba(255,255,255,.55);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.7);
+  box-shadow: 0 10px 25px rgba(60,110,125,.07);
+}
+
+.section-title {
   font-weight: 700;
-
-  color: var(--deep-blue);
-
-  margin-top: 5px;
+  color: #3f7182;
 }
 
+.section-subtitle {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #78949d;
+}
 
-.booking-area input {
+.booking-section input,
+.booking-section textarea {
   width: 100%;
-
-  padding: 13px 14px;
-
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(80,130,145,.18);
   border-radius: 12px;
-
-  border: 1px solid rgba(90,140,155,0.2);
-
-  background: rgba(255,255,255,0.85);
-
-  font-family: "DM Sans", sans-serif;
-
-  color: var(--brown);
-
+  background: rgba(255,255,255,.8);
+  color: #456a75;
+  font-family: inherit;
   outline: none;
 }
 
-
-.booking-area input:focus {
-  border-color: var(--blue);
-
-  box-shadow:
-    0 0 0 3px rgba(111,183,210,0.12);
+.booking-section input:focus,
+.booking-section textarea:focus {
+  border-color: #72aabd;
+  box-shadow: 0 0 0 3px rgba(114,170,189,.1);
 }
 
+.time-label {
+  display: block;
+  text-align: left;
+  margin-top: 18px;
+  font-size: 13px;
+  color: #63838d;
+}
+
+.booking-section textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.character-count {
+  text-align: right;
+  font-size: 10px;
+  margin-top: 5px;
+  color: #91a8ae;
+}
 
 .date-hint {
-  text-align: center;
-
-  font-size: 11px;
-
-  color: rgba(112,89,76,0.6);
-
-  margin-top: 5px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #70909a;
 }
 
 
-/* =================================
+/* =====================================================
    CHOICE BUTTONS
-================================= */
+===================================================== */
 
 .choice-buttons {
   display: flex;
-
   flex-direction: column;
-
-  gap: 11px;
-
-  width: min(350px, 100%);
-
-  margin: 0 auto;
+  gap: 10px;
+  max-width: 470px;
+  margin: 20px auto;
 }
-
-
-.yes-button,
-.maybe-button {
-  width: 100%;
-
-  padding: 14px;
-
-  border-radius: 30px;
-
-  font-family: "DM Sans", sans-serif;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.25s ease;
-}
-
 
 .yes-button {
-  border: none;
-
-  background:
-    linear-gradient(
-      135deg,
-      #77bdd7,
-      #589eb9
-    );
-
+  padding: 17px;
+  border-radius: 100px;
+  background: #477f93;
   color: white;
-
-  box-shadow:
-    0 10px 25px rgba(76,145,171,0.22);
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(55,110,130,.2);
 }
-
 
 .yes-button:hover {
   transform: translateY(-2px);
 }
 
-
 .maybe-button {
-  border: 1px solid rgba(90,140,155,0.2);
-
-  background: rgba(255,255,255,0.65);
-
-  color: var(--deep-blue);
+  padding: 13px;
+  border-radius: 100px;
+  background: rgba(255,255,255,.6);
+  color: #61828d;
 }
 
+.maybe-button:hover {
+  transform: rotate(-1deg);
+}
 
 .footer-note {
-  font-family: "Caveat", cursive;
-
   margin-top: 25px;
-
-  font-size: 17px;
-
-  color: rgba(112,89,76,0.65);
+  font-size: 11px;
+  color: #89a1a8;
 }
 
 
-/* =================================
+/* =====================================================
    SUCCESS
-================================= */
+===================================================== */
 
 .success-overlay {
   position: fixed;
-
   inset: 0;
-
-  z-index: 100;
-
-  display: none;
-
-  justify-content: center;
-
+  z-index: 500;
+  display: flex;
   align-items: center;
-
-  padding: 25px;
-
-  background:
-    rgba(70,130,150,0.35);
-
-  backdrop-filter: blur(10px);
+  justify-content: center;
+  padding: 20px;
+  background: rgba(47,82,94,.35);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: .5s ease;
+  overflow-y: auto;
 }
-
 
 .success-overlay.show {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-
-.success-card {
-  width: min(430px, 100%);
-
+.reservation-ticket {
+  width: min(440px, 100%);
+  position: relative;
+  padding: 30px 25px;
+  background: #fffdf8;
+  box-shadow: 0 25px 70px rgba(30,70,80,.25);
   text-align: center;
-
-  padding: 42px 30px;
-
-  border-radius: 28px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fffef9,
-      #fff8e9
-    );
-
-  box-shadow:
-    0 30px 90px rgba(50,90,105,0.25);
-
-  animation:
-    pop 0.45s ease;
+  transform: translateY(30px) scale(.95);
+  transition: .5s ease;
 }
 
-
-@keyframes pop {
-
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-
+.success-overlay.show .reservation-ticket {
+  transform: translateY(0) scale(1);
 }
 
-
-.success-flower {
-  font-size: 35px;
-
-  color: var(--blue);
-
-  margin-bottom: 10px;
+.ticket-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #76a9b8;
+  font-size: 15px;
 }
 
-
-.success-card h2 {
-  font-family: "Caveat", cursive;
-
-  color: var(--deep-blue);
-
-  font-size: 55px;
-}
-
-
-.success-card p {
-  margin-top: 8px;
-
-  color: var(--soft-brown);
-
-  line-height: 1.6;
-}
-
-
-.chosen-date {
-  margin: 20px 0;
-
-  padding: 13px;
-
-  border-radius: 14px;
-
-  background: rgba(169,219,231,0.25);
-
-  color: var(--deep-blue);
-
+.ticket-top p {
+  font-size: 10px;
+  letter-spacing: 1.5px;
   font-weight: 700;
 }
 
+.ticket-divider {
+  height: 1px;
+  margin: 20px 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #cbdfe4 0,
+      #cbdfe4 6px,
+      transparent 6px,
+      transparent 12px
+    );
+}
 
-.success-small {
+.ticket-title {
+  font-family: "Caveat", cursive;
+  font-size: 45px;
+  color: #40768a;
+}
+
+.ticket-subtitle {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #76919a;
+}
+
+.ticket-info {
+  margin-top: 25px;
+}
+
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #dce8ea;
+  text-align: left;
   font-size: 13px;
 }
 
+.ticket-row span {
+  color: #91a4a9;
+}
 
-.hearts {
+.ticket-row strong {
+  color: #4c6f78;
+  text-align: right;
+}
+
+.ticket-status {
+  display: inline-block;
+  padding: 7px 13px;
+  border-radius: 100px;
+  background: #e5f4ee;
+  color: #548673;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.ticket-message {
+  margin: 20px 10px;
+  font-family: "Caveat", cursive;
+  font-size: 21px;
+  color: #57727b;
+}
+
+.ticket-bottom {
   margin-top: 20px;
+  font-family: "Caveat", cursive;
+  font-size: 22px;
+  color: #4b7482;
+}
 
-  color: #75b7cf;
+.ticket-final {
+  margin-top: 7px;
+  font-family: "Caveat", cursive;
+  font-size: 26px;
+  color: #3e7184;
+}
 
-  letter-spacing: 10px;
+.ticket-barcode {
+  margin-top: 25px;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: #45666e;
+  overflow: hidden;
+}
 
-  font-size: 20px;
+.ticket-code {
+  margin-top: 5px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #9aacb0;
+}
+
+.close-ticket {
+  margin-top: 22px;
+  padding: 13px 20px;
+  border-radius: 100px;
+  background: #477f93;
+  color: white;
+  font-weight: 600;
 }
 
 
-/* =================================
+/* =====================================================
+   CELEBRATION
+===================================================== */
+
+.celebration {
+  position: fixed;
+  z-index: 900;
+  pointer-events: none;
+  font-size: 25px;
+  animation: celebrationFloat 3s ease-out forwards;
+}
+
+@keyframes celebrationFloat {
+  0% {
+    opacity: 0;
+    transform:
+      translateY(0)
+      scale(.5)
+      rotate(0);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translateY(-300px)
+      scale(1.3)
+      rotate(30deg);
+  }
+}
+
+
+/* =====================================================
    MOBILE
-================================= */
+===================================================== */
 
 @media (max-width: 600px) {
 
   .page {
-    padding:
-      70px
-      14px
-      30px;
+    padding: 80px 12px 35px;
   }
 
   .intro-card,
   .date-card {
-    padding:
-      30px
-      18px
-      25px;
-
-    border-radius: 23px;
-  }
-
-  h1 {
-    font-size: 62px;
-  }
-
-  .intro-text {
-    font-size: 14px;
+    padding: 10px;
   }
 
   .paper-letter.open {
-    padding:
-      40px
-      21px
-      25px;
+    padding: 40px 25px;
   }
 
   .paper-letter p {
     font-size: 20px;
   }
 
-  .letter-greeting {
-    font-size: 26px !important;
+  .paper-letter::before {
+    inset: 10px;
   }
 
-  .date-card h2 {
-    font-size: 52px;
+  .paper-tape {
+    width: 55px;
   }
 
-  .big-question {
-    font-size: 33px;
+  .tape-left {
+    left: 25px;
   }
 
-  .music-button span {
-    display: none;
+  .tape-right {
+    right: 25px;
+  }
+
+  .booking-section {
+    padding: 20px 16px;
   }
 
   .music-button {
-    padding: 10px 12px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .sun {
+    right: -30px;
+    top: 8%;
+  }
+
+  .capiz-window {
+    width: 220px;
+    height: 220px;
+  }
+
+  .reservation-ticket {
+    padding: 25px 18px;
   }
 
 }
 
 
-/* very small phones */
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
 
-@media (max-width: 380px) {
+@media (prefers-reduced-motion: reduce) {
 
-  .page {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  h1 {
-    font-size: 55px;
-  }
-
-  .paper-letter p {
-    font-size: 18px;
-  }
-
-  .big-question {
-    font-size: 30px;
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
   }
 
 }
