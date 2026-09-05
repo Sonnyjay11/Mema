@@ -1,18 +1,45 @@
-/* =====================================
+/* =====================================================
+   VERSION 7.2
+   AESTHETIC EDITION
+===================================================== */
+
+
+/* =====================================================
    ELEMENTS
-===================================== */
+===================================================== */
 
-const song = document.getElementById("song");
-const musicButton = document.getElementById("musicButton");
+const loadingScreen =
+  document.getElementById("loadingScreen");
 
-const pageOne = document.getElementById("pageOne");
-const pageTwo = document.getElementById("pageTwo");
+const song =
+  document.getElementById("song");
 
-const letterBtn = document.getElementById("letterBtn");
-const letterBtnText = document.getElementById("letterBtnText");
+const musicButton =
+  document.getElementById("musicButton");
 
-const paperLetter = document.getElementById("paperLetter");
-const hintText = document.getElementById("hintText");
+const pageOne =
+  document.getElementById("pageOne");
+
+const pageTwo =
+  document.getElementById("pageTwo");
+
+const envelope =
+  document.getElementById("envelope");
+
+const letterBtn =
+  document.getElementById("letterBtn");
+
+const letterBtnText =
+  document.getElementById("letterBtnText");
+
+const letterBtnIcon =
+  document.getElementById("letterBtnIcon");
+
+const paperLetter =
+  document.getElementById("paperLetter");
+
+const hintText =
+  document.getElementById("hintText");
 
 const transitionScreen =
   document.getElementById("transitionScreen");
@@ -39,75 +66,90 @@ const successOverlay =
   document.getElementById("successOverlay");
 
 const selectedDateDisplay =
-  document.getElementById("selectedDateDisplay");
+  document.getElementById(
+    "selectedDateDisplay"
+  );
 
 const selectedTimeDisplay =
-  document.getElementById("selectedTimeDisplay");
+  document.getElementById(
+    "selectedTimeDisplay"
+  );
 
 const calendarButton =
-  document.getElementById("calendarButton");
+  document.getElementById(
+    "calendarButton"
+  );
 
 const secretHeart =
-  document.getElementById("secretHeart");
+  document.getElementById(
+    "secretHeart"
+  );
 
 const secretOverlay =
-  document.getElementById("secretOverlay");
+  document.getElementById(
+    "secretOverlay"
+  );
 
 const closeSecret =
-  document.getElementById("closeSecret");
+  document.getElementById(
+    "closeSecret"
+  );
 
 const photo =
   document.getElementById("photo");
 
 
-/* =====================================
+/* =====================================================
    VARIABLES
-===================================== */
+===================================================== */
 
 let letterOpened = false;
+
 let musicStarted = false;
 
 let maybeCount = 0;
+
 let secretClicks = 0;
 
 
-/* =====================================
-   DATE MINIMUM
-===================================== */
+/* =====================================================
+   LOADING SCREEN
+===================================================== */
 
-function setMinimumDate() {
+window.addEventListener(
+  "load",
+  () => {
 
-  const today = new Date();
+    /*
+      Small loading screen only.
 
-  const year =
-    today.getFullYear();
+      IMPORTANT:
+      This does NOT start the music.
+    */
 
-  const month =
-    String(today.getMonth() + 1)
-      .padStart(2, "0");
+    setTimeout(
+      () => {
 
-  const day =
-    String(today.getDate())
-      .padStart(2, "0");
+        loadingScreen.classList.add(
+          "hide"
+        );
 
-  dateInput.min =
-    `${year}-${month}-${day}`;
-}
+      },
+      650
+    );
 
-setMinimumDate();
+  }
+);
 
 
-/* =====================================
+/* =====================================================
    MUSIC
-===================================== */
+===================================================== */
 
 /*
-  IMPORTANT:
+  The song intentionally does NOT autoplay.
 
-  There is NO autoplay on page load.
-
-  The song begins when the user clicks
-  "Buksan mo ♡".
+  It starts when "Buksan mo" is clicked.
 */
 
 async function startMusic() {
@@ -120,22 +162,27 @@ async function startMusic() {
 
     musicStarted = true;
 
-    musicButton.classList.add("playing");
+    musicButton.classList.add(
+      "playing"
+    );
 
   } catch (error) {
 
-    /*
-      Some browsers may still block playback.
-
-      The music pill remains available so
-      the user can manually start the song.
-    */
-
     musicStarted = false;
 
+    console.log(
+      "Music playback was blocked.",
+      error
+    );
+
   }
+
 }
 
+
+/*
+  Music toggle.
+*/
 
 musicButton.addEventListener(
   "click",
@@ -151,12 +198,14 @@ musicButton.addEventListener(
 
         musicStarted = true;
 
-        musicButton.classList.add("playing");
+        musicButton.classList.add(
+          "playing"
+        );
 
       } catch (error) {
 
         console.log(
-          "Music could not start.",
+          "Unable to play music.",
           error
         );
 
@@ -166,7 +215,9 @@ musicButton.addEventListener(
 
       song.pause();
 
-      musicButton.classList.remove("playing");
+      musicButton.classList.remove(
+        "playing"
+      );
 
     }
 
@@ -174,88 +225,142 @@ musicButton.addEventListener(
 );
 
 
-/* =====================================
+/* =====================================================
    PAGE 1
-===================================== */
+===================================================== */
 
 letterBtn.addEventListener(
   "click",
   async () => {
 
-    /*
-      FIRST CLICK
 
-      Open the letter and start music.
-    */
+    /* =================================
+       FIRST CLICK
+    ================================= */
 
     if (!letterOpened) {
 
       letterOpened = true;
 
 
-      /* Start song because this is
-         a direct user interaction. */
+      /*
+        Start music immediately because
+        this click is a direct user action.
+      */
 
       await startMusic();
 
 
-      /* Open letter */
+      /*
+        Envelope animation
+      */
 
-      paperLetter.classList.add("open");
+      envelope.classList.add(
+        "open"
+      );
 
 
-      /* Change button */
+      /*
+        Small delay before showing
+        the actual letter.
+      */
 
-      letterBtn.classList.add("opened");
+      setTimeout(
+        () => {
+
+          paperLetter.classList.add(
+            "open"
+          );
+
+        },
+        500
+      );
+
+
+      /*
+        Change button.
+      */
+
+      letterBtn.classList.add(
+        "opened"
+      );
 
       letterBtnText.textContent =
         "Okay, next...";
 
+      letterBtnIcon.textContent =
+        "☕";
+
 
       /*
-        This is NOT a timer.
+        No reading timer.
 
-        The user can read the letter for
-        as long as they want.
+        She controls when to continue.
       */
 
       hintText.textContent =
-        "Take your time. ♡";
+        "Basahin mo muna. ♡";
 
 
-      /* Small heart animation */
+      /*
+        Hearts
+      */
 
       const rect =
         letterBtn.getBoundingClientRect();
 
-      for (let i = 0; i < 5; i++) {
+
+      for (
+        let i = 0;
+        i < 7;
+        i++
+      ) {
 
         setTimeout(
           () => {
 
             createHeart(
               rect.left +
-                rect.width / 2,
+              rect.width / 2,
 
               rect.top +
-                rect.height / 2
+              rect.height / 2
             );
 
           },
-          i * 130
+          i * 120
         );
 
       }
 
+
+      /*
+        Sparkles around envelope.
+      */
+
+      const envelopeRect =
+        envelope.getBoundingClientRect();
+
+
+      createSparkles(
+        envelopeRect.left +
+        envelopeRect.width / 2,
+
+        envelopeRect.top +
+        envelopeRect.height / 2,
+
+        9
+      );
+
+
       return;
+
     }
 
 
-    /*
-      SECOND CLICK
-
-      Only now do we move to Page 2.
-    */
+    /* =================================
+       SECOND CLICK
+    ================================= */
 
     showTransition();
 
@@ -263,40 +368,100 @@ letterBtn.addEventListener(
 );
 
 
-/* =====================================
+/* =====================================================
    PAGE TRANSITION
-===================================== */
+===================================================== */
 
 function showTransition() {
 
-  transitionScreen.classList.add("show");
-
-  setTimeout(
-    () => {
-
-      pageOne.classList.remove("active");
-
-      pageTwo.classList.add("active");
-
-    },
-    850
+  transitionScreen.classList.add(
+    "show"
   );
 
+
+  /*
+    Give the transition enough time
+    to feel intentional, but this is
+    NOT a reading timer.
+  */
+
   setTimeout(
     () => {
 
-      transitionScreen.classList.remove("show");
+      pageOne.classList.remove(
+        "active"
+      );
+
+      pageTwo.classList.add(
+        "active"
+      );
+
+      window.scrollTo(
+        {
+          top: 0,
+          behavior: "smooth"
+        }
+      );
 
     },
-    1450
+    900
+  );
+
+
+  setTimeout(
+    () => {
+
+      transitionScreen.classList.remove(
+        "show"
+      );
+
+    },
+    1550
   );
 
 }
 
 
-/* =====================================
-   DATE PICKER
-===================================== */
+/* =====================================================
+   DATE MINIMUM
+===================================================== */
+
+function setMinimumDate() {
+
+  const today =
+    new Date();
+
+  const year =
+    today.getFullYear();
+
+  const month =
+    String(
+      today.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+  const day =
+    String(
+      today.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  dateInput.min =
+    `${year}-${month}-${day}`;
+
+}
+
+setMinimumDate();
+
+
+/* =====================================================
+   DATE INPUT
+===================================================== */
 
 dateInput.addEventListener(
   "change",
@@ -304,9 +469,12 @@ dateInput.addEventListener(
 
     if (!dateInput.value) {
 
-      dateHint.classList.remove("show");
+      dateHint.classList.remove(
+        "show"
+      );
 
       return;
+
     }
 
 
@@ -328,9 +496,21 @@ dateInput.addEventListener(
 
 
     dateHint.textContent =
+      `Noted. 👀 ${formatted sounds good...`;
+
+
+    /*
+      Fix the template string separately
+      so the display remains valid.
+    */
+
+    dateHint.textContent =
       `Noted. 👀 ${formatted} sounds good...`;
 
-    dateHint.classList.add("show");
+
+    dateHint.classList.add(
+      "show"
+    );
 
 
     localStorage.setItem(
@@ -342,9 +522,9 @@ dateInput.addEventListener(
 );
 
 
-/* =====================================
-   TIME PICKER
-===================================== */
+/* =====================================================
+   TIME INPUT
+===================================================== */
 
 timeInput.addEventListener(
   "change",
@@ -352,13 +532,19 @@ timeInput.addEventListener(
 
     if (!timeInput.value) {
 
-      timeHint.classList.remove("show");
+      timeHint.classList.remove(
+        "show"
+      );
 
       return;
+
     }
 
 
-    const [hours, minutes] =
+    const [
+      hours,
+      minutes
+    ] =
       timeInput.value
         .split(":")
         .map(Number);
@@ -388,7 +574,10 @@ timeInput.addEventListener(
     timeHint.textContent =
       `Okay, noted na talaga. ☕ ${formatted}. Jay has been informed. HAHAHA.`;
 
-    timeHint.classList.add("show");
+
+    timeHint.classList.add(
+      "show"
+    );
 
 
     localStorage.setItem(
@@ -400,9 +589,9 @@ timeInput.addEventListener(
 );
 
 
-/* =====================================
+/* =====================================================
    MAYBE BUTTON
-===================================== */
+===================================================== */
 
 const maybeMessages = [
 
@@ -424,9 +613,13 @@ maybeButton.addEventListener(
   () => {
 
     maybeButton.textContent =
-      maybeMessages[maybeCount];
+      maybeMessages[
+        maybeCount
+      ];
+
 
     maybeCount++;
+
 
     if (
       maybeCount >=
@@ -438,7 +631,9 @@ maybeButton.addEventListener(
     }
 
 
-    /* Little playful movement */
+    /*
+      Playful little shake.
+    */
 
     maybeButton.animate(
       [
@@ -459,11 +654,17 @@ maybeButton.addEventListener(
 
         {
           transform:
+            "translateX(-3px)"
+        },
+
+        {
+          transform:
             "translateX(0)"
         }
+
       ],
       {
-        duration: 300
+        duration: 330
       }
     );
 
@@ -471,9 +672,9 @@ maybeButton.addEventListener(
 );
 
 
-/* =====================================
+/* =====================================================
    YES BUTTON
-===================================== */
+===================================================== */
 
 yesButton.addEventListener(
   "click",
@@ -486,35 +687,57 @@ yesButton.addEventListener(
       timeInput.value;
 
 
+    /*
+      Require date.
+    */
+
     if (!selectedDate) {
 
       dateHint.textContent =
         "Pili ka muna ng date. 👀";
 
-      dateHint.classList.add("show");
+      dateHint.classList.add(
+        "show"
+      );
 
       dateInput.focus();
+
+      shakeElement(
+        dateInput
+      );
 
       return;
 
     }
 
+
+    /*
+      Require time.
+    */
 
     if (!selectedTime) {
 
       timeHint.textContent =
         "Pili ka rin ng time. ☕";
 
-      timeHint.classList.add("show");
+      timeHint.classList.add(
+        "show"
+      );
 
       timeInput.focus();
+
+      shakeElement(
+        timeInput
+      );
 
       return;
 
     }
 
 
-    /* Save */
+    /*
+      Save booking.
+    */
 
     localStorage.setItem(
       "coffeeDate",
@@ -527,23 +750,39 @@ yesButton.addEventListener(
     );
 
 
-    /* Display */
+    /*
+      Display booking.
+    */
 
     selectedDateDisplay.textContent =
-      formatDate(selectedDate);
+      formatDate(
+        selectedDate
+      );
 
     selectedTimeDisplay.textContent =
-      formatTime(selectedTime);
+      formatTime(
+        selectedTime
+      );
 
 
-    /* Show success */
+    /*
+      Show confirmation.
+    */
 
-    successOverlay.classList.add("show");
+    successOverlay.classList.add(
+      "show"
+    );
 
 
-    /* Hearts */
+    /*
+      Celebration hearts.
+    */
 
-    for (let i = 0; i < 7; i++) {
+    for (
+      let i = 0;
+      i < 12;
+      i++
+    ) {
 
       setTimeout(
         () => {
@@ -554,25 +793,39 @@ yesButton.addEventListener(
           );
 
         },
-        i * 120
+        i * 100
       );
 
     }
+
+
+    /*
+      Celebration sparkles.
+    */
+
+    createSparkles(
+      window.innerWidth / 2,
+      window.innerHeight / 2,
+      14
+    );
 
   }
 );
 
 
-/* =====================================
+/* =====================================================
    DATE FORMAT
-===================================== */
+===================================================== */
 
-function formatDate(value) {
+function formatDate(
+  value
+) {
 
   const date =
     new Date(
       `${value}T00:00:00`
     );
+
 
   return date.toLocaleDateString(
     "en-US",
@@ -587,19 +840,26 @@ function formatDate(value) {
 }
 
 
-/* =====================================
+/* =====================================================
    TIME FORMAT
-===================================== */
+===================================================== */
 
-function formatTime(value) {
+function formatTime(
+  value
+) {
 
-  const [hours, minutes] =
+  const [
+    hours,
+    minutes
+  ] =
     value
       .split(":")
       .map(Number);
 
+
   const date =
     new Date();
+
 
   date.setHours(
     hours,
@@ -607,6 +867,7 @@ function formatTime(value) {
     0,
     0
   );
+
 
   return date.toLocaleTimeString(
     "en-US",
@@ -619,16 +880,24 @@ function formatTime(value) {
 }
 
 
-/* =====================================
+/* =====================================================
    GOOGLE CALENDAR
-===================================== */
+===================================================== */
 
-function formatGoogleDate(date) {
+function formatGoogleDate(
+  date
+) {
 
   return date
     .toISOString()
-    .replace(/[-:]/g, "")
-    .replace(/\.\d{3}/, "");
+    .replace(
+      /[-:]/g,
+      ""
+    )
+    .replace(
+      /\.\d{3}/,
+      ""
+    );
 
 }
 
@@ -668,10 +937,14 @@ calendarButton.addEventListener(
 
 
     const startString =
-      formatGoogleDate(start);
+      formatGoogleDate(
+        start
+      );
 
     const endString =
-      formatGoogleDate(end);
+      formatGoogleDate(
+        end
+      );
 
 
     const title =
@@ -697,12 +970,9 @@ calendarButton.addEventListener(
 
 
     /*
-      IMPORTANT:
-
       Opens Google Calendar in a NEW TAB.
 
-      It does NOT redirect the GitHub Pages
-      website itself.
+      GitHub Pages stays open.
     */
 
     window.open(
@@ -715,9 +985,9 @@ calendarButton.addEventListener(
 );
 
 
-/* =====================================
+/* =====================================================
    SECRET EASTER EGG
-===================================== */
+===================================================== */
 
 secretHeart.addEventListener(
   "click",
@@ -726,9 +996,25 @@ secretHeart.addEventListener(
     secretClicks++;
 
 
-    if (secretClicks >= 3) {
+    /*
+      Three clicks.
+    */
 
-      secretOverlay.classList.add("show");
+    if (
+      secretClicks >= 3
+    ) {
+
+      secretOverlay.classList.add(
+        "show"
+      );
+
+
+      createSparkles(
+        window.innerWidth / 2,
+        window.innerHeight / 2,
+        10
+      );
+
 
       secretClicks = 0;
 
@@ -738,17 +1024,25 @@ secretHeart.addEventListener(
 );
 
 
+/* =====================================================
+   CLOSE SECRET
+===================================================== */
+
 closeSecret.addEventListener(
   "click",
   () => {
 
-    secretOverlay.classList.remove("show");
+    secretOverlay.classList.remove(
+      "show"
+    );
 
   }
 );
 
 
-/* Close secret by clicking outside */
+/*
+  Close by clicking outside.
+*/
 
 secretOverlay.addEventListener(
   "click",
@@ -769,59 +1063,78 @@ secretOverlay.addEventListener(
 );
 
 
-/* =====================================
+/* =====================================================
    PHOTO FALLBACK
-===================================== */
+===================================================== */
 
 photo.addEventListener(
   "error",
   () => {
 
-    photo.style.display = "none";
+    photo.style.display =
+      "none";
 
-    photo.parentElement.style.minHeight =
-      "240px";
 
-    photo.parentElement.style.display =
+    const frame =
+      photo.parentElement;
+
+
+    frame.style.minHeight =
+      "220px";
+
+
+    frame.style.display =
       "flex";
 
-    photo.parentElement.style.alignItems =
+    frame.style.alignItems =
       "center";
 
-    photo.parentElement.style.justifyContent =
+    frame.style.justifyContent =
       "center";
 
-    photo.parentElement.innerHTML +=
+
+    frame.insertAdjacentHTML(
+      "beforeend",
+
       `
         <div
           style="
             font-family: Caveat, cursive;
-            font-size: 25px;
-            color: #6b8797;
+            font-size: 26px;
+            color: #648393;
           "
         >
           our little memory ♡
         </div>
-      `;
+      `
+
+    );
 
   }
 );
 
 
-/* =====================================
-   FLOATING HEARTS
-===================================== */
+/* =====================================================
+   CREATE HEART
+===================================================== */
 
-function createHeart(x, y) {
+function createHeart(
+  x,
+  y
+) {
 
   const heart =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   heart.className =
     "created-heart";
 
+
   heart.textContent =
-    Math.random() > 0.35
+    Math.random() > 0.3
       ? "♡"
       : "♥";
 
@@ -834,10 +1147,10 @@ function createHeart(x, y) {
 
 
   const randomX =
-    `${(Math.random() - 0.5) * 100}px`;
+    `${(Math.random() - 0.5) * 130}px`;
 
   const randomY =
-    `${-50 - Math.random() * 90}px`;
+    `${-60 - Math.random() * 100}px`;
 
 
   heart.style.setProperty(
@@ -862,15 +1175,145 @@ function createHeart(x, y) {
       heart.remove();
 
     },
-    1300
+    1400
   );
 
 }
 
 
-/* =====================================
-   RESTORE SAVED DATE/TIME
-===================================== */
+/* =====================================================
+   CREATE SPARKLES
+===================================================== */
+
+function createSparkles(
+  x,
+  y,
+  amount = 8
+) {
+
+  const symbols = [
+    "✦",
+    "✧",
+    "·",
+    "✦"
+  ];
+
+
+  for (
+    let i = 0;
+    i < amount;
+    i++
+  ) {
+
+    const sparkle =
+      document.createElement(
+        "div"
+      );
+
+
+    sparkle.className =
+      "sparkle";
+
+
+    sparkle.textContent =
+      symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
+
+
+    sparkle.style.left =
+      `${x}px`;
+
+    sparkle.style.top =
+      `${y}px`;
+
+
+    const randomX =
+      `${(Math.random() - 0.5) * 180}px`;
+
+    const randomY =
+      `${(Math.random() - 0.5) * 150}px`;
+
+
+    sparkle.style.setProperty(
+      "--x",
+      randomX
+    );
+
+    sparkle.style.setProperty(
+      "--y",
+      randomY
+    );
+
+
+    document.body.appendChild(
+      sparkle
+    );
+
+
+    setTimeout(
+      () => {
+
+        sparkle.remove();
+
+      },
+      1100
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SHAKE ELEMENT
+===================================================== */
+
+function shakeElement(
+  element
+) {
+
+  element.animate(
+    [
+      {
+        transform:
+          "translateX(0)"
+      },
+
+      {
+        transform:
+          "translateX(-5px)"
+      },
+
+      {
+        transform:
+          "translateX(5px)"
+      },
+
+      {
+        transform:
+          "translateX(-3px)"
+      },
+
+      {
+        transform:
+          "translateX(0)"
+      }
+    ],
+    {
+      duration: 300
+    }
+  );
+
+}
+
+
+/* =====================================================
+   RESTORE SAVED DATA
+===================================================== */
 
 window.addEventListener(
   "load",
@@ -899,6 +1342,33 @@ window.addEventListener(
 
       timeInput.value =
         savedTime;
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   EXTRA TOUCH:
+   ESCAPE KEY FOR SECRET
+===================================================== */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      secretOverlay.classList.remove(
+        "show"
+      );
+
+      successOverlay.classList.remove(
+        "show"
+      );
 
     }
 
