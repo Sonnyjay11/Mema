@@ -1,1783 +1,742 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="en">
 
-html {
-  scroll-behavior: smooth;
-}
+<head>
 
-body {
-  font-family: "DM Sans", sans-serif;
-  color: #466875;
-  background: #bde4f2;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+  <meta charset="UTF-8">
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
-/* =====================================================
-   BACKGROUND
-===================================================== */
+  <meta
+    name="theme-color"
+    content="#a9dff2"
+  >
 
-.background {
-  position: fixed;
-  inset: 0;
-  z-index: -10;
-  overflow: hidden;
+  <title>For Carmina ♡</title>
 
-  background:
-    linear-gradient(
-      180deg,
-      #a8dcef 0%,
-      #c8eaf4 48%,
-      #eaf7f9 100%
-    );
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
-/* Soft center glow */
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
-.background::after {
-  content: "";
-  position: absolute;
-  width: 650px;
-  height: 650px;
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
-  left: 50%;
-  top: 45%;
+</head>
 
-  transform: translate(-50%, -50%);
 
-  border-radius: 50%;
+<body>
 
-  background: rgba(255,255,255,.24);
 
-  filter: blur(80px);
-}
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
 
+<div class="background">
 
-/* Sun */
+  <div class="sun"></div>
 
-.sun {
-  position: absolute;
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
 
-  width: 115px;
-  height: 115px;
+  <div class="capiz-window">
 
-  top: 8%;
-  right: 13%;
+    <div class="window-cross vertical"></div>
 
-  border-radius: 50%;
+    <div class="window-cross horizontal"></div>
 
-  background: rgba(255,247,201,.78);
+  </div>
 
-  box-shadow:
-    0 0 80px rgba(255,247,201,.7);
-}
 
+  <!-- Decorative leaves -->
 
-/* =====================================================
-   CLOUDS
-===================================================== */
+  <div class="plant plant-left">
 
-.cloud {
-  position: absolute;
+    <span class="stem"></span>
 
-  width: 170px;
-  height: 45px;
+    <span class="leaf l1">❧</span>
+    <span class="leaf l2">❧</span>
+    <span class="leaf l3">❧</span>
 
-  border-radius: 50px;
+  </div>
 
-  background: rgba(255,255,255,.48);
 
-  filter: blur(1px);
-}
+  <div class="plant plant-right">
 
-.cloud::before,
-.cloud::after {
-  content: "";
+    <span class="stem"></span>
 
-  position: absolute;
+    <span class="leaf l1">❧</span>
+    <span class="leaf l2">❧</span>
+    <span class="leaf l3">❧</span>
 
-  border-radius: 50%;
+  </div>
 
-  background: inherit;
-}
 
-.cloud::before {
-  width: 65px;
-  height: 65px;
+  <!-- Sampaguita -->
 
-  left: 25px;
-  bottom: 8px;
-}
+  <div class="flower flower-1">✿</div>
+  <div class="flower flower-2">✿</div>
+  <div class="flower flower-3">✿</div>
 
-.cloud::after {
-  width: 80px;
-  height: 80px;
 
-  right: 20px;
-  bottom: 5px;
-}
+  <!-- Floating petals -->
 
-.cloud-1 {
-  left: -40px;
-  top: 17%;
+  <div class="floating-petal p1">♡</div>
+  <div class="floating-petal p2">✿</div>
+  <div class="floating-petal p3">♡</div>
+  <div class="floating-petal p4">✿</div>
+  <div class="floating-petal p5">♡</div>
 
-  animation:
-    cloudOne 32s linear infinite;
-}
+</div>
 
-.cloud-2 {
-  right: -80px;
-  top: 38%;
 
-  transform: scale(.7);
 
-  animation:
-    cloudTwo 38s linear infinite;
-}
+<!-- =====================================================
+     MUSIC
+===================================================== -->
 
-.cloud-3 {
-  left: 15%;
-  top: 8%;
+<button
+  class="music-button"
+  id="musicButton"
+  aria-label="Music"
+>
 
-  transform: scale(.45);
+  <span id="musicIcon">♫</span>
 
-  opacity: .5;
-}
+  <span id="musicLabel">
+    Love Is
+  </span>
 
-@keyframes cloudOne {
+</button>
 
-  from {
-    transform: translateX(0);
-  }
 
-  to {
-    transform: translateX(120vw);
-  }
+<audio
+  id="song"
+  loop
+  preload="auto"
+>
 
-}
+  <source
+    src="Love Is.mp3"
+    type="audio/mpeg"
+  >
 
-@keyframes cloudTwo {
+</audio>
 
-  from {
-    transform: translateX(0);
-  }
 
-  to {
-    transform: translateX(-120vw);
-  }
 
-}
+<!-- =====================================================
+     PAGE 1
+===================================================== -->
 
+<main
+  class="page active"
+  id="page1"
+>
 
-/* =====================================================
-   CAPIZ WINDOW
-===================================================== */
+  <section class="letter-container">
 
-.capiz-window {
 
-  position: absolute;
+    <div class="top-decoration">
 
-  width: 290px;
-  height: 290px;
+      <span>✿</span>
 
-  left: 50%;
-  top: 50%;
+      <div></div>
 
-  transform:
-    translate(-50%, -50%)
-    rotate(1deg);
+      <span>♡</span>
 
-  border: 10px solid rgba(255,255,255,.22);
+      <div></div>
 
-  opacity: .55;
+      <span>✿</span>
 
-  box-shadow:
-    inset 0 0 35px rgba(255,255,255,.12);
+    </div>
 
-}
 
-.window-cross {
-  position: absolute;
+    <p class="eyebrow">
+      a little something for you
+    </p>
 
-  background: rgba(255,255,255,.25);
-}
 
-.window-cross.vertical {
-  width: 5px;
-  height: 100%;
+    <h1>
 
-  left: 50%;
-  top: 0;
+      Hello,
 
-  transform: translateX(-50%);
-}
+      <br>
 
-.window-cross.horizontal {
-  height: 5px;
-  width: 100%;
+      <span>Carmina</span>
 
-  top: 50%;
-  left: 0;
+      <small>♡</small>
 
-  transform: translateY(-50%);
-}
+    </h1>
 
 
-/* =====================================================
-   LEAVES
-===================================================== */
+    <p class="intro-line">
 
-.plant {
-  position: absolute;
+      May gusto akong sabihin sa'yo.
 
-  width: 160px;
-  height: 220px;
+    </p>
 
-  opacity: .22;
-}
 
-.plant-left {
-  left: -50px;
-  bottom: -35px;
 
-  transform: rotate(-12deg);
-}
+    <!-- PAPER -->
 
-.plant-right {
-  right: -50px;
-  top: 48%;
+    <div class="paper-area">
 
-  transform:
-    rotate(18deg)
-    scale(.9);
-}
 
-.stem {
-  position: absolute;
+      <div
+        class="paper-letter"
+        id="paperLetter"
+      >
 
-  width: 3px;
-  height: 210px;
 
-  left: 50%;
-  bottom: 0;
+        <!-- Tape -->
 
-  background: #568b78;
+        <div class="tape tape-1"></div>
+        <div class="tape tape-2"></div>
 
-  transform: rotate(-12deg);
-}
 
-.leaf {
-  position: absolute;
+        <!-- Paper corners -->
 
-  color: #508775;
+        <div class="paper-corner corner-1"></div>
+        <div class="paper-corner corner-2"></div>
 
-  font-size: 65px;
-}
 
-.plant .l1 {
-  left: 5px;
-  bottom: 90px;
+        <p class="letter-hi">
+          Hello, Carmina &lt;3
+        </p>
 
-  transform: rotate(-30deg);
-}
 
-.plant .l2 {
-  right: 0;
-  bottom: 55px;
+        <p>
 
-  transform: rotate(25deg);
-}
+          Pagpasensyahan mo na itong
+          kabaliwan ko HAHAHA.
 
-.plant .l3 {
-  left: 15px;
-  bottom: 10px;
+          Sayang naman yung mga pinag-aralan ko
+          kung hindi ko gagamitin, diba?
 
-  transform: rotate(-15deg);
-}
+          Kaya ayan, pinag-isipan ko talaga 'to
+          kahit medyo OA HAHAHA.
 
+        </p>
 
-/* =====================================================
-   FLOWERS
-===================================================== */
 
-.flower {
-  position: absolute;
+        <p>
 
-  color: rgba(255,255,255,.72);
+          Gusto ko lang din sabihin na
+          <strong>thank you for always being there.</strong>
 
-  font-size: 30px;
+          Kahit sobrang busy mo,
+          you still somehow make time
+          and find a way para magkita tayo.
 
-  animation:
-    flowerFloat 5s ease-in-out infinite;
-}
+          I really appreciate that
+          more than you probably realize.
 
-.flower-1 {
-  left: 9%;
-  bottom: 17%;
-}
+        </p>
 
-.flower-2 {
-  right: 10%;
-  bottom: 21%;
 
-  animation-delay: 1.5s;
-}
+        <p>
 
-.flower-3 {
-  right: 17%;
-  top: 14%;
+          I hope you like this little surprise.
 
-  font-size: 22px;
+          And eto na rin yung
+          <strong>booking system natin</strong>
+          HAHAHAHA.
 
-  animation-delay: 2.5s;
-}
+          Para naman may silbi yung
+          website na ginawa ko.
 
-@keyframes flowerFloat {
+        </p>
 
-  0%,
-  100% {
-    transform: translateY(0) rotate(0);
-  }
 
-  50% {
-    transform: translateY(-10px) rotate(8deg);
-  }
+        <p>
 
-}
+          Pagpasensyahan mo na rin na
+          hindi ko muna siya na-publish properly...
 
+          medyo mahal kasi HAHAHA,
+          kaya dito na lang muna tayo.
 
-/* =====================================================
-   FLOATING PETALS
-===================================================== */
+        </p>
 
-.floating-petal {
 
-  position: absolute;
+        <p>
 
-  color: rgba(255,255,255,.65);
+          Anyway, thank you for being someone
+          I'm always happy to spend time with.
 
-  pointer-events: none;
+          I hope this little thing makes you smile,
+          kahit konti. ♡
 
-  animation:
-    petalFloat 8s ease-in-out infinite;
-}
+        </p>
 
-.p1 {
-  top: 28%;
-  left: 13%;
-}
 
-.p2 {
-  top: 70%;
-  left: 20%;
+        <div class="paper-divider">
 
-  animation-delay: 2s;
-}
+          <span>✿</span>
+          <span>♡</span>
+          <span>✿</span>
 
-.p3 {
-  top: 23%;
-  right: 16%;
+        </div>
 
-  animation-delay: 1s;
-}
 
-.p4 {
-  top: 60%;
-  right: 17%;
+        <p class="signature">
+          — Jay
+        </p>
 
-  animation-delay: 3s;
-}
 
-.p5 {
-  top: 12%;
-  left: 48%;
+      </div>
 
-  animation-delay: 4s;
-}
+    </div>
 
-@keyframes petalFloat {
 
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(0);
-  }
 
-  50% {
-    transform:
-      translateY(-25px)
-      rotate(20deg);
-  }
+    <!-- BUTTON -->
 
-}
+    <button
+      class="primary-button"
+      id="letterButton"
+    >
 
+      Buksan mo ♡
 
-/* =====================================================
-   MUSIC
-===================================================== */
+    </button>
 
-.music-button {
 
-  position: fixed;
+    <p
+      class="tiny-hint"
+      id="letterHint"
+    >
 
-  right: 18px;
-  top: 18px;
+      no pressure, promise :)
 
-  z-index: 100;
+    </p>
 
-  display: flex;
 
-  align-items: center;
+  </section>
 
-  gap: 7px;
+</main>
 
-  padding: 9px 13px;
 
-  border-radius: 100px;
 
-  border:
-    1px solid
-    rgba(255,255,255,.7);
+<!-- =====================================================
+     PAGE 2
+===================================================== -->
 
-  background:
-    rgba(255,255,255,.62);
+<main
+  class="page"
+  id="page2"
+>
 
-  backdrop-filter: blur(12px);
+  <section class="date-container">
 
-  color: #47798b;
 
-  font-size: 11px;
+    <div class="top-decoration">
 
-  cursor: pointer;
+      <span>✿</span>
 
-  box-shadow:
-    0 7px 25px
-    rgba(50,100,120,.08);
+      <div></div>
 
-}
+      <span>♡</span>
 
-.music-button.playing #musicIcon {
+      <div></div>
 
-  animation:
-    musicBounce .6s ease-in-out
-    infinite alternate;
+      <span>✿</span>
 
-}
+    </div>
 
-@keyframes musicBounce {
 
-  from {
-    transform: translateY(0);
-  }
+    <p class="eyebrow">
+      one small question
+    </p>
 
-  to {
-    transform: translateY(-3px);
-  }
 
-}
+    <h2>
 
+      Mimz...
 
-/* =====================================================
-   PAGE
-===================================================== */
+    </h2>
 
-.page {
 
-  min-height: 100vh;
+    <div class="question">
 
-  padding:
-    80px
-    20px
-    60px;
+      Pwede ba kitang yayain
 
-  display: none;
+      <br>
 
-  align-items: center;
-  justify-content: center;
-}
+      <span>
+        mag-coffee date?
+      </span>
 
-.page.active {
+      ☕♡
 
-  display: flex;
+    </div>
 
-  animation:
-    pageAppear .8s ease;
 
-}
+    <p class="question-description">
 
-@keyframes pageAppear {
+      Walang pressure.
 
-  from {
+      <br>
 
-    opacity: 0;
+      Ikaw ang pumili ng araw at oras.
 
-    transform:
-      translateY(20px);
+      <br>
 
-  }
+      <strong>Ako na bahala sa iba. :)</strong>
 
-  to {
+    </p>
 
-    opacity: 1;
 
-    transform:
-      translateY(0);
 
-  }
+    <!-- PHOTO -->
 
-}
+    <div class="polaroid">
 
+      <div class="photo-tape"></div>
 
-/* =====================================================
-   GENERAL DECORATION
-===================================================== */
 
-.top-decoration {
+      <div class="photo">
 
-  display: flex;
+        <img
+          src="photo.jpg"
+          alt="A little memory"
+        >
 
-  justify-content: center;
+      </div>
 
-  align-items: center;
 
-  gap: 9px;
+      <p>
+        maybe one more memory? ♡
+      </p>
 
-  margin-bottom: 17px;
+    </div>
 
-  color: #72a9b9;
 
-  font-size: 13px;
 
-}
+    <!-- BOOKING CARD -->
 
-.top-decoration div {
+    <div class="booking-card">
 
-  width: 35px;
-  height: 1px;
 
-  background:
-    rgba(100,150,165,.25);
+      <div class="booking-header">
 
-}
+        <span class="calendar-icon">
+          ♡
+        </span>
 
-.eyebrow {
+        <div>
 
-  text-transform: uppercase;
+          <p>
+            COFFEE DATE
+          </p>
 
-  letter-spacing: 2.5px;
+          <small>
+            reservation form
+          </small>
 
-  font-size: 10px;
+        </div>
 
-  color: #7296a1;
+      </div>
 
-}
 
 
-/* =====================================================
-   PAGE 1
-===================================================== */
+      <!-- DATE -->
 
-.letter-container {
+      <div class="field">
 
-  width: min(690px, 100%);
+        <label for="date">
+          📅 Pick a date
+        </label>
 
-  text-align: center;
 
-}
+        <input
+          type="date"
+          id="date"
+        >
 
-.letter-container h1 {
+      </div>
 
-  margin-top: 12px;
 
-  font-family: "Caveat", cursive;
 
-  font-size:
-    clamp(
-      60px,
-      13vw,
-      92px
-    );
+      <!-- TIME -->
 
-  line-height: .82;
+      <div class="field">
 
-  font-weight: 600;
+        <label for="time">
+          ⏰ Pick a time
+        </label>
 
-  color: #315b6a;
 
-}
+        <input
+          type="time"
+          id="time"
+        >
 
-.letter-container h1 span {
+      </div>
 
-  color: #467e93;
 
-}
 
-.letter-container h1 small {
+      <!-- OPTIONAL MESSAGE -->
 
-  font-size: .42em;
+      <div class="field">
 
-  vertical-align: top;
+        <label for="message">
+          💌 Optional message
+        </label>
 
-  color: #659bad;
 
-}
+        <textarea
+          id="message"
+          maxlength="180"
+          placeholder="Anything you want to tell me..."
+        ></textarea>
 
-.intro-line {
 
-  margin-top: 24px;
+        <div class="counter">
 
-  color: #698893;
+          <span id="characterCount">
+            0
+          </span>
 
-  font-size: 14px;
+          / 180
 
-}
+        </div>
 
+      </div>
 
-/* =====================================================
-   PAPER
-===================================================== */
 
-.paper-area {
+      <p
+        class="booking-hint"
+        id="bookingHint"
+      >
 
-  width: 100%;
+        Take your time. ♡
 
-  margin-top: 32px;
+      </p>
 
-  perspective: 1000px;
 
-}
+    </div>
 
-.paper-letter {
 
-  position: relative;
 
-  width: min(600px, 100%);
+    <!-- CONFIRM -->
 
-  margin: auto;
+    <button
+      class="primary-button confirm-button"
+      id="confirmButton"
+    >
 
-  max-height: 0;
+      Confirm coffee date ☕♡
 
-  overflow: hidden;
+    </button>
 
-  opacity: 0;
 
-  transform:
-    translateY(25px)
-    rotateX(-8deg);
+    <p class="tiny-hint">
 
-  padding:
-    0 38px;
+      yes, this is an actual booking system HAHAHA
 
-  text-align: left;
+    </p>
 
-  background:
-    linear-gradient(
-      135deg,
-      #fffef9,
-      #f8f5eb
-    );
 
-  box-shadow:
-    0 25px 55px
-    rgba(49,90,105,.14),
+  </section>
 
-    0 2px 7px
-    rgba(49,90,105,.1);
+</main>
 
-  transition:
-    max-height 1.3s ease,
-    opacity .8s ease,
-    transform .9s ease,
-    padding .9s ease;
 
-}
 
-.paper-letter.open {
+<!-- =====================================================
+     CONFIRMATION
+===================================================== -->
 
-  max-height: 1100px;
+<div
+  class="confirmation"
+  id="confirmation"
+>
 
-  opacity: 1;
 
-  transform:
-    translateY(0)
-    rotateX(0);
+  <div class="confirmation-backdrop"></div>
 
-  padding:
-    48px 38px;
 
-}
+  <div class="ticket">
 
 
-/* Paper texture */
+    <div class="ticket-top">
 
-.paper-letter::after {
+      <div class="ticket-flower">
+        ✿
+      </div>
 
-  content: "";
+      <p>
+        COFFEE DATE
+      </p>
 
-  position: absolute;
+      <div class="ticket-flower">
+        ✿
+      </div>
 
-  inset: 18px;
+    </div>
 
-  border:
-    1px solid
-    rgba(80,120,130,.1);
 
-  pointer-events: none;
+    <div class="ticket-line"></div>
 
-}
 
+    <p class="ticket-small">
+      RESERVATION CONFIRMED
+    </p>
 
-/* Tape */
 
-.tape {
+    <h3>
+      It's a date! ♡
+    </h3>
 
-  position: absolute;
 
-  width: 70px;
-  height: 25px;
+    <p class="ticket-subtitle">
 
-  top: 13px;
+      Okay... noted na HAHAHA.
 
-  background:
-    rgba(171,215,221,.52);
+    </p>
 
-  z-index: 2;
 
-}
 
-.tape-1 {
+    <div class="ticket-details">
 
-  left: 42px;
 
-  transform:
-    rotate(-5deg);
+      <div class="ticket-detail">
 
-}
+        <span>
+          Guest
+        </span>
 
-.tape-2 {
+        <strong>
+          Carmina
+        </strong>
 
-  right: 42px;
+      </div>
 
-  transform:
-    rotate(5deg);
 
-}
+      <div class="ticket-detail">
 
+        <span>
+          Invited by
+        </span>
 
-/* Paper corners */
+        <strong>
+          Jay
+        </strong>
 
-.paper-corner {
+      </div>
 
-  position: absolute;
 
-  width: 0;
-  height: 0;
+      <div class="ticket-detail">
 
-  border-style: solid;
+        <span>
+          Date
+        </span>
 
-  opacity: .45;
+        <strong id="ticketDate">
+        </strong>
 
-}
+      </div>
 
-.corner-1 {
 
-  right: 0;
-  top: 0;
+      <div class="ticket-detail">
 
-  border-width:
-    0 55px 55px 0;
+        <span>
+          Time
+        </span>
 
-  border-color:
-    transparent #e8e2d4 transparent transparent;
+        <strong id="ticketTime">
+        </strong>
 
-}
+      </div>
 
-.corner-2 {
 
-  left: 0;
-  bottom: 0;
+    </div>
 
-  border-width:
-    55px 0 0 55px;
 
-  border-color:
-    transparent transparent transparent #e8e2d4;
 
-}
+    <div class="ticket-line"></div>
 
 
-/* Letter typography */
+    <div class="confirmed">
 
-.paper-letter p {
+      <span>✓</span>
 
-  position: relative;
+      CONFIRMED
 
-  z-index: 3;
+    </div>
 
-  margin-bottom: 19px;
 
-  font-family:
-    "Caveat",
-    cursive;
+    <p
+      class="ticket-message"
+      id="ticketMessage"
+    ></p>
 
-  font-size: 21px;
 
-  line-height: 1.42;
+    <p class="ticket-footer">
 
-  color: #536c74;
+      I'll take care of the rest. ☕
 
-}
+      <br>
 
-.paper-letter strong {
+      <span>
+        See you soon, Carmina. ♡
+      </span>
 
-  color: #3d7487;
+    </p>
 
-}
 
-.letter-hi {
+    <div class="barcode">
 
-  font-size: 29px !important;
+      ||| || |||| | || ||| || ||
 
-  color: #376d80 !important;
+    </div>
 
-}
 
-.paper-divider {
+    <p class="ticket-code">
 
-  display: flex;
+      JAY × CARMINA
 
-  justify-content: center;
+    </p>
 
-  gap: 12px;
 
-  margin:
-    25px 0
-    8px;
+    <button
+      class="close-button"
+      id="closeButton"
+    >
 
-  color: #75a8b7;
+      okay ♡
 
-}
+    </button>
 
-.signature {
 
-  text-align: right;
+  </div>
 
-  font-size: 30px !important;
+</div>
 
-  margin-bottom: 0 !important;
 
-  color: #3f7383 !important;
 
-}
+<!-- =====================================================
+     SCRIPT
+===================================================== -->
 
+<script src="script.js"></script>
 
-/* =====================================================
-   BUTTON
-===================================================== */
+</body>
 
-.primary-button {
-
-  margin-top: 28px;
-
-  padding:
-    15px
-    30px;
-
-  border: none;
-
-  border-radius: 100px;
-
-  background:
-    #477f93;
-
-  color: white;
-
-  font-family:
-    "DM Sans",
-    sans-serif;
-
-  font-size: 14px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 10px 28px
-    rgba(52,105,125,.18);
-
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease;
-
-}
-
-.primary-button:hover {
-
-  transform:
-    translateY(-3px);
-
-  box-shadow:
-    0 14px 30px
-    rgba(52,105,125,.23);
-
-}
-
-.primary-button:active {
-
-  transform:
-    scale(.97);
-
-}
-
-.tiny-hint {
-
-  margin-top: 11px;
-
-  font-size: 10px;
-
-  color: #8ba4ac;
-
-}
-
-
-/* =====================================================
-   PAGE 2
-===================================================== */
-
-.date-container {
-
-  width: min(650px, 100%);
-
-  text-align: center;
-
-}
-
-.date-container h2 {
-
-  margin-top: 7px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 54px;
-
-  font-weight: 600;
-
-  color: #3e7183;
-
-}
-
-.question {
-
-  margin-top: 12px;
-
-  font-size:
-    clamp(
-      22px,
-      5vw,
-      31px
-    );
-
-  line-height: 1.35;
-
-  color: #456c79;
-
-}
-
-.question span {
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 1.45em;
-
-  color: #3e768a;
-
-}
-
-.question-description {
-
-  margin-top: 13px;
-
-  font-size: 13px;
-
-  line-height: 1.7;
-
-  color: #75919a;
-
-}
-
-.question-description strong {
-
-  color: #4b7c8d;
-
-}
-
-
-/* =====================================================
-   POLAROID
-===================================================== */
-
-.polaroid {
-
-  position: relative;
-
-  width: min(310px, 90%);
-
-  margin:
-    28px
-    auto;
-
-  padding:
-    10px
-    10px
-    17px;
-
-  background: white;
-
-  box-shadow:
-    0 18px 40px
-    rgba(50,100,115,.12);
-
-  transform:
-    rotate(-1.5deg);
-
-  transition:
-    transform .4s ease;
-
-}
-
-.polaroid:hover {
-
-  transform:
-    rotate(0deg)
-    translateY(-3px);
-
-}
-
-.photo {
-
-  width: 100%;
-
-  aspect-ratio: 4 / 3;
-
-  overflow: hidden;
-
-  background: #dceef2;
-
-}
-
-.photo img {
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-}
-
-.polaroid p {
-
-  margin-top: 10px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 20px;
-
-  color: #607982;
-
-}
-
-.photo-tape {
-
-  position: absolute;
-
-  width: 70px;
-  height: 22px;
-
-  top: -10px;
-  left: 50%;
-
-  transform:
-    translateX(-50%)
-    rotate(2deg);
-
-  background:
-    rgba(172,214,220,.58);
-
-}
-
-
-/* =====================================================
-   BOOKING CARD
-===================================================== */
-
-.booking-card {
-
-  max-width: 480px;
-
-  margin:
-    25px
-    auto
-    0;
-
-  padding: 25px;
-
-  text-align: left;
-
-  background:
-    rgba(255,255,255,.57);
-
-  border:
-    1px solid
-    rgba(255,255,255,.72);
-
-  border-radius: 22px;
-
-  box-shadow:
-    0 12px 30px
-    rgba(55,105,120,.08);
-
-  backdrop-filter:
-    blur(8px);
-
-}
-
-.booking-header {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-
-  margin-bottom: 22px;
-
-  padding-bottom: 17px;
-
-  border-bottom:
-    1px solid
-    rgba(100,145,155,.13);
-
-}
-
-.calendar-icon {
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 42px;
-  height: 42px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(255,255,255,.75);
-
-  color: #5e95a7;
-
-}
-
-.booking-header p {
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  letter-spacing: 1.5px;
-
-  color: #4c7887;
-
-}
-
-.booking-header small {
-
-  font-size: 10px;
-
-  color: #8ba1a7;
-
-}
-
-
-/* Fields */
-
-.field {
-
-  margin-top: 18px;
-
-}
-
-.field label {
-
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-size: 12px;
-
-  font-weight: 600;
-
-  color: #5e7d87;
-
-}
-
-.field input,
-.field textarea {
-
-  width: 100%;
-
-  border:
-    1px solid
-    rgba(78,125,140,.18);
-
-  border-radius: 12px;
-
-  padding:
-    13px;
-
-  background:
-    rgba(255,255,255,.78);
-
-  color: #486c77;
-
-  font-family:
-    "DM Sans",
-    sans-serif;
-
-  outline: none;
-
-  transition:
-    border .2s ease,
-    box-shadow .2s ease;
-
-}
-
-.field input:focus,
-.field textarea:focus {
-
-  border-color:
-    #78aebe;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(120,174,190,.1);
-
-}
-
-.field textarea {
-
-  min-height: 95px;
-
-  resize: vertical;
-
-}
-
-.counter {
-
-  margin-top: 5px;
-
-  text-align: right;
-
-  font-size: 9px;
-
-  color: #91a8ae;
-
-}
-
-.booking-hint {
-
-  margin-top: 17px;
-
-  text-align: center;
-
-  font-size: 11px;
-
-  color: #849fa7;
-
-}
-
-.confirm-button {
-
-  margin-top: 22px;
-
-}
-
-
-/* =====================================================
-   CONFIRMATION
-===================================================== */
-
-.confirmation {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 500;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 20px;
-
-  opacity: 0;
-
-  visibility: hidden;
-
-  pointer-events: none;
-
-  transition:
-    opacity .5s ease,
-    visibility .5s ease;
-
-}
-
-.confirmation.show {
-
-  opacity: 1;
-
-  visibility: visible;
-
-  pointer-events: auto;
-
-}
-
-.confirmation-backdrop {
-
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    rgba(40,73,84,.38);
-
-  backdrop-filter:
-    blur(9px);
-
-}
-
-.ticket {
-
-  position: relative;
-
-  width: min(430px, 100%);
-
-  max-height: 92vh;
-
-  overflow-y: auto;
-
-  padding:
-    27px
-    24px;
-
-  background:
-    #fffdf8;
-
-  box-shadow:
-    0 30px 80px
-    rgba(30,65,75,.28);
-
-  text-align: center;
-
-  transform:
-    translateY(25px)
-    scale(.94);
-
-  transition:
-    transform .55s ease;
-
-}
-
-.confirmation.show .ticket {
-
-  transform:
-    translateY(0)
-    scale(1);
-
-}
-
-
-/* Ticket */
-
-.ticket-top {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  color: #78aab8;
-
-}
-
-.ticket-top p {
-
-  font-size: 9px;
-
-  letter-spacing: 2px;
-
-  font-weight: 700;
-
-}
-
-.ticket-flower {
-
-  font-size: 15px;
-
-}
-
-.ticket-line {
-
-  height: 1px;
-
-  margin: 18px 0;
-
-  background:
-    repeating-linear-gradient(
-      90deg,
-      #d2e0e3 0,
-      #d2e0e3 7px,
-      transparent 7px,
-      transparent 13px
-    );
-
-}
-
-.ticket-small {
-
-  font-size: 9px;
-
-  letter-spacing: 2px;
-
-  color: #9aabad;
-
-}
-
-.ticket h3 {
-
-  margin-top: 5px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 48px;
-
-  color: #40778a;
-
-}
-
-.ticket-subtitle {
-
-  margin-top: 3px;
-
-  font-size: 12px;
-
-  color: #819aa1;
-
-}
-
-.ticket-details {
-
-  margin-top: 20px;
-
-}
-
-.ticket-detail {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 20px;
-
-  padding: 9px 0;
-
-  border-bottom:
-    1px dashed
-    #dbe6e8;
-
-  text-align: left;
-
-  font-size: 12px;
-
-}
-
-.ticket-detail span {
-
-  color: #9aabad;
-
-}
-
-.ticket-detail strong {
-
-  color: #4e7079;
-
-  text-align: right;
-
-}
-
-.confirmed {
-
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 6px;
-
-  padding:
-    7px
-    12px;
-
-  border-radius: 100px;
-
-  background:
-    #e5f3ed;
-
-  color: #568472;
-
-  font-size: 9px;
-
-  letter-spacing: 1.5px;
-
-  font-weight: 700;
-
-}
-
-.confirmed span {
-
-  font-size: 12px;
-
-}
-
-.ticket-message {
-
-  margin:
-    17px
-    8px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 20px;
-
-  color: #59747c;
-
-}
-
-.ticket-footer {
-
-  margin-top: 19px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 21px;
-
-  line-height: 1.45;
-
-  color: #507783;
-
-}
-
-.ticket-footer span {
-
-  font-size: 25px;
-
-  color: #3e7183;
-
-}
-
-.barcode {
-
-  margin-top: 23px;
-
-  font-size: 20px;
-
-  letter-spacing: 2px;
-
-  color: #536d73;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-}
-
-.ticket-code {
-
-  margin-top: 4px;
-
-  font-size: 8px;
-
-  letter-spacing: 3px;
-
-  color: #a1afb2;
-
-}
-
-.close-button {
-
-  margin-top: 20px;
-
-  padding:
-    12px
-    22px;
-
-  border: none;
-
-  border-radius: 100px;
-
-  background:
-    #477f93;
-
-  color: white;
-
-  font-family:
-    "DM Sans",
-    sans-serif;
-
-  font-size: 12px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-}
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width: 600px) {
-
-  .page {
-
-    padding:
-      72px
-      13px
-      40px;
-
-  }
-
-  .music-button {
-
-    top: 11px;
-    right: 11px;
-
-  }
-
-  .capiz-window {
-
-    width: 220px;
-    height: 220px;
-
-  }
-
-  .sun {
-
-    right: -25px;
-
-  }
-
-  .paper-letter.open {
-
-    padding:
-      43px
-      25px;
-
-  }
-
-  .paper-letter p {
-
-    font-size: 20px;
-
-  }
-
-  .paper-letter::after {
-
-    inset: 11px;
-
-  }
-
-  .tape {
-
-    width: 55px;
-
-  }
-
-  .tape-1 {
-
-    left: 25px;
-
-  }
-
-  .tape-2 {
-
-    right: 25px;
-
-  }
-
-  .booking-card {
-
-    padding:
-      21px
-      17px;
-
-  }
-
-  .ticket {
-
-    padding:
-      25px
-      18px;
-
-  }
-
-}
-
-
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-
-    animation-duration:
-      .01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      .01ms !important;
-
-  }
-
-}
+</html>
