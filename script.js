@@ -2,12 +2,6 @@
    ELEMENTS
 ===================================================== */
 
-const entryScreen =
-  document.getElementById("entryScreen");
-
-const enterButton =
-  document.getElementById("enterButton");
-
 const song =
   document.getElementById("song");
 
@@ -17,8 +11,9 @@ const musicButton =
 const musicIcon =
   document.getElementById("musicIcon");
 
-const musicText =
-  document.getElementById("musicText");
+const musicLabel =
+  document.getElementById("musicLabel");
+
 
 const page1 =
   document.getElementById("page1");
@@ -26,14 +21,16 @@ const page1 =
 const page2 =
   document.getElementById("page2");
 
+
 const paperLetter =
   document.getElementById("paperLetter");
 
-const letterBtn =
-  document.getElementById("letterBtn");
+const letterButton =
+  document.getElementById("letterButton");
 
-const hintText =
-  document.getElementById("hintText");
+const letterHint =
+  document.getElementById("letterHint");
+
 
 const dateInput =
   document.getElementById("date");
@@ -41,26 +38,22 @@ const dateInput =
 const timeInput =
   document.getElementById("time");
 
-const dateHint =
-  document.getElementById("dateHint");
-
 const messageInput =
   document.getElementById("message");
 
 const characterCount =
   document.getElementById("characterCount");
 
-const yesBtn =
-  document.getElementById("yesBtn");
+const bookingHint =
+  document.getElementById("bookingHint");
 
-const maybeBtn =
-  document.getElementById("maybeBtn");
 
-const kiligText =
-  document.getElementById("kiligText");
+const confirmButton =
+  document.getElementById("confirmButton");
 
-const successOverlay =
-  document.getElementById("successOverlay");
+
+const confirmation =
+  document.getElementById("confirmation");
 
 const ticketDate =
   document.getElementById("ticketDate");
@@ -71,8 +64,8 @@ const ticketTime =
 const ticketMessage =
   document.getElementById("ticketMessage");
 
-const closeTicket =
-  document.getElementById("closeTicket");
+const closeButton =
+  document.getElementById("closeButton");
 
 
 /* =====================================================
@@ -83,86 +76,68 @@ let letterOpened = false;
 
 let musicPlaying = false;
 
-let maybeIndex = 0;
-
 
 /* =====================================================
-   ENTRY + MUSIC
+   MUSIC
 ===================================================== */
 
-enterButton.addEventListener("click", async () => {
+musicButton.addEventListener(
+  "click",
+  async () => {
 
-  entryScreen.classList.add("hide");
+    if (song.paused) {
 
-  try {
+      try {
 
-    await song.play();
+        await song.play();
 
-    musicPlaying = true;
+        musicPlaying = true;
 
-    updateMusicButton();
+      } catch (error) {
 
-  } catch (error) {
+        console.log(error);
 
-    console.log(
-      "Music could not start automatically."
-    );
+      }
 
-  }
+    } else {
 
-});
+      song.pause();
 
-
-/* =====================================================
-   MUSIC BUTTON
-===================================================== */
-
-musicButton.addEventListener("click", async () => {
-
-  if (song.paused) {
-
-    try {
-
-      await song.play();
-
-      musicPlaying = true;
-
-    } catch (error) {
-
-      console.log(error);
+      musicPlaying = false;
 
     }
 
-  } else {
-
-    song.pause();
-
-    musicPlaying = false;
+    updateMusic();
 
   }
-
-  updateMusicButton();
-
-});
+);
 
 
-function updateMusicButton() {
+function updateMusic() {
 
   if (musicPlaying) {
 
-    musicButton.classList.add("playing");
+    musicButton.classList.add(
+      "playing"
+    );
 
-    musicIcon.textContent = "♫";
+    musicIcon.textContent =
+      "♫";
 
-    musicText.textContent = "Love Is";
+    musicLabel.textContent =
+      "Love Is";
 
   } else {
 
-    musicButton.classList.remove("playing");
+    musicButton.classList.remove(
+      "playing"
+    );
 
-    musicIcon.textContent = "▶";
+    musicIcon.textContent =
+      "▶";
 
-    musicText.textContent = "Music";
+    musicLabel.textContent =
+      "Music";
 
   }
 
@@ -173,56 +148,76 @@ function updateMusicButton() {
    LETTER
 ===================================================== */
 
-letterBtn.addEventListener("click", () => {
+letterButton.addEventListener(
+  "click",
+  () => {
 
-  if (!letterOpened) {
+    if (!letterOpened) {
 
-    paperLetter.classList.add("open");
+      openLetter();
 
-    letterOpened = true;
+    } else {
 
-    letterBtn.textContent =
-      "May itatanong ako sa'yo →";
+      goToDatePage();
 
-    hintText.textContent =
-      "Basahin mo muna... don't rush ♡";
+    }
 
-    setTimeout(() => {
-
-      paperLetter.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    }, 300);
-
-    return;
   }
+);
 
 
-  goToPage2();
+function openLetter() {
 
-});
+  paperLetter.classList.add(
+    "open"
+  );
+
+  letterOpened = true;
 
 
-/* =====================================================
-   PAGE TRANSITION
-===================================================== */
+  letterButton.textContent =
+    "May itatanong ako sa'yo →";
 
-function goToPage2() {
 
-  page1.classList.remove("active");
+  letterHint.textContent =
+    "Basahin mo muna... ♡";
+
 
   setTimeout(() => {
 
-    page2.classList.add("active");
+    paperLetter.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }, 350);
+
+}
+
+
+/* =====================================================
+   PAGE 2
+===================================================== */
+
+function goToDatePage() {
+
+  page1.classList.remove(
+    "active"
+  );
+
+
+  setTimeout(() => {
+
+    page2.classList.add(
+      "active"
+    );
 
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
 
-  }, 200);
+  }, 180);
 
 }
 
@@ -249,6 +244,7 @@ function setMinimumDate() {
       today.getDate()
     ).padStart(2, "0");
 
+
   dateInput.min =
     `${year}-${month}-${day}`;
 
@@ -258,64 +254,95 @@ setMinimumDate();
 
 
 /* =====================================================
-   DATE
+   SAVE DATE / TIME
 ===================================================== */
 
 dateInput.addEventListener(
   "change",
-  saveBooking
+  () => {
+
+    localStorage.setItem(
+      "coffeeDate",
+      dateInput.value
+    );
+
+
+    if (dateInput.value) {
+
+      bookingHint.textContent =
+        "Okay... may napili ka nang araw. 👀";
+
+    }
+
+  }
 );
+
 
 timeInput.addEventListener(
   "change",
-  saveBooking
+  () => {
+
+    localStorage.setItem(
+      "coffeeTime",
+      timeInput.value
+    );
+
+
+    if (
+      dateInput.value &&
+      timeInput.value
+    ) {
+
+      bookingHint.textContent =
+        "Noted... parang legit na 'to. ☕";
+
+    }
+
+  }
 );
 
 
-function saveBooking() {
+/* =====================================================
+   MESSAGE
+===================================================== */
 
-  localStorage.setItem(
-    "coffeeDate",
-    dateInput.value
-  );
+messageInput.addEventListener(
+  "input",
+  () => {
 
-  localStorage.setItem(
-    "coffeeTime",
-    timeInput.value
-  );
+    characterCount.textContent =
+      messageInput.value.length;
 
 
-  if (
-    dateInput.value &&
-    timeInput.value
-  ) {
-
-    dateHint.textContent =
-      "Okay... may schedule na tayo. 👀";
-
-    changeKiligMessage(
-      "Wait... legit may date na tayo? 👀"
+    localStorage.setItem(
+      "coffeeMessage",
+      messageInput.value
     );
 
   }
-
-}
+);
 
 
 /* =====================================================
-   RESTORE BOOKING
+   RESTORE
 ===================================================== */
 
-function restoreBooking() {
+function restoreSavedData() {
 
   const savedDate =
-    localStorage.getItem("coffeeDate");
+    localStorage.getItem(
+      "coffeeDate"
+    );
 
   const savedTime =
-    localStorage.getItem("coffeeTime");
+    localStorage.getItem(
+      "coffeeTime"
+    );
 
   const savedMessage =
-    localStorage.getItem("coffeeMessage");
+    localStorage.getItem(
+      "coffeeMessage"
+    );
 
 
   if (savedDate) {
@@ -350,208 +377,79 @@ function restoreBooking() {
     savedTime
   ) {
 
-    dateHint.textContent =
+    bookingHint.textContent =
       "May napili ka na pala. 👀";
 
   }
 
 }
 
-restoreBooking();
+restoreSavedData();
 
 
 /* =====================================================
-   MESSAGE
+   CONFIRM DATE
 ===================================================== */
 
-messageInput.addEventListener(
-  "input",
-  () => {
-
-    characterCount.textContent =
-      messageInput.value.length;
-
-    localStorage.setItem(
-      "coffeeMessage",
-      messageInput.value
-    );
-
-  }
-);
-
-
-/* =====================================================
-   KULIT MESSAGES
-===================================================== */
-
-const kiligMessages = [
-
-  "Sige na... pumili ka na HAHAHA.",
-
-  "Hindi naman kita pine-pressure... konti lang. 👀",
-
-  "Imagine mo na lang may coffee tayo habang nagkukwentuhan. ☕",
-
-  "Okay lang mag-isip... basta pili ka. HAHAHA.",
-
-  "Jay has entered his booking-system era. 😭",
-
-  "Please cooperate with the management. HAHAHA.",
-
-  "This is a very serious business transaction. ☕",
-
-  "Date application form po ito. Kindly accomplish. 😂",
-
-  "Mimz, wag mo akong pahirapan. HAHAHA.",
-
-  "Lowkey hoping na pili ka ng malapit. 👀",
-
-  "Take your time... pero sana ngayon. HAHAHA.",
-
-  "Imagine natin na reservation na talaga 'to. ♡"
-
-];
-
-
-function changeKiligMessage(message) {
-
-  kiligText.style.opacity = "0";
-
-  setTimeout(() => {
-
-    kiligText.textContent =
-      message;
-
-    kiligText.style.opacity = "1";
-
-  }, 180);
-
-}
-
-
-/* =====================================================
-   RANDOM KULIT MESSAGE
-===================================================== */
-
-setInterval(() => {
-
-  if (
-    page2.classList.contains("active") &&
-    !successOverlay.classList.contains("show")
-  ) {
-
-    const random =
-      kiligMessages[
-        Math.floor(
-          Math.random() *
-          kiligMessages.length
-        )
-      ];
-
-    changeKiligMessage(random);
-
-  }
-
-}, 7000);
-
-
-/* =====================================================
-   MAYBE BUTTON
-===================================================== */
-
-const maybeMessages = [
-
-  "Maybe... 👀",
-
-  "Sure ka ba? 😭",
-
-  "Pag-isipan mo muna HAHAHA.",
-
-  "May coffee naman. ☕",
-
-  "Hindi kita pine-pressure...",
-
-  "Pero sana oo. 👀",
-
-  "Last chance na 'to.",
-
-  "Mimz naman oh HAHAHA.",
-
-  "One coffee lang. Promise. ♡",
-
-  "Okay... I'll wait. 🥹",
-
-  "So... yes? 👀"
-
-];
-
-
-maybeBtn.addEventListener("click", () => {
-
-  maybeIndex++;
-
-  if (
-    maybeIndex >=
-    maybeMessages.length
-  ) {
-
-    maybeIndex = 0;
-
-  }
-
-  maybeBtn.textContent =
-    maybeMessages[maybeIndex];
-
-
-  changeKiligMessage(
-    maybeMessages[maybeIndex]
-  );
-
-});
-
-
-/* =====================================================
-   CONFIRM
-===================================================== */
-
-yesBtn.addEventListener(
+confirmButton.addEventListener(
   "click",
   () => {
 
-    const selectedDate =
+    const date =
       dateInput.value;
 
-    const selectedTime =
+    const time =
       timeInput.value;
 
 
-    if (
-      !selectedDate ||
-      !selectedTime
-    ) {
+    /* No date */
 
-      dateHint.textContent =
-        "Hoyyy, date and time muna please. 😂♡";
+    if (!date) {
 
-      changeKiligMessage(
-        "Hindi pa complete ang booking form, Mimz. 👀"
-      );
+      bookingHint.textContent =
+        "Pili ka muna ng date please. ♡";
 
       dateInput.focus();
+
+      shakeElement(
+        dateInput
+      );
 
       return;
 
     }
 
 
-    const dateObject =
+    /* No time */
+
+    if (!time) {
+
+      bookingHint.textContent =
+        "Okay na yung date... oras naman. 👀";
+
+      timeInput.focus();
+
+      shakeElement(
+        timeInput
+      );
+
+      return;
+
+    }
+
+
+    /* Build date */
+
+    const selected =
       new Date(
-        `${selectedDate}T${selectedTime}`
+        `${date}T${time}`
       );
 
 
+    /* Date formatting */
+
     const formattedDate =
-      dateObject.toLocaleDateString(
+      selected.toLocaleDateString(
         "en-PH",
         {
           weekday: "long",
@@ -562,8 +460,10 @@ yesBtn.addEventListener(
       );
 
 
+    /* Time formatting */
+
     const formattedTime =
-      dateObject.toLocaleTimeString(
+      selected.toLocaleTimeString(
         "en-PH",
         {
           hour: "numeric",
@@ -579,6 +479,8 @@ yesBtn.addEventListener(
     ticketTime.textContent =
       formattedTime;
 
+
+    /* Message */
 
     const message =
       messageInput.value.trim();
@@ -597,40 +499,85 @@ yesBtn.addEventListener(
     }
 
 
+    /* Save confirmation */
+
     localStorage.setItem(
       "coffeeConfirmed",
       "true"
     );
 
 
-    successOverlay.classList.add(
+    /* Show ticket */
+
+    confirmation.classList.add(
       "show"
     );
 
 
-    createCelebration();
+    /* Celebration */
 
-
-    setTimeout(() => {
-
-      changeKiligMessage(
-        "AYAN NA. DATE NA TALAGA. 😭♡"
-      );
-
-    }, 500);
+    createHearts();
 
   }
 );
 
 
 /* =====================================================
-   ESCAPE HTML
+   SHAKE
+===================================================== */
+
+function shakeElement(element) {
+
+  element.animate(
+    [
+      {
+        transform:
+          "translateX(0)"
+      },
+
+      {
+        transform:
+          "translateX(-5px)"
+      },
+
+      {
+        transform:
+          "translateX(5px)"
+      },
+
+      {
+        transform:
+          "translateX(-4px)"
+      },
+
+      {
+        transform:
+          "translateX(4px)"
+      },
+
+      {
+        transform:
+          "translateX(0)"
+      }
+    ],
+    {
+      duration: 350
+    }
+  );
+
+}
+
+
+/* =====================================================
+   SAFE HTML
 ===================================================== */
 
 function escapeHTML(text) {
 
   const div =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   div.textContent =
     text;
@@ -641,37 +588,34 @@ function escapeHTML(text) {
 
 
 /* =====================================================
-   CELEBRATION
+   HEART CELEBRATION
 ===================================================== */
 
-function createCelebration() {
+function createHearts() {
 
   const symbols = [
     "♡",
     "♥",
     "✿",
     "✧",
-    "☕",
     "♡",
-    "✿"
+    "☕"
   ];
 
 
   for (
     let i = 0;
-    i < 35;
+    i < 28;
     i++
   ) {
 
-    const item =
-      document.createElement("div");
+    const heart =
+      document.createElement(
+        "div"
+      );
 
 
-    item.className =
-      "celebration";
-
-
-    item.textContent =
+    heart.textContent =
       symbols[
         Math.floor(
           Math.random() *
@@ -680,34 +624,73 @@ function createCelebration() {
       ];
 
 
-    item.style.left =
+    heart.style.position =
+      "fixed";
+
+    heart.style.left =
       Math.random() * 100 + "vw";
 
-
-    item.style.top =
-      70 +
-      Math.random() * 30 +
+    heart.style.top =
+      (70 + Math.random() * 25) +
       "vh";
 
+    heart.style.zIndex =
+      "800";
 
-    item.style.animationDelay =
-      Math.random() * .8 + "s";
+    heart.style.pointerEvents =
+      "none";
 
-
-    item.style.fontSize =
-      15 +
-      Math.random() * 25 +
+    heart.style.fontSize =
+      (14 + Math.random() * 20) +
       "px";
 
+    heart.style.color =
+      "rgba(255,255,255,.9)";
 
-    document.body.appendChild(item);
+
+    heart.animate(
+      [
+        {
+          opacity: 0,
+
+          transform:
+            "translateY(0) scale(.5)"
+        },
+
+        {
+          opacity: 1
+        },
+
+        {
+          opacity: 0,
+
+          transform:
+            "translateY(-300px) rotate(25deg) scale(1.2)"
+        }
+      ],
+      {
+        duration:
+          2200 +
+          Math.random() * 1200,
+
+        delay:
+          Math.random() * 500,
+
+        easing:
+          "ease-out"
+      }
+    );
 
 
-    setTimeout(() => {
+    document.body.appendChild(
+      heart
+    );
 
-      item.remove();
 
-    }, 3500);
+    setTimeout(
+      () => heart.remove(),
+      4000
+    );
 
   }
 
@@ -718,17 +701,12 @@ function createCelebration() {
    CLOSE TICKET
 ===================================================== */
 
-closeTicket.addEventListener(
+closeButton.addEventListener(
   "click",
   () => {
 
-    successOverlay.classList.remove(
+    confirmation.classList.remove(
       "show"
-    );
-
-
-    changeKiligMessage(
-      "Okay... so when are we getting coffee? 👀♡"
     );
 
   }
@@ -736,7 +714,7 @@ closeTicket.addEventListener(
 
 
 /* =====================================================
-   KEYBOARD SUPPORT
+   ESCAPE
 ===================================================== */
 
 document.addEventListener(
@@ -744,11 +722,10 @@ document.addEventListener(
   (event) => {
 
     if (
-      event.key === "Escape" &&
-      successOverlay.classList.contains("show")
+      event.key === "Escape"
     ) {
 
-      successOverlay.classList.remove(
+      confirmation.classList.remove(
         "show"
       );
 
