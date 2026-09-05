@@ -1,87 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#8ed8f8" />
-  <title>A Little Invitation for Mimz ♡</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>A Little Invitation ♡</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="sky-glow glow-one"></div>
-  <div class="sky-glow glow-two"></div>
 
-  <main class="card" id="inviteCard">
-    <div class="tiny-heart">♡</div>
+  <!-- Floating decorations -->
+  <div class="decor heart1">♡</div>
+  <div class="decor heart2">♡</div>
+  <div class="decor heart3">♡</div>
+  <div class="decor star1">✦</div>
+  <div class="decor star2">✦</div>
 
-    <p class="eyebrow">A little invitation from Jay</p>
-    <h1>Mimz, coffee date?</h1>
+  <main>
 
-    <p class="intro">
-      Nothing too complicated.<br>
-      Just good coffee, good conversation,<br>
-      and hopefully a little time with you.
-    </p>
+    <!-- INVITATION CARD -->
+    <section class="card" id="inviteCard">
 
-    <div class="divider"><span>♡</span></div>
-
-    <section class="choices">
-      <label for="date">Pick a date</label>
-      <input id="date" type="date" />
-
-      <label for="time">And a time</label>
-      <input id="time" type="time" />
-    </section>
-
-    <p class="secret-note">The place is a secret for now. 🤫</p>
-
-    <div class="buttons">
-      <button class="yes-btn" id="yesBtn">Yes, let's go ♡</button>
-      <button class="no-btn" id="noBtn">No</button>
-    </div>
-
-    <p class="hint" id="hint">Choose a date and time first.</p>
-  </main>
-
-  <section class="success hidden" id="success">
-    <div class="success-card">
-      <div class="big-heart">♡</div>
-      <p class="eyebrow">It's a date!</p>
-      <h2>See you, Mimz.</h2>
-
-      <p class="success-text">
-        You pick the date.<br>
-        You pick the time.<br>
-        I'll take care of the rest.
-      </p>
-
-      <div class="summary">
-        <div>
-          <span>Date</span>
-          <strong id="chosenDate">—</strong>
-        </div>
-        <div>
-          <span>Time</span>
-          <strong id="chosenTime">—</strong>
-        </div>
-        <div>
-          <span>Place</span>
-          <strong>Secret 🤫</strong>
-        </div>
+      <div class="small-text">
+        A little something for you...
       </div>
 
-      <p class="closing">
-        I’m looking forward to spending a little time with you. ♡
+      <h1>
+        Hey, Mimz ♡
+      </h1>
+
+      <!-- YOUR PHOTO -->
+      <div class="photo-container">
+        <img src="photo.jpg" alt="Us">
+      </div>
+
+      <div class="message">
+
+        <p class="intro">
+          I have a little question for you.
+        </p>
+
+        <p>
+          Would you let me take you out for
+          a simple coffee date?
+        </p>
+
+        <p class="sweet">
+          Just you, me, good coffee,<br>
+          and hopefully a really nice day.
+        </p>
+
+      </div>
+
+      <!-- MUSIC -->
+      <button class="music-btn" id="songBtn">
+        ♫ Our little song
+      </button>
+
+      <div class="divider"></div>
+
+      <h2>
+        Pick our date ♡
+      </h2>
+
+      <p class="instruction">
+        You get to choose the day and time.
       </p>
 
-      <button class="song-btn" id="songBtn">Love Is — The Ridleys ♫</button>
-      <p class="music-note">Add your own song link in <code>script.js</code> if you want the button to open the song.</p>
-    </div>
-  </section>
+      <div class="input-group">
+
+        <label for="date">
+          DATE
+        </label>
+
+        <input
+          type="date"
+          id="date"
+        >
+
+      </div>
+
+      <div class="input-group">
+
+        <label for="time">
+          TIME
+        </label>
+
+        <input
+          type="time"
+          id="time"
+        >
+
+      </div>
+
+      <p id="hint" class="hint">
+        Choose a date and time first.
+      </p>
+
+      <div class="buttons">
+
+        <button id="yesBtn" class="yes-btn">
+          Yes, I'd love to ♡
+        </button>
+
+        <button id="noBtn" class="no-btn">
+          Maybe not...
+        </button>
+
+      </div>
+
+      <p class="footer">
+        — Jay
+      </p>
+
+    </section>
+
+
+    <!-- SUCCESS SCREEN -->
+
+    <section class="card success hidden" id="success">
+
+      <div class="success-heart">
+        ♡
+      </div>
+
+      <div class="small-text">
+        It's a date.
+      </div>
+
+      <h1>
+        You said yes! ♡
+      </h1>
+
+      <div class="photo-container success-photo">
+        <img src="photo.jpg" alt="Our photo">
+      </div>
+
+      <p class="success-message">
+        I honestly couldn't be happier.
+      </p>
+
+      <div class="date-box">
+
+        <div>
+          <span>DATE</span>
+          <strong id="chosenDate"></strong>
+        </div>
+
+        <div>
+          <span>TIME</span>
+          <strong id="chosenTime"></strong>
+        </div>
+
+      </div>
+
+      <p class="final-message">
+
+        I'll take care of the coffee.<br>
+        You just have to show up. ♡
+
+      </p>
+
+      <p class="signature">
+        Can't wait, Mimz.<br>
+        — Jay
+      </p>
+
+    </section>
+
+  </main>
 
   <script src="script.js"></script>
+
 </body>
 </html>
