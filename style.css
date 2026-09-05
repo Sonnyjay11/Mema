@@ -4,1780 +4,1028 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
+:root {
+  --sky: #a9dff1;
+  --sky-light: #eaf8fc;
+  --blue: #6fb7d2;
+  --deep-blue: #477f99;
+  --paper: #fffdf7;
+  --cream: #fff8e9;
+  --brown: #70594c;
+  --soft-brown: #92776a;
+  --white: rgba(255,255,255,0.8);
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
 }
 
 body {
   font-family: "DM Sans", sans-serif;
-  color: #466875;
-  background: #bde4f2;
-  min-height: 100vh;
+  color: var(--brown);
   overflow-x: hidden;
+  background:
+    linear-gradient(
+      135deg,
+      #bde9f6 0%,
+      #e9f8fb 45%,
+      #fdf8ed 100%
+    );
 }
 
 
-/* =====================================================
+/* =================================
    BACKGROUND
-===================================================== */
+================================= */
 
 .background {
   position: fixed;
   inset: 0;
-  z-index: -10;
   overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+
+/* soft sun */
+
+.sun {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  right: -110px;
+  top: -100px;
+
+  background: rgba(255, 245, 205, 0.55);
+
+  filter: blur(3px);
+}
+
+
+/* Filipino capiz-window inspired shape */
+
+.capiz-window {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+
+  left: -190px;
+  bottom: -170px;
+
+  border-radius: 50%;
+
+  border: 3px solid rgba(255,255,255,0.45);
 
   background:
-    linear-gradient(
-      180deg,
-      #a8dcef 0%,
-      #c8eaf4 48%,
-      #eaf7f9 100%
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.2),
+      rgba(255,255,255,0.03)
+    );
+
+  box-shadow:
+    0 0 60px rgba(255,255,255,0.3);
+}
+
+.window-line {
+  position: absolute;
+  background: rgba(255,255,255,0.3);
+}
+
+.window-line.vertical {
+  width: 2px;
+  height: 100%;
+  left: 50%;
+}
+
+.window-line.horizontal {
+  width: 100%;
+  height: 2px;
+  top: 50%;
+}
+
+
+/* subtle Filipino woven / banig-inspired texture */
+
+.woven-pattern {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.12;
+
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0px,
+      transparent 10px,
+      rgba(72, 125, 145, 0.25) 11px,
+      transparent 12px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0px,
+      transparent 10px,
+      rgba(72, 125, 145, 0.18) 11px,
+      transparent 12px
     );
 }
 
 
-/* Soft center glow */
+/* Sampaguita-inspired flowers */
 
-.background::after {
-  content: "";
-  position: absolute;
-  width: 650px;
-  height: 650px;
-
-  left: 50%;
-  top: 45%;
-
-  transform: translate(-50%, -50%);
-
-  border-radius: 50%;
-
-  background: rgba(255,255,255,.24);
-
-  filter: blur(80px);
-}
-
-
-/* Sun */
-
-.sun {
+.sampaguita {
   position: absolute;
 
-  width: 115px;
-  height: 115px;
+  font-family: serif;
 
-  top: 8%;
-  right: 13%;
+  color: rgba(255,255,255,0.7);
 
-  border-radius: 50%;
+  font-size: 40px;
 
-  background: rgba(255,247,201,.78);
+  filter: blur(0.2px);
 
-  box-shadow:
-    0 0 80px rgba(255,247,201,.7);
+  animation: floating 7s ease-in-out infinite;
 }
 
-
-/* =====================================================
-   CLOUDS
-===================================================== */
-
-.cloud {
-  position: absolute;
-
-  width: 170px;
-  height: 45px;
-
-  border-radius: 50px;
-
-  background: rgba(255,255,255,.48);
-
-  filter: blur(1px);
+.flower-one {
+  top: 15%;
+  left: 8%;
 }
 
-.cloud::before,
-.cloud::after {
-  content: "";
-
-  position: absolute;
-
-  border-radius: 50%;
-
-  background: inherit;
+.flower-two {
+  top: 68%;
+  right: 8%;
+  font-size: 28px;
+  animation-delay: 1.5s;
 }
 
-.cloud::before {
-  width: 65px;
-  height: 65px;
-
-  left: 25px;
-  bottom: 8px;
-}
-
-.cloud::after {
-  width: 80px;
-  height: 80px;
-
-  right: 20px;
-  bottom: 5px;
-}
-
-.cloud-1 {
-  left: -40px;
-  top: 17%;
-
-  animation:
-    cloudOne 32s linear infinite;
-}
-
-.cloud-2 {
-  right: -80px;
+.flower-three {
   top: 38%;
-
-  transform: scale(.7);
-
-  animation:
-    cloudTwo 38s linear infinite;
-}
-
-.cloud-3 {
-  left: 15%;
-  top: 8%;
-
-  transform: scale(.45);
-
-  opacity: .5;
-}
-
-@keyframes cloudOne {
-
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(120vw);
-  }
-
-}
-
-@keyframes cloudTwo {
-
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-120vw);
-  }
-
+  right: 4%;
+  font-size: 20px;
+  animation-delay: 3s;
 }
 
 
-/* =====================================================
-   CAPIZ WINDOW
-===================================================== */
-
-.capiz-window {
-
-  position: absolute;
-
-  width: 290px;
-  height: 290px;
-
-  left: 50%;
-  top: 50%;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(1deg);
-
-  border: 10px solid rgba(255,255,255,.22);
-
-  opacity: .55;
-
-  box-shadow:
-    inset 0 0 35px rgba(255,255,255,.12);
-
-}
-
-.window-cross {
-  position: absolute;
-
-  background: rgba(255,255,255,.25);
-}
-
-.window-cross.vertical {
-  width: 5px;
-  height: 100%;
-
-  left: 50%;
-  top: 0;
-
-  transform: translateX(-50%);
-}
-
-.window-cross.horizontal {
-  height: 5px;
-  width: 100%;
-
-  top: 50%;
-  left: 0;
-
-  transform: translateY(-50%);
-}
-
-
-/* =====================================================
-   LEAVES
-===================================================== */
-
-.plant {
-  position: absolute;
-
-  width: 160px;
-  height: 220px;
-
-  opacity: .22;
-}
-
-.plant-left {
-  left: -50px;
-  bottom: -35px;
-
-  transform: rotate(-12deg);
-}
-
-.plant-right {
-  right: -50px;
-  top: 48%;
-
-  transform:
-    rotate(18deg)
-    scale(.9);
-}
-
-.stem {
-  position: absolute;
-
-  width: 3px;
-  height: 210px;
-
-  left: 50%;
-  bottom: 0;
-
-  background: #568b78;
-
-  transform: rotate(-12deg);
-}
+/* leaves */
 
 .leaf {
   position: absolute;
 
-  color: #508775;
+  font-size: 70px;
 
-  font-size: 65px;
+  color: rgba(90, 150, 125, 0.15);
+
+  transform: rotate(-20deg);
 }
 
-.plant .l1 {
-  left: 5px;
-  bottom: 90px;
-
-  transform: rotate(-30deg);
+.leaf-one {
+  left: -15px;
+  top: 35%;
 }
 
-.plant .l2 {
-  right: 0;
-  bottom: 55px;
-
-  transform: rotate(25deg);
-}
-
-.plant .l3 {
-  left: 15px;
-  bottom: 10px;
-
-  transform: rotate(-15deg);
+.leaf-two {
+  right: -10px;
+  bottom: 20%;
+  transform: rotate(160deg);
 }
 
 
-/* =====================================================
-   FLOWERS
-===================================================== */
-
-.flower {
-  position: absolute;
-
-  color: rgba(255,255,255,.72);
-
-  font-size: 30px;
-
-  animation:
-    flowerFloat 5s ease-in-out infinite;
-}
-
-.flower-1 {
-  left: 9%;
-  bottom: 17%;
-}
-
-.flower-2 {
-  right: 10%;
-  bottom: 21%;
-
-  animation-delay: 1.5s;
-}
-
-.flower-3 {
-  right: 17%;
-  top: 14%;
-
-  font-size: 22px;
-
-  animation-delay: 2.5s;
-}
-
-@keyframes flowerFloat {
+@keyframes floating {
 
   0%,
   100% {
-    transform: translateY(0) rotate(0);
+    transform: translateY(0) rotate(0deg);
   }
 
   50% {
-    transform: translateY(-10px) rotate(8deg);
+    transform: translateY(-12px) rotate(4deg);
   }
-
 }
 
 
-/* =====================================================
-   FLOATING PETALS
-===================================================== */
-
-.floating-petal {
-
-  position: absolute;
-
-  color: rgba(255,255,255,.65);
-
-  pointer-events: none;
-
-  animation:
-    petalFloat 8s ease-in-out infinite;
-}
-
-.p1 {
-  top: 28%;
-  left: 13%;
-}
-
-.p2 {
-  top: 70%;
-  left: 20%;
-
-  animation-delay: 2s;
-}
-
-.p3 {
-  top: 23%;
-  right: 16%;
-
-  animation-delay: 1s;
-}
-
-.p4 {
-  top: 60%;
-  right: 17%;
-
-  animation-delay: 3s;
-}
-
-.p5 {
-  top: 12%;
-  left: 48%;
-
-  animation-delay: 4s;
-}
-
-@keyframes petalFloat {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(0);
-  }
-
-  50% {
-    transform:
-      translateY(-25px)
-      rotate(20deg);
-  }
-
-}
-
-
-/* =====================================================
+/* =================================
    MUSIC
-===================================================== */
+================================= */
 
 .music-button {
-
   position: fixed;
 
-  right: 18px;
   top: 18px;
+  right: 18px;
 
-  z-index: 100;
+  z-index: 20;
 
-  display: flex;
+  border: 1px solid rgba(255,255,255,0.7);
 
-  align-items: center;
-
-  gap: 7px;
-
-  padding: 9px 13px;
-
-  border-radius: 100px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.7);
-
-  background:
-    rgba(255,255,255,.62);
+  background: rgba(255,255,255,0.65);
 
   backdrop-filter: blur(12px);
 
-  color: #47798b;
+  padding: 10px 15px;
 
-  font-size: 11px;
+  border-radius: 30px;
+
+  color: var(--deep-blue);
+
+  font-weight: 600;
 
   cursor: pointer;
 
   box-shadow:
-    0 7px 25px
-    rgba(50,100,120,.08);
+    0 5px 20px rgba(76, 125, 145, 0.12);
 
+  transition: 0.25s ease;
 }
 
-.music-button.playing #musicIcon {
-
-  animation:
-    musicBounce .6s ease-in-out
-    infinite alternate;
-
-}
-
-@keyframes musicBounce {
-
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(-3px);
-  }
-
+.music-button:hover {
+  transform: translateY(-2px);
+  background: white;
 }
 
 
-/* =====================================================
-   PAGE
-===================================================== */
+/* =================================
+   PAGE SYSTEM
+================================= */
 
 .page {
-
-  min-height: 100vh;
-
-  padding:
-    80px
-    20px
-    60px;
-
   display: none;
 
-  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 70px 20px 40px;
+
   justify-content: center;
+  align-items: center;
 }
 
 .page.active {
-
   display: flex;
-
-  animation:
-    pageAppear .8s ease;
-
-}
-
-@keyframes pageAppear {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      translateY(20px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      translateY(0);
-
-  }
-
 }
 
 
-/* =====================================================
-   GENERAL DECORATION
-===================================================== */
-
-.top-decoration {
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  gap: 9px;
-
-  margin-bottom: 17px;
-
-  color: #72a9b9;
-
-  font-size: 13px;
-
-}
-
-.top-decoration div {
-
-  width: 35px;
-  height: 1px;
-
-  background:
-    rgba(100,150,165,.25);
-
-}
-
-.eyebrow {
-
-  text-transform: uppercase;
-
-  letter-spacing: 2.5px;
-
-  font-size: 10px;
-
-  color: #7296a1;
-
-}
-
-
-/* =====================================================
+/* =================================
    PAGE 1
-===================================================== */
+================================= */
 
-.letter-container {
-
-  width: min(690px, 100%);
+.intro-card {
+  width: min(620px, 100%);
 
   text-align: center;
 
+  padding: 38px 30px 30px;
+
+  border-radius: 28px;
+
+  background:
+    rgba(255,255,255,0.5);
+
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255,255,255,0.7);
+
+  box-shadow:
+    0 30px 80px rgba(69, 124, 148, 0.16);
 }
 
-.letter-container h1 {
 
-  margin-top: 12px;
+.small-label {
+  font-size: 11px;
 
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  color: var(--blue);
+
+  font-weight: 700;
+
+  margin-bottom: 15px;
+}
+
+
+.tiny-flower {
+  font-size: 20px;
+
+  color: var(--blue);
+
+  margin-bottom: 5px;
+}
+
+
+h1 {
   font-family: "Caveat", cursive;
 
-  font-size:
-    clamp(
-      60px,
-      13vw,
-      92px
-    );
+  font-size: clamp(55px, 12vw, 82px);
 
-  line-height: .82;
+  line-height: 0.9;
 
   font-weight: 600;
 
-  color: #315b6a;
-
+  color: var(--deep-blue);
 }
 
-.letter-container h1 span {
-
-  color: #467e93;
-
-}
-
-.letter-container h1 small {
-
-  font-size: .42em;
-
-  vertical-align: top;
-
-  color: #659bad;
-
-}
-
-.intro-line {
-
-  margin-top: 24px;
-
-  color: #698893;
-
-  font-size: 14px;
-
+h1 span {
+  color: #568fa8;
 }
 
 
-/* =====================================================
-   PAPER
-===================================================== */
+.intro-text {
+  margin-top: 22px;
 
-.paper-area {
+  line-height: 1.7;
 
+  color: var(--soft-brown);
+
+  font-size: 15px;
+}
+
+
+/* =================================
+   PAPER LETTER
+================================= */
+
+.paper-wrapper {
   width: 100%;
 
-  margin-top: 32px;
-
-  perspective: 1000px;
-
-}
-
-.paper-letter {
-
-  position: relative;
-
-  width: min(600px, 100%);
-
-  margin: auto;
-
-  max-height: 0;
+  margin-top: 28px;
 
   overflow: hidden;
 
+  border-radius: 12px;
+}
+
+
+.paper-letter {
+  position: relative;
+
+  max-height: 0;
+
   opacity: 0;
 
-  transform:
-    translateY(25px)
-    rotateX(-8deg);
+  overflow: hidden;
 
-  padding:
-    0 38px;
+  transform: translateY(25px);
+
+  transition:
+    max-height 0.8s ease,
+    opacity 0.5s ease,
+    transform 0.6s ease;
 
   text-align: left;
+
+  padding: 0 30px;
+
+  background:
+
+    repeating-linear-gradient(
+      0deg,
+      rgba(120,90,60,0.025) 0px,
+      rgba(120,90,60,0.025) 1px,
+      transparent 1px,
+      transparent 30px
+    ),
+
+    linear-gradient(
+      135deg,
+      #fffef9,
+      #fffaf0
+    );
+
+  box-shadow:
+    0 15px 35px rgba(90,70,50,0.12);
+
+  border: 1px solid rgba(160,130,100,0.12);
+
+  border-radius: 8px;
+}
+
+
+.paper-letter.open {
+  max-height: 1000px;
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+  padding: 42px 30px 35px;
+}
+
+
+.paper-letter p {
+  font-family: "Caveat", cursive;
+
+  font-size: 22px;
+
+  line-height: 1.45;
+
+  margin-bottom: 18px;
+
+  color: #66564c;
+}
+
+
+.paper-letter strong {
+  font-weight: 700;
+
+  color: #4e7f94;
+}
+
+
+.letter-greeting {
+  font-size: 28px !important;
+
+  font-weight: 600;
+
+  color: var(--deep-blue) !important;
+}
+
+
+.letter-signature {
+  text-align: right;
+
+  font-size: 29px !important;
+
+  margin-top: 25px;
+}
+
+
+/* paper tape */
+
+.paper-tape {
+  position: absolute;
+
+  width: 90px;
+  height: 25px;
+
+  background: rgba(167, 215, 226, 0.55);
+
+  top: 10px;
+
+  transform: rotate(-5deg);
+}
+
+.tape-left {
+  left: 25px;
+}
+
+.tape-right {
+  right: 25px;
+
+  transform: rotate(5deg);
+}
+
+
+/* =================================
+   BUTTON
+================================= */
+
+.main-button {
+  margin-top: 25px;
+
+  border: none;
 
   background:
     linear-gradient(
       135deg,
-      #fffef9,
-      #f8f5eb
+      #77bad3,
+      #5fa5c1
     );
-
-  box-shadow:
-    0 25px 55px
-    rgba(49,90,105,.14),
-
-    0 2px 7px
-    rgba(49,90,105,.1);
-
-  transition:
-    max-height 1.3s ease,
-    opacity .8s ease,
-    transform .9s ease,
-    padding .9s ease;
-
-}
-
-.paper-letter.open {
-
-  max-height: 1100px;
-
-  opacity: 1;
-
-  transform:
-    translateY(0)
-    rotateX(0);
-
-  padding:
-    48px 38px;
-
-}
-
-
-/* Paper texture */
-
-.paper-letter::after {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 18px;
-
-  border:
-    1px solid
-    rgba(80,120,130,.1);
-
-  pointer-events: none;
-
-}
-
-
-/* Tape */
-
-.tape {
-
-  position: absolute;
-
-  width: 70px;
-  height: 25px;
-
-  top: 13px;
-
-  background:
-    rgba(171,215,221,.52);
-
-  z-index: 2;
-
-}
-
-.tape-1 {
-
-  left: 42px;
-
-  transform:
-    rotate(-5deg);
-
-}
-
-.tape-2 {
-
-  right: 42px;
-
-  transform:
-    rotate(5deg);
-
-}
-
-
-/* Paper corners */
-
-.paper-corner {
-
-  position: absolute;
-
-  width: 0;
-  height: 0;
-
-  border-style: solid;
-
-  opacity: .45;
-
-}
-
-.corner-1 {
-
-  right: 0;
-  top: 0;
-
-  border-width:
-    0 55px 55px 0;
-
-  border-color:
-    transparent #e8e2d4 transparent transparent;
-
-}
-
-.corner-2 {
-
-  left: 0;
-  bottom: 0;
-
-  border-width:
-    55px 0 0 55px;
-
-  border-color:
-    transparent transparent transparent #e8e2d4;
-
-}
-
-
-/* Letter typography */
-
-.paper-letter p {
-
-  position: relative;
-
-  z-index: 3;
-
-  margin-bottom: 19px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 21px;
-
-  line-height: 1.42;
-
-  color: #536c74;
-
-}
-
-.paper-letter strong {
-
-  color: #3d7487;
-
-}
-
-.letter-hi {
-
-  font-size: 29px !important;
-
-  color: #376d80 !important;
-
-}
-
-.paper-divider {
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  margin:
-    25px 0
-    8px;
-
-  color: #75a8b7;
-
-}
-
-.signature {
-
-  text-align: right;
-
-  font-size: 30px !important;
-
-  margin-bottom: 0 !important;
-
-  color: #3f7383 !important;
-
-}
-
-
-/* =====================================================
-   BUTTON
-===================================================== */
-
-.primary-button {
-
-  margin-top: 28px;
-
-  padding:
-    15px
-    30px;
-
-  border: none;
-
-  border-radius: 100px;
-
-  background:
-    #477f93;
 
   color: white;
 
-  font-family:
-    "DM Sans",
-    sans-serif;
+  padding: 14px 25px;
+
+  border-radius: 40px;
 
   font-size: 14px;
 
-  font-weight: 600;
+  font-weight: 700;
 
   cursor: pointer;
 
   box-shadow:
-    0 10px 28px
-    rgba(52,105,125,.18);
+    0 10px 25px rgba(77, 139, 164, 0.25);
 
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease;
-
+  transition: 0.25s ease;
 }
 
-.primary-button:hover {
-
-  transform:
-    translateY(-3px);
+.main-button:hover {
+  transform: translateY(-3px);
 
   box-shadow:
-    0 14px 30px
-    rgba(52,105,125,.23);
-
-}
-
-.primary-button:active {
-
-  transform:
-    scale(.97);
-
-}
-
-.tiny-hint {
-
-  margin-top: 11px;
-
-  font-size: 10px;
-
-  color: #8ba4ac;
-
+    0 15px 30px rgba(77, 139, 164, 0.3);
 }
 
 
-/* =====================================================
+.hint {
+  margin-top: 13px;
+
+  font-size: 11px;
+
+  color: rgba(112,89,76,0.55);
+}
+
+
+/* =================================
    PAGE 2
-===================================================== */
+================================= */
 
-.date-container {
-
-  width: min(650px, 100%);
+.date-card {
+  width: min(580px, 100%);
 
   text-align: center;
 
+  padding: 40px 28px 30px;
+
+  border-radius: 30px;
+
+  background:
+    rgba(255,255,255,0.68);
+
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,0.75);
+
+  box-shadow:
+    0 30px 90px rgba(69,124,148,0.18);
 }
 
-.date-container h2 {
 
-  margin-top: 7px;
+.date-top-flower {
+  color: var(--blue);
 
-  font-family:
-    "Caveat",
-    cursive;
+  font-size: 24px;
 
-  font-size: 54px;
-
-  font-weight: 600;
-
-  color: #3e7183;
-
+  margin-bottom: 5px;
 }
 
-.question {
 
-  margin-top: 12px;
+.date-card h2 {
+  font-family: "Caveat", cursive;
 
-  font-size:
-    clamp(
-      22px,
-      5vw,
-      31px
-    );
+  color: var(--deep-blue);
 
-  line-height: 1.35;
+  font-size: 58px;
 
-  color: #456c79;
-
+  margin-top: 5px;
 }
 
-.question span {
 
-  font-family:
-    "Caveat",
-    cursive;
+.big-question {
+  font-family: "Caveat", cursive;
 
-  font-size: 1.45em;
+  font-size: 38px;
 
-  color: #3e768a;
+  line-height: 1.05;
 
+  margin-top: 10px;
+
+  color: var(--brown);
 }
 
-.question-description {
 
-  margin-top: 13px;
+.big-question span {
+  color: var(--deep-blue);
 
-  font-size: 13px;
+  font-weight: 700;
+}
+
+
+.question-subtext {
+  margin-top: 20px;
 
   line-height: 1.7;
 
-  color: #75919a;
+  font-size: 14px;
 
-}
-
-.question-description strong {
-
-  color: #4b7c8d;
-
+  color: var(--soft-brown);
 }
 
 
-/* =====================================================
-   POLAROID
-===================================================== */
+/* =================================
+   PHOTO
+================================= */
 
-.polaroid {
-
+.photo-frame {
   position: relative;
 
   width: min(310px, 90%);
 
-  margin:
-    28px
-    auto;
+  margin: 30px auto 25px;
 
-  padding:
-    10px
-    10px
-    17px;
+  padding: 10px 10px 22px;
 
-  background: white;
+  background: #fffdf8;
 
   box-shadow:
-    0 18px 40px
-    rgba(50,100,115,.12);
+    0 15px 35px rgba(80,65,55,0.16);
 
-  transform:
-    rotate(-1.5deg);
-
-  transition:
-    transform .4s ease;
-
+  transform: rotate(-1.5deg);
 }
 
-.polaroid:hover {
 
-  transform:
-    rotate(0deg)
-    translateY(-3px);
-
-}
-
-.photo {
+.photo-frame img {
+  display: block;
 
   width: 100%;
 
   aspect-ratio: 4 / 3;
 
-  overflow: hidden;
-
-  background: #dceef2;
-
-}
-
-.photo img {
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
   object-fit: cover;
-
-}
-
-.polaroid p {
-
-  margin-top: 10px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 20px;
-
-  color: #607982;
-
-}
-
-.photo-tape {
-
-  position: absolute;
-
-  width: 70px;
-  height: 22px;
-
-  top: -10px;
-  left: 50%;
-
-  transform:
-    translateX(-50%)
-    rotate(2deg);
-
-  background:
-    rgba(172,214,220,.58);
-
 }
 
 
-/* =====================================================
-   BOOKING CARD
-===================================================== */
+.photo-frame p {
+  font-family: "Caveat", cursive;
 
-.booking-card {
-
-  max-width: 480px;
-
-  margin:
-    25px
-    auto
-    0;
-
-  padding: 25px;
-
-  text-align: left;
-
-  background:
-    rgba(255,255,255,.57);
-
-  border:
-    1px solid
-    rgba(255,255,255,.72);
-
-  border-radius: 22px;
-
-  box-shadow:
-    0 12px 30px
-    rgba(55,105,120,.08);
-
-  backdrop-filter:
-    blur(8px);
-
-}
-
-.booking-header {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-
-  margin-bottom: 22px;
-
-  padding-bottom: 17px;
-
-  border-bottom:
-    1px solid
-    rgba(100,145,155,.13);
-
-}
-
-.calendar-icon {
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 42px;
-  height: 42px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(255,255,255,.75);
-
-  color: #5e95a7;
-
-}
-
-.booking-header p {
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  letter-spacing: 1.5px;
-
-  color: #4c7887;
-
-}
-
-.booking-header small {
-
-  font-size: 10px;
-
-  color: #8ba1a7;
-
-}
-
-
-/* Fields */
-
-.field {
-
-  margin-top: 18px;
-
-}
-
-.field label {
-
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-size: 12px;
-
-  font-weight: 600;
-
-  color: #5e7d87;
-
-}
-
-.field input,
-.field textarea {
-
-  width: 100%;
-
-  border:
-    1px solid
-    rgba(78,125,140,.18);
-
-  border-radius: 12px;
-
-  padding:
-    13px;
-
-  background:
-    rgba(255,255,255,.78);
-
-  color: #486c77;
-
-  font-family:
-    "DM Sans",
-    sans-serif;
-
-  outline: none;
-
-  transition:
-    border .2s ease,
-    box-shadow .2s ease;
-
-}
-
-.field input:focus,
-.field textarea:focus {
-
-  border-color:
-    #78aebe;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(120,174,190,.1);
-
-}
-
-.field textarea {
-
-  min-height: 95px;
-
-  resize: vertical;
-
-}
-
-.counter {
+  font-size: 19px;
 
   margin-top: 5px;
 
-  text-align: right;
-
-  font-size: 9px;
-
-  color: #91a8ae;
-
+  color: var(--soft-brown);
 }
 
-.booking-hint {
 
-  margin-top: 17px;
+.photo-tape {
+  position: absolute;
 
+  width: 85px;
+  height: 23px;
+
+  background: rgba(169,219,231,0.65);
+
+  top: -10px;
+
+  left: 50%;
+
+  transform: translateX(-50%) rotate(2deg);
+
+  z-index: 2;
+}
+
+
+/* =================================
+   BOOKING
+================================= */
+
+.booking-area {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin: 25px auto;
+
+  width: min(350px, 100%);
+
+  text-align: left;
+}
+
+
+.booking-area label {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: var(--deep-blue);
+
+  margin-top: 5px;
+}
+
+
+.booking-area input {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border-radius: 12px;
+
+  border: 1px solid rgba(90,140,155,0.2);
+
+  background: rgba(255,255,255,0.85);
+
+  font-family: "DM Sans", sans-serif;
+
+  color: var(--brown);
+
+  outline: none;
+}
+
+
+.booking-area input:focus {
+  border-color: var(--blue);
+
+  box-shadow:
+    0 0 0 3px rgba(111,183,210,0.12);
+}
+
+
+.date-hint {
   text-align: center;
 
   font-size: 11px;
 
-  color: #849fa7;
+  color: rgba(112,89,76,0.6);
 
-}
-
-.confirm-button {
-
-  margin-top: 22px;
-
+  margin-top: 5px;
 }
 
 
-/* =====================================================
-   CONFIRMATION
-===================================================== */
+/* =================================
+   CHOICE BUTTONS
+================================= */
 
-.confirmation {
+.choice-buttons {
+  display: flex;
 
+  flex-direction: column;
+
+  gap: 11px;
+
+  width: min(350px, 100%);
+
+  margin: 0 auto;
+}
+
+
+.yes-button,
+.maybe-button {
+  width: 100%;
+
+  padding: 14px;
+
+  border-radius: 30px;
+
+  font-family: "DM Sans", sans-serif;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+
+.yes-button {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #77bdd7,
+      #589eb9
+    );
+
+  color: white;
+
+  box-shadow:
+    0 10px 25px rgba(76,145,171,0.22);
+}
+
+
+.yes-button:hover {
+  transform: translateY(-2px);
+}
+
+
+.maybe-button {
+  border: 1px solid rgba(90,140,155,0.2);
+
+  background: rgba(255,255,255,0.65);
+
+  color: var(--deep-blue);
+}
+
+
+.footer-note {
+  font-family: "Caveat", cursive;
+
+  margin-top: 25px;
+
+  font-size: 17px;
+
+  color: rgba(112,89,76,0.65);
+}
+
+
+/* =================================
+   SUCCESS
+================================= */
+
+.success-overlay {
   position: fixed;
 
   inset: 0;
 
-  z-index: 500;
+  z-index: 100;
 
-  display: flex;
-
-  align-items: center;
+  display: none;
 
   justify-content: center;
 
-  padding: 20px;
+  align-items: center;
 
-  opacity: 0;
-
-  visibility: hidden;
-
-  pointer-events: none;
-
-  transition:
-    opacity .5s ease,
-    visibility .5s ease;
-
-}
-
-.confirmation.show {
-
-  opacity: 1;
-
-  visibility: visible;
-
-  pointer-events: auto;
-
-}
-
-.confirmation-backdrop {
-
-  position: absolute;
-
-  inset: 0;
+  padding: 25px;
 
   background:
-    rgba(40,73,84,.38);
+    rgba(70,130,150,0.35);
 
-  backdrop-filter:
-    blur(9px);
-
+  backdrop-filter: blur(10px);
 }
 
-.ticket {
 
-  position: relative;
+.success-overlay.show {
+  display: flex;
+}
 
+
+.success-card {
   width: min(430px, 100%);
-
-  max-height: 92vh;
-
-  overflow-y: auto;
-
-  padding:
-    27px
-    24px;
-
-  background:
-    #fffdf8;
-
-  box-shadow:
-    0 30px 80px
-    rgba(30,65,75,.28);
 
   text-align: center;
 
-  transform:
-    translateY(25px)
-    scale(.94);
+  padding: 42px 30px;
 
-  transition:
-    transform .55s ease;
-
-}
-
-.confirmation.show .ticket {
-
-  transform:
-    translateY(0)
-    scale(1);
-
-}
-
-
-/* Ticket */
-
-.ticket-top {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  color: #78aab8;
-
-}
-
-.ticket-top p {
-
-  font-size: 9px;
-
-  letter-spacing: 2px;
-
-  font-weight: 700;
-
-}
-
-.ticket-flower {
-
-  font-size: 15px;
-
-}
-
-.ticket-line {
-
-  height: 1px;
-
-  margin: 18px 0;
+  border-radius: 28px;
 
   background:
-    repeating-linear-gradient(
-      90deg,
-      #d2e0e3 0,
-      #d2e0e3 7px,
-      transparent 7px,
-      transparent 13px
+    linear-gradient(
+      135deg,
+      #fffef9,
+      #fff8e9
     );
 
+  box-shadow:
+    0 30px 90px rgba(50,90,105,0.25);
+
+  animation:
+    pop 0.45s ease;
 }
 
-.ticket-small {
 
-  font-size: 9px;
+@keyframes pop {
 
-  letter-spacing: 2px;
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
 
-  color: #9aabad;
-
-}
-
-.ticket h3 {
-
-  margin-top: 5px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 48px;
-
-  color: #40778a;
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 
 }
 
-.ticket-subtitle {
 
-  margin-top: 3px;
+.success-flower {
+  font-size: 35px;
 
-  font-size: 12px;
+  color: var(--blue);
 
-  color: #819aa1;
-
+  margin-bottom: 10px;
 }
 
-.ticket-details {
 
-  margin-top: 20px;
+.success-card h2 {
+  font-family: "Caveat", cursive;
 
+  color: var(--deep-blue);
+
+  font-size: 55px;
 }
 
-.ticket-detail {
 
-  display: flex;
+.success-card p {
+  margin-top: 8px;
 
-  justify-content: space-between;
+  color: var(--soft-brown);
 
-  gap: 20px;
-
-  padding: 9px 0;
-
-  border-bottom:
-    1px dashed
-    #dbe6e8;
-
-  text-align: left;
-
-  font-size: 12px;
-
+  line-height: 1.6;
 }
 
-.ticket-detail span {
 
-  color: #9aabad;
+.chosen-date {
+  margin: 20px 0;
 
-}
+  padding: 13px;
 
-.ticket-detail strong {
+  border-radius: 14px;
 
-  color: #4e7079;
+  background: rgba(169,219,231,0.25);
 
-  text-align: right;
-
-}
-
-.confirmed {
-
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 6px;
-
-  padding:
-    7px
-    12px;
-
-  border-radius: 100px;
-
-  background:
-    #e5f3ed;
-
-  color: #568472;
-
-  font-size: 9px;
-
-  letter-spacing: 1.5px;
+  color: var(--deep-blue);
 
   font-weight: 700;
-
 }
 
-.confirmed span {
 
-  font-size: 12px;
-
+.success-small {
+  font-size: 13px;
 }
 
-.ticket-message {
 
-  margin:
-    17px
-    8px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 20px;
-
-  color: #59747c;
-
-}
-
-.ticket-footer {
-
-  margin-top: 19px;
-
-  font-family:
-    "Caveat",
-    cursive;
-
-  font-size: 21px;
-
-  line-height: 1.45;
-
-  color: #507783;
-
-}
-
-.ticket-footer span {
-
-  font-size: 25px;
-
-  color: #3e7183;
-
-}
-
-.barcode {
-
-  margin-top: 23px;
-
-  font-size: 20px;
-
-  letter-spacing: 2px;
-
-  color: #536d73;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-}
-
-.ticket-code {
-
-  margin-top: 4px;
-
-  font-size: 8px;
-
-  letter-spacing: 3px;
-
-  color: #a1afb2;
-
-}
-
-.close-button {
-
+.hearts {
   margin-top: 20px;
 
-  padding:
-    12px
-    22px;
+  color: #75b7cf;
 
-  border: none;
+  letter-spacing: 10px;
 
-  border-radius: 100px;
-
-  background:
-    #477f93;
-
-  color: white;
-
-  font-family:
-    "DM Sans",
-    sans-serif;
-
-  font-size: 12px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
+  font-size: 20px;
 }
 
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+/* =================================
+   MOBILE
+================================= */
 
 @media (max-width: 600px) {
 
   .page {
-
     padding:
-      72px
-      13px
-      40px;
-
+      70px
+      14px
+      30px;
   }
 
-  .music-button {
+  .intro-card,
+  .date-card {
+    padding:
+      30px
+      18px
+      25px;
 
-    top: 11px;
-    right: 11px;
-
+    border-radius: 23px;
   }
 
-  .capiz-window {
-
-    width: 220px;
-    height: 220px;
-
+  h1 {
+    font-size: 62px;
   }
 
-  .sun {
-
-    right: -25px;
-
+  .intro-text {
+    font-size: 14px;
   }
 
   .paper-letter.open {
-
     padding:
-      43px
+      40px
+      21px
       25px;
-
   }
 
   .paper-letter p {
-
     font-size: 20px;
-
   }
 
-  .paper-letter::after {
-
-    inset: 11px;
-
+  .letter-greeting {
+    font-size: 26px !important;
   }
 
-  .tape {
-
-    width: 55px;
-
+  .date-card h2 {
+    font-size: 52px;
   }
 
-  .tape-1 {
-
-    left: 25px;
-
+  .big-question {
+    font-size: 33px;
   }
 
-  .tape-2 {
-
-    right: 25px;
-
+  .music-button span {
+    display: none;
   }
 
-  .booking-card {
-
-    padding:
-      21px
-      17px;
-
-  }
-
-  .ticket {
-
-    padding:
-      25px
-      18px;
-
+  .music-button {
+    padding: 10px 12px;
   }
 
 }
 
 
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
+/* very small phones */
 
-@media (prefers-reduced-motion: reduce) {
+@media (max-width: 380px) {
 
-  *,
-  *::before,
-  *::after {
+  .page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 
-    animation-duration:
-      .01ms !important;
+  h1 {
+    font-size: 55px;
+  }
 
-    animation-iteration-count:
-      1 !important;
+  .paper-letter p {
+    font-size: 18px;
+  }
 
-    transition-duration:
-      .01ms !important;
-
+  .big-question {
+    font-size: 30px;
   }
 
 }
