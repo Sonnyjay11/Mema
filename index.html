@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#dff5ff">
 
   <title>A Little Invitation ♡</title>
 
@@ -11,16 +12,20 @@
 
 <body>
 
-  <!-- Floating decorations -->
+  <!-- BACKGROUND DECORATIONS -->
+
   <div class="decor heart1">♡</div>
   <div class="decor heart2">♡</div>
   <div class="decor heart3">♡</div>
+
   <div class="decor star1">✦</div>
   <div class="decor star2">✦</div>
 
+
   <main>
 
-    <!-- INVITATION CARD -->
+    <!-- INVITATION -->
+
     <section class="card" id="inviteCard">
 
       <div class="small-text">
@@ -31,10 +36,20 @@
         Hey, Mimz ♡
       </h1>
 
-      <!-- YOUR PHOTO -->
+
+      <!-- PHOTO -->
+
       <div class="photo-container">
-        <img src="photo.jpg" alt="Us">
+
+        <img
+          src="photo.jpg"
+          alt="A special photo"
+        >
+
       </div>
+
+
+      <!-- MESSAGE -->
 
       <div class="message">
 
@@ -54,12 +69,39 @@
 
       </div>
 
+
       <!-- MUSIC -->
-      <button class="music-btn" id="songBtn">
-        ♫ Our little song
-      </button>
+
+      <div class="music-player">
+
+        <button
+          class="music-btn"
+          id="songBtn"
+        >
+          ♫ Play our little song
+        </button>
+
+        <audio
+          id="song"
+          preload="metadata"
+        >
+          <source
+            src="love-is.mp3"
+            type="audio/mpeg"
+          >
+        </audio>
+
+        <div class="song-name">
+          Love Is — The Ridleys
+        </div>
+
+      </div>
+
 
       <div class="divider"></div>
+
+
+      <!-- DATE -->
 
       <h2>
         Pick our date ♡
@@ -68,6 +110,7 @@
       <p class="instruction">
         You get to choose the day and time.
       </p>
+
 
       <div class="input-group">
 
@@ -82,6 +125,7 @@
 
       </div>
 
+
       <div class="input-group">
 
         <label for="time">
@@ -95,21 +139,36 @@
 
       </div>
 
-      <p id="hint" class="hint">
+
+      <p
+        id="hint"
+        class="hint"
+      >
         Choose a date and time first.
       </p>
 
+
+      <!-- BUTTONS -->
+
       <div class="buttons">
 
-        <button id="yesBtn" class="yes-btn">
+        <button
+          id="yesBtn"
+          class="yes-btn"
+        >
           Yes, I'd love to ♡
         </button>
 
-        <button id="noBtn" class="no-btn">
+
+        <button
+          id="noBtn"
+          class="no-btn"
+        >
           Maybe not...
         </button>
 
       </div>
+
 
       <p class="footer">
         — Jay
@@ -118,59 +177,93 @@
     </section>
 
 
-    <!-- SUCCESS SCREEN -->
 
-    <section class="card success hidden" id="success">
+    <!-- SUCCESS -->
+
+    <section
+      class="card success hidden"
+      id="success"
+    >
 
       <div class="success-heart">
         ♡
       </div>
 
+
       <div class="small-text">
         It's a date.
       </div>
+
 
       <h1>
         You said yes! ♡
       </h1>
 
+
       <div class="photo-container success-photo">
-        <img src="photo.jpg" alt="Our photo">
+
+        <img
+          src="photo.jpg"
+          alt="Our special photo"
+        >
+
       </div>
+
 
       <p class="success-message">
         I honestly couldn't be happier.
       </p>
 
+
+      <!-- SELECTED DATE -->
+
       <div class="date-box">
 
         <div>
-          <span>DATE</span>
+
+          <span>
+            DATE
+          </span>
+
           <strong id="chosenDate"></strong>
+
         </div>
 
+
         <div>
-          <span>TIME</span>
+
+          <span>
+            TIME
+          </span>
+
           <strong id="chosenTime"></strong>
+
         </div>
 
       </div>
 
+
       <p class="final-message">
 
         I'll take care of the coffee.<br>
+
         You just have to show up. ♡
 
       </p>
 
+
       <p class="signature">
+
         Can't wait, Mimz.<br>
+
         — Jay
+
       </p>
 
     </section>
 
   </main>
+
 
   <script src="script.js"></script>
 
