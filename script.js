@@ -1,18 +1,19 @@
-/* =====================================================
-   VERSION 6.0
-   Para Kay Carmina ♡
-===================================================== */
+/* =========================================
+   VERSION 7
+   Coffee Invitation
+   Carmina + Jay ♡
+========================================= */
 
 
-/* =====================================================
+/* =========================================
    ELEMENTS
-===================================================== */
+========================================= */
 
-const page1 =
-  document.getElementById("page1");
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
 
-const page2 =
-  document.getElementById("page2");
+const transitionScreen =
+  document.getElementById("transitionScreen");
 
 const letterBtn =
   document.getElementById("letterBtn");
@@ -23,657 +24,1006 @@ const paperLetter =
 const hintText =
   document.getElementById("hintText");
 
-
-/* MUSIC */
-
 const musicButton =
   document.getElementById("musicButton");
-
-const musicText =
-  document.getElementById("musicText");
 
 const song =
   document.getElementById("song");
 
-
-/* DATE */
-
 const dateInput =
-  document.getElementById("date");
+  document.getElementById("dateInput");
 
 const timeInput =
-  document.getElementById("time");
+  document.getElementById("timeInput");
 
 const dateHint =
   document.getElementById("dateHint");
 
+const timeHint =
+  document.getElementById("timeHint");
 
-/* BUTTONS */
+const yesButton =
+  document.getElementById("yesButton");
 
-const yesBtn =
-  document.getElementById("yesBtn");
-
-const maybeBtn =
-  document.getElementById("maybeBtn");
-
-
-/* SUCCESS */
+const maybeButton =
+  document.getElementById("maybeButton");
 
 const successOverlay =
   document.getElementById("successOverlay");
 
-const chosenDate =
-  document.getElementById("chosenDate");
-
-const calendarBtn =
-  document.getElementById("calendarBtn");
-
 const closeSuccess =
   document.getElementById("closeSuccess");
 
+const confirmedDate =
+  document.getElementById("confirmedDate");
 
-/* SECRET */
+const confirmedTime =
+  document.getElementById("confirmedTime");
+
+const calendarButton =
+  document.getElementById("calendarButton");
+
+const secretHeart =
+  document.getElementById("secretHeart");
 
 const secretMessage =
   document.getElementById("secretMessage");
 
+const closeSecret =
+  document.getElementById("closeSecret");
 
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let letterOpened = false;
-
-let musicPlaying = false;
-
-let maybeIndex = 0;
-
-let selectedDateTime = null;
+const photo =
+  document.getElementById("photo");
 
 
-/* =====================================================
-   LETTER
-===================================================== */
+/* =========================================
+   DATE
+========================================= */
 
-letterBtn.addEventListener(
-  "click",
-  function () {
+const today = new Date();
 
-    if (!letterOpened) {
+const year = today.getFullYear();
 
-      letterOpened = true;
+const month =
+  String(today.getMonth() + 1).padStart(2, "0");
 
-      paperLetter.classList.add("open");
+const day =
+  String(today.getDate()).padStart(2, "0");
 
-      letterBtn.textContent =
-        "Okay... may tanong ako →";
+const todayString =
+  `${year}-${month}-${day}`;
 
-      hintText.textContent =
-        "Basahin mo muna... bawal mag-skip HAHAHA.";
-
-      startMusic();
-
-      setTimeout(
-        function () {
-
-          paperLetter.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-
-        },
-        250
-      );
-
-      return;
-    }
+dateInput.min = todayString;
 
 
-    goToPageTwo();
+/* =========================================
+   LOCAL STORAGE
+========================================= */
 
-  }
-);
+const savedDate =
+  localStorage.getItem("coffeeDate");
 
+const savedTime =
+  localStorage.getItem("coffeeTime");
 
-/* =====================================================
-   PAGE TRANSITION
-===================================================== */
+if (savedDate) {
+  dateInput.value = savedDate;
+}
 
-function goToPageTwo() {
-
-  page1.classList.remove("active");
-
-  setTimeout(
-    function () {
-
-      page2.classList.add("active");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    },
-    120
-  );
-
-  startMusic();
-
+if (savedTime) {
+  timeInput.value = savedTime;
 }
 
 
-/* =====================================================
+/* =========================================
    MUSIC
-===================================================== */
+========================================= */
+
+let musicStarted = false;
+
 
 /*
-  Browsers may block autoplay.
+   Browsers often block audible autoplay.
 
-  We try to play automatically,
-  but the music button remains available
-  as the fallback.
+   We try to autoplay, but if the browser
+   blocks it, the music button remains available.
 */
 
-window.addEventListener(
-  "load",
-  function () {
+window.addEventListener("load", () => {
 
-    setTimeout(
-      function () {
+  setTimeout(() => {
 
-        startMusic();
+    song.volume = 0.45;
 
-      },
-      500
-    );
+    const playAttempt = song.play();
 
-  }
-);
+    if (playAttempt !== undefined) {
 
+      playAttempt
+        .then(() => {
 
-function startMusic() {
+          musicStarted = true;
 
-  if (musicPlaying) {
-    return;
-  }
+          musicButton.classList.add("playing");
 
-  song.volume = 0.72;
+        })
+        .catch(() => {
 
-  const playPromise =
-    song.play();
+          /*
+            Autoplay blocked.
+            User can tap the music button.
+          */
 
-  if (
-    playPromise !== undefined
-  ) {
+        });
 
-    playPromise
-      .then(
-        function () {
+    }
 
-          musicPlaying = true;
+  }, 700);
 
-          updateMusicButton();
-
-        }
-      )
-      .catch(
-        function () {
-
-          musicPlaying = false;
-
-          updateMusicButton();
-
-        }
-      );
-
-  }
-
-}
+});
 
 
-function updateMusicButton() {
+musicButton.addEventListener("click", () => {
 
-  if (musicPlaying) {
+  if (song.paused) {
 
-    musicButton.classList.add(
-      "playing"
-    );
+    song.play()
+      .then(() => {
 
-    musicText.textContent =
-      "Love Is • Playing";
+        musicStarted = true;
 
-    musicButton.setAttribute(
-      "aria-label",
-      "Pause Love Is"
-    );
+        musicButton.classList.add("playing");
+
+        createHeart(
+          musicButton.getBoundingClientRect().left,
+          musicButton.getBoundingClientRect().top
+        );
+
+      })
+      .catch(() => {});
 
   } else {
 
-    musicButton.classList.remove(
-      "playing"
-    );
+    song.pause();
 
-    musicText.textContent =
-      "Play Love Is";
-
-    musicButton.setAttribute(
-      "aria-label",
-      "Play Love Is"
-    );
+    musicButton.classList.remove("playing");
 
   }
 
-}
+});
 
 
-musicButton.addEventListener(
-  "click",
-  function () {
+song.addEventListener("play", () => {
 
-    if (musicPlaying) {
+  musicButton.classList.add("playing");
 
-      song.pause();
+});
 
-      return;
 
-    }
+song.addEventListener("pause", () => {
 
-    song.volume = 0.72;
+  musicButton.classList.remove("playing");
 
-    song.play()
-      .then(
-        function () {
+});
 
-          musicPlaying = true;
 
-          updateMusicButton();
+/* =========================================
+   PAGE 1
+========================================= */
 
-        }
-      )
-      .catch(
-        function () {
+let letterOpened = false;
 
-          musicPlaying = false;
+letterBtn.addEventListener("click", () => {
 
-          updateMusicButton();
+  if (letterOpened) {
+    return;
+  }
 
-        }
+  letterOpened = true;
+
+  letterBtn.classList.add("opened");
+
+  letterBtn.innerHTML = `
+    <span>Reading...</span>
+    <span>♡</span>
+  `;
+
+  hintText.textContent =
+    "okay wait... may letter talaga HAHAHA.";
+
+  paperLetter.classList.add("open");
+
+  /*
+    Create little hearts around button.
+  */
+
+  const rect =
+    letterBtn.getBoundingClientRect();
+
+  for (let i = 0; i < 4; i++) {
+
+    setTimeout(() => {
+
+      createHeart(
+        rect.left + rect.width / 2,
+        rect.top + rect.height / 2
       );
 
-  }
-);
-
-
-song.addEventListener(
-  "play",
-  function () {
-
-    musicPlaying = true;
-
-    updateMusicButton();
-
-  }
-);
-
-
-song.addEventListener(
-  "pause",
-  function () {
-
-    musicPlaying = false;
-
-    updateMusicButton();
-
-  }
-);
-
-
-/* =====================================================
-   DATE
-===================================================== */
-
-function getTodayString() {
-
-  const today =
-    new Date();
-
-  const year =
-    today.getFullYear();
-
-  const month =
-    String(
-      today.getMonth() + 1
-    ).padStart(
-      2,
-      "0"
-    );
-
-  const day =
-    String(
-      today.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
-
-  return `${year}-${month}-${day}`;
-
-}
-
-
-function setMinimumDate() {
-
-  dateInput.min =
-    getTodayString();
-
-}
-
-
-setMinimumDate();
-
-
-/* =====================================================
-   LOCAL STORAGE
-===================================================== */
-
-const savedDate =
-  localStorage.getItem(
-    "carminaDate"
-  );
-
-const savedTime =
-  localStorage.getItem(
-    "carminaTime"
-  );
-
-
-if (savedDate) {
-
-  dateInput.value =
-    savedDate;
-
-}
-
-
-if (savedTime) {
-
-  timeInput.value =
-    savedTime;
-
-}
-
-
-if (
-  savedDate &&
-  savedTime
-) {
-
-  dateHint.textContent =
-    "May napili na pala... 👀";
-
-}
-
-
-/* =====================================================
-   DATE CHANGE
-===================================================== */
-
-dateInput.addEventListener(
-  "change",
-  function () {
-
-    if (!dateInput.value) {
-      return;
-    }
-
-    localStorage.setItem(
-      "carminaDate",
-      dateInput.value
-    );
-
-    animateHint(
-      "Ay may napili na... 👀"
-    );
-
-  }
-);
-
-
-/* =====================================================
-   TIME CHANGE
-===================================================== */
-
-timeInput.addEventListener(
-  "change",
-  function () {
-
-    if (!timeInput.value) {
-      return;
-    }
-
-    localStorage.setItem(
-      "carminaTime",
-      timeInput.value
-    );
-
-    animateHint(
-      "Noted... mukhang may pag-asa ako HAHAHA."
-    );
-
-  }
-);
-
-
-function animateHint(message) {
-
-  dateHint.classList.remove(
-    "changed"
-  );
-
-  void dateHint.offsetWidth;
-
-  dateHint.textContent =
-    message;
-
-  dateHint.classList.add(
-    "changed"
-  );
-
-}
-
-
-/* =====================================================
-   VALIDATE DATE + TIME
-===================================================== */
-
-function validateDateTime() {
-
-  const date =
-    dateInput.value;
-
-  const time =
-    timeInput.value;
-
-
-  if (!date) {
-
-    animateHint(
-      "Pili ka muna ng araw, binibini ♡"
-    );
-
-    dateInput.focus();
-
-    return false;
-
-  }
-
-
-  if (!time) {
-
-    animateHint(
-      "Okay lang... oras naman muna 👀"
-    );
-
-    timeInput.focus();
-
-    return false;
+    }, i * 180);
 
   }
 
 
   /*
-    Prevent past date/time.
+    Move to booking page after letter
+    has had time to reveal.
   */
 
-  const selected =
-    new Date(
-      `${date}T${time}`
+  setTimeout(() => {
+
+    showTransition();
+
+  }, 6500);
+
+});
+
+
+/* =========================================
+   PAGE TRANSITION
+========================================= */
+
+function showTransition() {
+
+  transitionScreen.classList.add("show");
+
+  setTimeout(() => {
+
+    page1.classList.remove("active");
+
+    page2.classList.add("active");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "instant"
+    });
+
+  }, 900);
+
+
+  setTimeout(() => {
+
+    transitionScreen.classList.add("hide");
+
+  }, 1500);
+
+
+  setTimeout(() => {
+
+    transitionScreen.classList.remove(
+      "show",
+      "hide"
     );
 
-  const now =
-    new Date();
-
-
-  if (
-    selected.getTime() <
-    now.getTime()
-  ) {
-
-    animateHint(
-      "Uy, past na 'yan HAHAHA. Pumili tayo ng future."
-    );
-
-    return false;
-
-  }
-
-
-  return true;
+  }, 2300);
 
 }
 
 
-/* =====================================================
-   YES BUTTON
-===================================================== */
+/* =========================================
+   DATE
+========================================= */
 
-yesBtn.addEventListener(
-  "click",
-  function () {
+dateInput.addEventListener("change", () => {
 
-    if (
-      !validateDateTime()
-    ) {
+  const selectedDate =
+    dateInput.value;
 
-      shakeButton(
-        yesBtn
-      );
+  if (!selectedDate) {
+
+    dateHint.textContent = "";
+
+    dateHint.classList.remove("show");
+
+    return;
+
+  }
+
+
+  /*
+    Save date.
+  */
+
+  localStorage.setItem(
+    "coffeeDate",
+    selectedDate
+  );
+
+
+  /*
+    Don't allow past dates.
+  */
+
+  if (selectedDate < todayString) {
+
+    dateHint.textContent =
+      "Hoy... future date naman tayo HAHAHA.";
+
+    dateHint.classList.add("show");
+
+    dateInput.value = "";
+
+    localStorage.removeItem("coffeeDate");
+
+    return;
+
+  }
+
+
+  dateHint.textContent =
+    "Noted. 👀 Mukhang may ganap tayo...";
+
+  dateHint.classList.add("show");
+
+
+  createHeartFromElement(dateInput);
+
+});
+
+
+/* =========================================
+   TIME
+========================================= */
+
+timeInput.addEventListener("change", () => {
+
+  const selectedTime =
+    timeInput.value;
+
+  if (!selectedTime) {
+
+    timeHint.textContent = "";
+
+    timeHint.classList.remove("show");
+
+    return;
+
+  }
+
+
+  /*
+    Save time.
+  */
+
+  localStorage.setItem(
+    "coffeeTime",
+    selectedTime
+  );
+
+
+  /*
+    If selected date is today,
+    prevent choosing a past time.
+  */
+
+  if (
+    dateInput.value === todayString
+  ) {
+
+    const now = new Date();
+
+    const currentHours =
+      String(now.getHours()).padStart(2, "0");
+
+    const currentMinutes =
+      String(now.getMinutes()).padStart(2, "0");
+
+    const currentTime =
+      `${currentHours}:${currentMinutes}`;
+
+    if (selectedTime < currentTime) {
+
+      timeHint.textContent =
+        "Medyo past na yan HAHAHA. Pili ulit.";
+
+      timeHint.classList.add("show");
+
+      timeInput.value = "";
+
+      localStorage.removeItem("coffeeTime");
 
       return;
 
     }
 
-
-    const date =
-      dateInput.value;
-
-    const time =
-      timeInput.value;
-
-
-    selectedDateTime =
-      new Date(
-        `${date}T${time}`
-      );
-
-
-    const formattedDate =
-      selectedDateTime.toLocaleDateString(
-        "en-PH",
-        {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-          year: "numeric"
-        }
-      );
-
-
-    const formattedTime =
-      selectedDateTime.toLocaleTimeString(
-        "en-PH",
-        {
-          hour: "numeric",
-          minute: "2-digit"
-        }
-      );
-
-
-    chosenDate.innerHTML =
-      `
-        ${formattedDate}
-        <br>
-        at ${formattedTime}
-      `;
-
-
-    successOverlay.classList.add(
-      "show"
-    );
-
-
-    successOverlay.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-
-    document.body.style.overflow =
-      "hidden";
-
-
-    createHearts();
-
   }
-);
 
 
-/* =====================================================
-   BUTTON SHAKE
-===================================================== */
+  timeHint.textContent =
+    "Okay, noted na talaga. ☕ Jay has been informed. HAHAHA.";
 
-function shakeButton(button) {
+  timeHint.classList.add("show");
 
-  button.animate(
+
+  createHeartFromElement(timeInput);
+
+});
+
+
+/* =========================================
+   MAYBE / KULIT BUTTON
+========================================= */
+
+const maybeMessages = [
+
+  "Sure ka ba? 👀",
+
+  "Coffee lang naman oh ☕",
+
+  "Libre ko na HAHAHA",
+
+  "Hindi kita pine-pressure 😭",
+
+  "...pero sana yes. ♡"
+
+];
+
+let maybeIndex = 0;
+
+maybeButton.addEventListener("click", () => {
+
+  maybeButton.animate(
     [
       {
-        transform:
-          "translateX(0)"
+        transform: "scale(1)"
       },
-
       {
-        transform:
-          "translateX(-5px)"
+        transform: "scale(0.95)"
       },
-
       {
-        transform:
-          "translateX(5px)"
+        transform: "scale(1.03)"
       },
-
       {
-        transform:
-          "translateX(-4px)"
+        transform: "scale(1)"
+      }
+    ],
+    {
+      duration: 350
+    }
+  );
+
+
+  maybeButton.textContent =
+    maybeMessages[maybeIndex];
+
+
+  maybeIndex++;
+
+  if (
+    maybeIndex >= maybeMessages.length
+  ) {
+    maybeIndex = 0;
+  }
+
+
+  createHeartFromElement(maybeButton);
+
+});
+
+
+/* =========================================
+   YES BUTTON
+========================================= */
+
+yesButton.addEventListener("click", () => {
+
+  const selectedDate =
+    dateInput.value;
+
+  const selectedTime =
+    timeInput.value;
+
+
+  /*
+    Require both.
+  */
+
+  if (!selectedDate) {
+
+    dateHint.textContent =
+      "Pili ka muna ng date please. 👀";
+
+    dateHint.classList.add("show");
+
+    dateInput.focus();
+
+    shakeElement(dateInput);
+
+    return;
+
+  }
+
+
+  if (!selectedTime) {
+
+    timeHint.textContent =
+      "Tapos oras naman. Para official HAHAHA.";
+
+    timeHint.classList.add("show");
+
+    timeInput.focus();
+
+    shakeElement(timeInput);
+
+    return;
+
+  }
+
+
+  /*
+    Validate date again.
+  */
+
+  if (selectedDate < todayString) {
+
+    dateHint.textContent =
+      "Past date yan HAHAHA. Future naman tayo.";
+
+    dateHint.classList.add("show");
+
+    dateInput.value = "";
+
+    return;
+
+  }
+
+
+  /*
+    Validate today's time.
+  */
+
+  if (
+    selectedDate === todayString
+  ) {
+
+    const now = new Date();
+
+    const currentTime =
+      `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+    if (selectedTime < currentTime) {
+
+      timeHint.textContent =
+        "Past time na yan HAHAHA.";
+
+      timeHint.classList.add("show");
+
+      timeInput.value = "";
+
+      return;
+
+    }
+
+  }
+
+
+  /*
+    Format date and time.
+  */
+
+  confirmedDate.textContent =
+    formatDate(selectedDate);
+
+  confirmedTime.textContent =
+    formatTime(selectedTime);
+
+
+  /*
+    Save confirmation.
+  */
+
+  localStorage.setItem(
+    "coffeeConfirmed",
+    "true"
+  );
+
+  localStorage.setItem(
+    "coffeeDate",
+    selectedDate
+  );
+
+  localStorage.setItem(
+    "coffeeTime",
+    selectedTime
+  );
+
+
+  /*
+    Show success.
+  */
+
+  successOverlay.classList.add("show");
+
+
+  /*
+    Create celebration hearts.
+  */
+
+  for (let i = 0; i < 10; i++) {
+
+    setTimeout(() => {
+
+      createRandomHeart();
+
+    }, i * 120);
+
+  }
+
+});
+
+
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+function formatDate(dateString) {
+
+  const date =
+    new Date(
+      `${dateString}T12:00:00`
+    );
+
+  return date.toLocaleDateString(
+    "en-US",
+    {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+/* =========================================
+   FORMAT TIME
+========================================= */
+
+function formatTime(timeString) {
+
+  const [hours, minutes] =
+    timeString.split(":");
+
+  const date =
+    new Date();
+
+  date.setHours(
+    Number(hours),
+    Number(minutes),
+    0
+  );
+
+  return date.toLocaleTimeString(
+    "en-US",
+    {
+      hour: "numeric",
+      minute: "2-digit"
+    }
+  );
+
+}
+
+
+/* =========================================
+   CLOSE SUCCESS
+========================================= */
+
+closeSuccess.addEventListener("click", () => {
+
+  successOverlay.classList.remove("show");
+
+});
+
+
+/*
+   Click outside card
+*/
+
+successOverlay.addEventListener("click", (event) => {
+
+  if (
+    event.target === successOverlay
+  ) {
+
+    successOverlay.classList.remove("show");
+
+  }
+
+});
+
+
+/*
+   Escape key
+*/
+
+document.addEventListener("keydown", (event) => {
+
+  if (event.key === "Escape") {
+
+    successOverlay.classList.remove("show");
+
+    secretMessage.classList.remove("show");
+
+  }
+
+});
+
+
+/* =========================================
+   GOOGLE CALENDAR
+========================================= */
+
+calendarButton.addEventListener("click", () => {
+
+  const selectedDate =
+    dateInput.value;
+
+  const selectedTime =
+    timeInput.value;
+
+
+  if (!selectedDate || !selectedTime) {
+    return;
+  }
+
+
+  /*
+    Create start time.
+
+    We use local Manila time for the
+    Google Calendar link.
+  */
+
+  const start =
+    new Date(
+      `${selectedDate}T${selectedTime}:00`
+    );
+
+
+  /*
+    Default coffee duration:
+    1 hour 30 minutes.
+  */
+
+  const end =
+    new Date(
+      start.getTime() +
+      90 * 60 * 1000
+    );
+
+
+  const startString =
+    formatGoogleDate(start);
+
+  const endString =
+    formatGoogleDate(end);
+
+
+  const title =
+    encodeURIComponent(
+      "Coffee with Carmina ☕♡"
+    );
+
+
+  const details =
+    encodeURIComponent(
+      "Coffee with Jay ♡\n\nDon't be late HAHAHA."
+    );
+
+
+  const location =
+    encodeURIComponent(
+      "Coffee date ☕"
+    );
+
+
+  /*
+    Google Calendar URL.
+
+    It opens in a NEW TAB,
+    so the GitHub website stays open.
+  */
+
+  const calendarURL =
+    `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startString}/${endString}&details=${details}&location=${location}`;
+
+
+  window.open(
+    calendarURL,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+});
+
+
+/* =========================================
+   GOOGLE CALENDAR DATE FORMAT
+========================================= */
+
+function formatGoogleDate(date) {
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(date.getMonth() + 1)
+      .padStart(2, "0");
+
+  const day =
+    String(date.getDate())
+      .padStart(2, "0");
+
+  const hours =
+    String(date.getHours())
+      .padStart(2, "0");
+
+  const minutes =
+    String(date.getMinutes())
+      .padStart(2, "0");
+
+  const seconds =
+    String(date.getSeconds())
+      .padStart(2, "0");
+
+
+  /*
+    Google Calendar accepts
+    YYYYMMDDTHHMMSS format.
+
+    We intentionally don't append Z
+    because this represents local time.
+  */
+
+  return (
+    `${year}${month}${day}` +
+    `T${hours}${minutes}${seconds}`
+  );
+
+}
+
+
+/* =========================================
+   SECRET EASTER EGG
+========================================= */
+
+let secretClicks = 0;
+
+let secretTimer = null;
+
+secretHeart.addEventListener("click", () => {
+
+  secretClicks++;
+
+  clearTimeout(secretTimer);
+
+  secretTimer = setTimeout(() => {
+
+    secretClicks = 0;
+
+  }, 1500);
+
+
+  if (secretClicks >= 3) {
+
+    secretClicks = 0;
+
+    secretMessage.classList.add("show");
+
+    for (let i = 0; i < 5; i++) {
+
+      setTimeout(() => {
+
+        createRandomHeart();
+
+      }, i * 150);
+
+    }
+
+  }
+
+});
+
+
+/* =========================================
+   CLOSE SECRET
+========================================= */
+
+closeSecret.addEventListener("click", () => {
+
+  secretMessage.classList.remove("show");
+
+});
+
+
+secretMessage.addEventListener("click", (event) => {
+
+  if (
+    event.target === secretMessage
+  ) {
+
+    secretMessage.classList.remove("show");
+
+  }
+
+});
+
+
+/* =========================================
+   PHOTO FALLBACK
+========================================= */
+
+photo.addEventListener("error", () => {
+
+  photo.style.display = "none";
+
+  photo.parentElement.style.background =
+    "linear-gradient(135deg, #dff4ff, #fff7ea)";
+
+  const fallback =
+    document.createElement("div");
+
+  fallback.style.minHeight = "210px";
+
+  fallback.style.display = "flex";
+
+  fallback.style.alignItems = "center";
+
+  fallback.style.justifyContent = "center";
+
+  fallback.style.fontFamily =
+    '"Caveat", cursive';
+
+  fallback.style.fontSize = "30px";
+
+  fallback.style.color =
+    "#438caf";
+
+  fallback.textContent =
+    "our little coffee memory ♡";
+
+  photo.parentElement.insertBefore(
+    fallback,
+    photo
+  );
+
+});
+
+
+/* =========================================
+   SHAKE
+========================================= */
+
+function shakeElement(element) {
+
+  element.animate(
+    [
+      {
+        transform: "translateX(0)"
       },
-
       {
-        transform:
-          "translateX(4px)"
+        transform: "translateX(-6px)"
       },
-
       {
-        transform:
-          "translateX(0)"
+        transform: "translateX(6px)"
+      },
+      {
+        transform: "translateX(-4px)"
+      },
+      {
+        transform: "translateX(4px)"
+      },
+      {
+        transform: "translateX(0)"
       }
     ],
     {
@@ -684,630 +1034,119 @@ function shakeButton(button) {
 }
 
 
-/* =====================================================
-   MAYBE BUTTON
-===================================================== */
+/* =========================================
+   CREATE HEART FROM ELEMENT
+========================================= */
 
-const maybeMessages = [
+function createHeartFromElement(element) {
 
-  "Sure ka ba? 👀",
+  const rect =
+    element.getBoundingClientRect();
 
-  "Pwede mo pag-isipan... HAHAHA",
-
-  "Coffee lang naman oh ☕",
-
-  "Hindi kita pine-pressure... konti lang 👀",
-
-  "Libre ko na coffee mo oh",
-
-  "Sige lang, hintayin kita HAHAHA",
-
-  "Last na talaga... coffee tayo? ♡"
-
-];
-
-
-maybeBtn.addEventListener(
-  "click",
-  function () {
-
-    maybeBtn.animate(
-      [
-        {
-          transform:
-            "scale(1)"
-        },
-
-        {
-          transform:
-            "scale(0.96)"
-        },
-
-        {
-          transform:
-            "scale(1)"
-        }
-      ],
-      {
-        duration: 220
-      }
-    );
-
-
-    maybeBtn.textContent =
-      maybeMessages[
-        maybeIndex
-      ];
-
-
-    maybeIndex++;
-
-
-    if (
-      maybeIndex >=
-      maybeMessages.length
-    ) {
-
-      maybeIndex = 0;
-
-    }
-
-
-    animateHint(
-      "No pressure... pero sana yes. ♡"
-    );
-
-  }
-);
-
-
-/* =====================================================
-   SUCCESS CLOSE
-===================================================== */
-
-closeSuccess.addEventListener(
-  "click",
-  function () {
-
-    closeSuccessOverlay();
-
-  }
-);
-
-
-function closeSuccessOverlay() {
-
-  successOverlay.classList.remove(
-    "show"
-  );
-
-  successOverlay.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  document.body.style.overflow =
-    "";
-
-}
-
-
-/* =====================================================
-   ESCAPE KEY
-===================================================== */
-
-document.addEventListener(
-  "keydown",
-  function (event) {
-
-    if (
-      event.key === "Escape" &&
-      successOverlay.classList.contains("show")
-    ) {
-
-      closeSuccessOverlay();
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   CREATE FLOATING HEARTS
-===================================================== */
-
-function createHearts() {
-
-  const symbols = [
-    "♡",
-    "♥",
-    "♡",
-    "✿",
-    "♡",
-    "♥",
-    "♡",
-    "✿",
-    "♡",
-    "♥",
-    "♡"
-  ];
-
-
-  symbols.forEach(
-    function (
-      symbol,
-      index
-    ) {
-
-      const heart =
-        document.createElement(
-          "div"
-        );
-
-
-      heart.textContent =
-        symbol;
-
-
-      heart.style.position =
-        "fixed";
-
-
-      heart.style.left =
-        Math.random() * 100 + "%";
-
-
-      heart.style.bottom =
-        "-35px";
-
-
-      heart.style.fontFamily =
-        "Caveat, cursive";
-
-
-      heart.style.fontSize =
-        (
-          18 +
-          Math.random() * 20
-        ) +
-        "px";
-
-
-      heart.style.color =
-        "rgba(112, 184, 210, 0.85)";
-
-
-      heart.style.zIndex =
-        "200";
-
-
-      heart.style.pointerEvents =
-        "none";
-
-
-      heart.style.transition =
-        `
-          transform 3.5s ease,
-          opacity 3.5s ease
-        `;
-
-
-      document.body.appendChild(
-        heart
-      );
-
-
-      setTimeout(
-        function () {
-
-          heart.style.transform =
-            `
-              translateY(
-                -${
-                  350 +
-                  Math.random() * 450
-                }px
-              )
-              translateX(
-                ${
-                  Math.random() * 100 - 50
-                }px
-              )
-              rotate(
-                ${
-                  Math.random() * 100 - 50
-                }deg
-              )
-            `;
-
-
-          heart.style.opacity =
-            "0";
-
-        },
-        index * 130
-      );
-
-
-      setTimeout(
-        function () {
-
-          heart.remove();
-
-        },
-        4300
-      );
-
-    }
+  createHeart(
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2
   );
 
 }
 
 
-/* =====================================================
-   SAVE TO CALENDAR
-===================================================== */
+/* =========================================
+   CREATE HEART
+========================================= */
 
-calendarBtn.addEventListener(
-  "click",
-  function () {
+function createHeart(x, y) {
 
-    if (
-      !selectedDateTime
-    ) {
-      return;
-    }
+  const heart =
+    document.createElement("div");
 
+  heart.className =
+    "click-heart";
 
-    const start =
-      formatCalendarDate(
-        selectedDateTime
-      );
+  heart.textContent =
+    "♡";
 
+  heart.style.left =
+    `${x}px`;
 
-    /*
-      Default coffee duration:
-      1 hour 30 minutes.
-    */
+  heart.style.top =
+    `${y}px`;
 
-    const endDate =
-      new Date(
-        selectedDateTime.getTime() +
-        90 * 60 * 1000
-      );
-
-
-    const end =
-      formatCalendarDate(
-        endDate
-      );
-
-
-    const title =
-      "Coffee with Jay ☕";
-
-
-    const description =
-      "Coffee with Jay. See you soon ♡";
-
-
-    const ics =
-      [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Coffee Invitation//EN",
-        "BEGIN:VEVENT",
-        `DTSTART:${start}`,
-        `DTEND:${end}`,
-        `SUMMARY:${escapeICS(title)}`,
-        `DESCRIPTION:${escapeICS(description)}`,
-        "END:VEVENT",
-        "END:VCALENDAR"
-      ].join("\r\n");
-
-
-    const blob =
-      new Blob(
-        [ics],
-        {
-          type:
-            "text/calendar;charset=utf-8"
-        }
-      );
-
-
-    const url =
-      URL.createObjectURL(
-        blob
-      );
-
-
-    const link =
-      document.createElement(
-        "a"
-      );
-
-
-    link.href =
-      url;
-
-    link.download =
-      "coffee-with-jay.ics";
-
-
-    document.body.appendChild(
-      link
-    );
-
-
-    link.click();
-
-
-    link.remove();
-
-
-    URL.revokeObjectURL(
-      url
-    );
-
-
-    calendarBtn.innerHTML =
-      `
-        <span>✓</span>
-        Calendar saved ♡
-      `;
-
-  }
-);
-
-
-/* =====================================================
-   CALENDAR DATE FORMAT
-===================================================== */
-
-function formatCalendarDate(
-  date
-) {
-
-  const year =
-    date.getFullYear();
-
-
-  const month =
-    String(
-      date.getMonth() + 1
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  const day =
-    String(
-      date.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  const hours =
-    String(
-      date.getHours()
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  const minutes =
-    String(
-      date.getMinutes()
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  const seconds =
-    String(
-      date.getSeconds()
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  return (
-    `${year}${month}${day}` +
-    `T${hours}${minutes}${seconds}`
+  heart.style.setProperty(
+    "--x",
+    `${Math.random() * 80 - 40}px`
   );
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+
+    heart.remove();
+
+  }, 1400);
 
 }
 
 
-/* =====================================================
-   ESCAPE ICS
-===================================================== */
+/* =========================================
+   RANDOM HEART
+========================================= */
 
-function escapeICS(
-  text
-) {
+function createRandomHeart() {
 
-  return text
-    .replace(
-      /\\/g,
-      "\\\\"
-    )
-    .replace(
-      /;/g,
-      "\\;"
-    )
-    .replace(
-      /,/g,
-      "\\,"
-    )
-    .replace(
-      /\n/g,
-      "\\n"
-    );
+  const heart =
+    document.createElement("div");
+
+  heart.className =
+    "click-heart";
+
+  heart.textContent =
+    Math.random() > 0.5
+      ? "♡"
+      : "♥";
+
+  heart.style.left =
+    `${Math.random() * window.innerWidth}px`;
+
+  heart.style.top =
+    `${window.innerHeight - 10}px`;
+
+  heart.style.setProperty(
+    "--x",
+    `${Math.random() * 160 - 80}px`
+  );
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+
+    heart.remove();
+
+  }, 1400);
 
 }
 
 
-/* =====================================================
-   SECRET EASTER EGG
-===================================================== */
+/* =========================================
+   PREVENT ACCIDENTAL FORM SUBMISSION
+========================================= */
 
-/*
-  Click the "Carmina" title three times.
-*/
+document.addEventListener("submit", (event) => {
 
-const carminaTitle =
-  document.querySelector(
-    "h1 span"
-  );
+  event.preventDefault();
+
+});
 
 
-let titleClicks = 0;
+/* =========================================
+   CONSOLE MESSAGE
+========================================= */
 
-
-carminaTitle.addEventListener(
-  "click",
-  function () {
-
-    titleClicks++;
-
-
-    if (
-      titleClicks >= 3
-    ) {
-
-      showSecret();
-
-      titleClicks = 0;
-
-    }
-
-  }
+console.log(
+  "%c☕ Coffee Invitation V7 ♡",
+  "font-size:18px;color:#438caf;font-weight:bold;"
 );
 
-
-function showSecret() {
-
-  secretMessage.classList.add(
-    "show"
-  );
-
-  secretMessage.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  setTimeout(
-    function () {
-
-      secretMessage.classList.remove(
-        "show"
-      );
-
-      secretMessage.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-    },
-    3500
-  );
-
-}
-
-
-/* =====================================================
-   PHOTO FALLBACK
-===================================================== */
-
-const photo =
-  document.querySelector(
-    ".photo-frame img"
-  );
-
-
-photo.addEventListener(
-  "error",
-  function () {
-
-    photo.style.display =
-      "none";
-
-    photo.parentElement.style.background =
-      `
-        linear-gradient(
-          135deg,
-          #dff5fb,
-          #fff8e9
-        )
-      `;
-
-    photo.parentElement.style.minHeight =
-      "210px";
-
-    photo.parentElement.style.display =
-      "flex";
-
-    photo.parentElement.style.alignItems =
-      "center";
-
-    photo.parentElement.style.justifyContent =
-      "center";
-
-    photo.parentElement.innerHTML =
-      `
-        <div
-          style="
-            text-align:center;
-            padding:30px;
-            font-family:Caveat,cursive;
-            color:#477f99;
-            font-size:22px;
-          "
-        >
-          ♡
-          <br>
-          our little memory
-          <br>
-          <span
-            style="
-              font-family:'DM Sans',sans-serif;
-              font-size:10px;
-              opacity:.6;
-            "
-          >
-            add photo.jpg
-          </span>
-        </div>
-      `;
-
-  }
-);
-
-
-/* =====================================================
-   AUDIO ERROR
-===================================================== */
-
-song.addEventListener(
-  "error",
-  function () {
-
-    musicText.textContent =
-      "Add Love Is.mp3";
-
-    musicButton.classList.remove(
-      "playing"
-    );
-
-  }
+console.log(
+  "Made with a little effort by Jay. HAHAHA."
 );
