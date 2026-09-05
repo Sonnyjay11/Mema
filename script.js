@@ -1,358 +1,758 @@
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-const letterBtn = document.getElementById("letterBtn");
-const paperLetter = document.getElementById("paperLetter");
+const entryScreen =
+  document.getElementById("entryScreen");
 
-const hintText = document.getElementById("hintText");
+const enterButton =
+  document.getElementById("enterButton");
 
-const musicButton = document.getElementById("musicButton");
-const song = document.getElementById("song");
+const song =
+  document.getElementById("song");
 
-const dateInput = document.getElementById("date");
-const timeInput = document.getElementById("time");
+const musicButton =
+  document.getElementById("musicButton");
 
-const dateHint = document.getElementById("dateHint");
+const musicIcon =
+  document.getElementById("musicIcon");
 
-const yesBtn = document.getElementById("yesBtn");
-const maybeBtn = document.getElementById("maybeBtn");
+const musicText =
+  document.getElementById("musicText");
+
+const page1 =
+  document.getElementById("page1");
+
+const page2 =
+  document.getElementById("page2");
+
+const paperLetter =
+  document.getElementById("paperLetter");
+
+const letterBtn =
+  document.getElementById("letterBtn");
+
+const hintText =
+  document.getElementById("hintText");
+
+const dateInput =
+  document.getElementById("date");
+
+const timeInput =
+  document.getElementById("time");
+
+const dateHint =
+  document.getElementById("dateHint");
+
+const messageInput =
+  document.getElementById("message");
+
+const characterCount =
+  document.getElementById("characterCount");
+
+const yesBtn =
+  document.getElementById("yesBtn");
+
+const maybeBtn =
+  document.getElementById("maybeBtn");
+
+const kiligText =
+  document.getElementById("kiligText");
 
 const successOverlay =
   document.getElementById("successOverlay");
 
-const chosenDate =
-  document.getElementById("chosenDate");
+const ticketDate =
+  document.getElementById("ticketDate");
+
+const ticketTime =
+  document.getElementById("ticketTime");
+
+const ticketMessage =
+  document.getElementById("ticketMessage");
+
+const closeTicket =
+  document.getElementById("closeTicket");
 
 
-/* =================================
-   LETTER
-================================= */
+/* =====================================================
+   STATE
+===================================================== */
 
 let letterOpened = false;
 
-letterBtn.addEventListener("click", function () {
+let musicPlaying = false;
 
-  /* FIRST CLICK */
+let maybeIndex = 0;
 
-  if (!letterOpened) {
 
-    letterOpened = true;
+/* =====================================================
+   ENTRY + MUSIC
+===================================================== */
 
-    paperLetter.classList.add("open");
+enterButton.addEventListener("click", async () => {
 
-    letterBtn.textContent =
-      "May itatanong ako sa'yo →";
+  entryScreen.classList.add("hide");
 
-    hintText.textContent =
-      "Basahin mo muna... promise, hindi mahaba ♡";
+  try {
 
-    return;
+    await song.play();
+
+    musicPlaying = true;
+
+    updateMusicButton();
+
+  } catch (error) {
+
+    console.log(
+      "Music could not start automatically."
+    );
+
   }
-
-
-  /* SECOND CLICK */
-
-  goToPageTwo();
 
 });
 
 
-/* =================================
-   GO TO PAGE 2
-================================= */
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
 
-function goToPageTwo() {
+musicButton.addEventListener("click", async () => {
 
-  page1.classList.remove("active");
+  if (song.paused) {
 
-  page2.classList.add("active");
+    try {
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-  startMusic();
-
-}
-
-
-/* =================================
-   MUSIC
-================================= */
-
-let musicPlaying = false;
-
-
-function startMusic() {
-
-  song.play()
-    .then(() => {
+      await song.play();
 
       musicPlaying = true;
 
-      musicButton.innerHTML =
-        "♫ <span>Love Is playing...</span>";
+    } catch (error) {
 
-    })
-    .catch(() => {
+      console.log(error);
 
-      musicPlaying = false;
+    }
 
-    });
-
-}
-
-
-musicButton.addEventListener("click", function () {
-
-  if (musicPlaying) {
+  } else {
 
     song.pause();
 
     musicPlaying = false;
 
-    musicButton.innerHTML =
-      "♫ <span>Love Is</span>";
-
-  } else {
-
-    song.play()
-      .then(() => {
-
-        musicPlaying = true;
-
-        musicButton.innerHTML =
-          "♫ <span>Love Is playing...</span>";
-
-      })
-      .catch(() => {
-
-        alert(
-          "Tap the button again to play the song ♡"
-        );
-
-      });
-
   }
+
+  updateMusicButton();
 
 });
 
 
-/* =================================
-   DATE
-================================= */
+function updateMusicButton() {
+
+  if (musicPlaying) {
+
+    musicButton.classList.add("playing");
+
+    musicIcon.textContent = "♫";
+
+    musicText.textContent = "Love Is";
+
+  } else {
+
+    musicButton.classList.remove("playing");
+
+    musicIcon.textContent = "▶";
+
+    musicText.textContent = "Music";
+
+  }
+
+}
+
+
+/* =====================================================
+   LETTER
+===================================================== */
+
+letterBtn.addEventListener("click", () => {
+
+  if (!letterOpened) {
+
+    paperLetter.classList.add("open");
+
+    letterOpened = true;
+
+    letterBtn.textContent =
+      "May itatanong ako sa'yo →";
+
+    hintText.textContent =
+      "Basahin mo muna... don't rush ♡";
+
+    setTimeout(() => {
+
+      paperLetter.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }, 300);
+
+    return;
+  }
+
+
+  goToPage2();
+
+});
+
+
+/* =====================================================
+   PAGE TRANSITION
+===================================================== */
+
+function goToPage2() {
+
+  page1.classList.remove("active");
+
+  setTimeout(() => {
+
+    page2.classList.add("active");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }, 200);
+
+}
+
+
+/* =====================================================
+   MINIMUM DATE
+===================================================== */
 
 function setMinimumDate() {
 
-  const today = new Date();
+  const today =
+    new Date();
 
   const year =
     today.getFullYear();
 
   const month =
-    String(today.getMonth() + 1)
-      .padStart(2, "0");
+    String(
+      today.getMonth() + 1
+    ).padStart(2, "0");
 
   const day =
-    String(today.getDate())
-      .padStart(2, "0");
+    String(
+      today.getDate()
+    ).padStart(2, "0");
 
   dateInput.min =
     `${year}-${month}-${day}`;
+
 }
 
 setMinimumDate();
 
 
-/* =================================
-   DATE / TIME CHANGE
-================================= */
+/* =====================================================
+   DATE
+===================================================== */
 
-dateInput.addEventListener("change", function () {
+dateInput.addEventListener(
+  "change",
+  saveBooking
+);
 
-  if (dateInput.value) {
-
-    dateHint.textContent =
-      "Okay, may napili ka na. 👀";
-
-  }
-
-});
-
-
-timeInput.addEventListener("change", function () {
-
-  if (timeInput.value) {
-
-    dateHint.textContent =
-      "Noted... mukhang seryoso na 'to HAHAHA.";
-
-  }
-
-});
+timeInput.addEventListener(
+  "change",
+  saveBooking
+);
 
 
-/* =================================
-   YES BUTTON
-================================= */
+function saveBooking() {
 
-yesBtn.addEventListener("click", function () {
+  localStorage.setItem(
+    "coffeeDate",
+    dateInput.value
+  );
 
-  const date = dateInput.value;
+  localStorage.setItem(
+    "coffeeTime",
+    timeInput.value
+  );
 
-  const time = timeInput.value;
 
-
-  if (!date || !time) {
+  if (
+    dateInput.value &&
+    timeInput.value
+  ) {
 
     dateHint.textContent =
-      "Pili ka muna ng date at time please ♡";
+      "Okay... may schedule na tayo. 👀";
 
-    dateHint.style.color =
-      "#568fa8";
-
-    return;
-
-  }
-
-
-  const dateObject =
-    new Date(`${date}T${time}`);
-
-
-  const formattedDate =
-    dateObject.toLocaleDateString(
-      "en-PH",
-      {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-        year: "numeric"
-      }
+    changeKiligMessage(
+      "Wait... legit may date na tayo? 👀"
     );
 
+  }
 
-  const formattedTime =
-    dateObject.toLocaleTimeString(
-      "en-PH",
-      {
-        hour: "numeric",
-        minute: "2-digit"
-      }
+}
+
+
+/* =====================================================
+   RESTORE BOOKING
+===================================================== */
+
+function restoreBooking() {
+
+  const savedDate =
+    localStorage.getItem("coffeeDate");
+
+  const savedTime =
+    localStorage.getItem("coffeeTime");
+
+  const savedMessage =
+    localStorage.getItem("coffeeMessage");
+
+
+  if (savedDate) {
+
+    dateInput.value =
+      savedDate;
+
+  }
+
+
+  if (savedTime) {
+
+    timeInput.value =
+      savedTime;
+
+  }
+
+
+  if (savedMessage) {
+
+    messageInput.value =
+      savedMessage;
+
+    characterCount.textContent =
+      savedMessage.length;
+
+  }
+
+
+  if (
+    savedDate &&
+    savedTime
+  ) {
+
+    dateHint.textContent =
+      "May napili ka na pala. 👀";
+
+  }
+
+}
+
+restoreBooking();
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+messageInput.addEventListener(
+  "input",
+  () => {
+
+    characterCount.textContent =
+      messageInput.value.length;
+
+    localStorage.setItem(
+      "coffeeMessage",
+      messageInput.value
     );
 
-
-  chosenDate.innerHTML =
-    `${formattedDate}<br>at ${formattedTime}`;
-
-
-  successOverlay.classList.add("show");
-
-  createHearts();
-
-});
+  }
+);
 
 
-/* =================================
-   MAYBE BUTTON
-================================= */
+/* =====================================================
+   KULIT MESSAGES
+===================================================== */
 
-const maybeMessages = [
-  "Sure ka ba? 👀",
-  "Pag-isipan mo muna HAHAHA",
-  "May free coffee dito oh ☕",
-  "Hindi kita pine-pressure... 👀",
-  "One coffee lang naman... ♡"
+const kiligMessages = [
+
+  "Sige na... pumili ka na HAHAHA.",
+
+  "Hindi naman kita pine-pressure... konti lang. 👀",
+
+  "Imagine mo na lang may coffee tayo habang nagkukwentuhan. ☕",
+
+  "Okay lang mag-isip... basta pili ka. HAHAHA.",
+
+  "Jay has entered his booking-system era. 😭",
+
+  "Please cooperate with the management. HAHAHA.",
+
+  "This is a very serious business transaction. ☕",
+
+  "Date application form po ito. Kindly accomplish. 😂",
+
+  "Mimz, wag mo akong pahirapan. HAHAHA.",
+
+  "Lowkey hoping na pili ka ng malapit. 👀",
+
+  "Take your time... pero sana ngayon. HAHAHA.",
+
+  "Imagine natin na reservation na talaga 'to. ♡"
+
 ];
 
-let maybeIndex = 0;
+
+function changeKiligMessage(message) {
+
+  kiligText.style.opacity = "0";
+
+  setTimeout(() => {
+
+    kiligText.textContent =
+      message;
+
+    kiligText.style.opacity = "1";
+
+  }, 180);
+
+}
 
 
-maybeBtn.addEventListener("click", function () {
+/* =====================================================
+   RANDOM KULIT MESSAGE
+===================================================== */
+
+setInterval(() => {
+
+  if (
+    page2.classList.contains("active") &&
+    !successOverlay.classList.contains("show")
+  ) {
+
+    const random =
+      kiligMessages[
+        Math.floor(
+          Math.random() *
+          kiligMessages.length
+        )
+      ];
+
+    changeKiligMessage(random);
+
+  }
+
+}, 7000);
+
+
+/* =====================================================
+   MAYBE BUTTON
+===================================================== */
+
+const maybeMessages = [
+
+  "Maybe... 👀",
+
+  "Sure ka ba? 😭",
+
+  "Pag-isipan mo muna HAHAHA.",
+
+  "May coffee naman. ☕",
+
+  "Hindi kita pine-pressure...",
+
+  "Pero sana oo. 👀",
+
+  "Last chance na 'to.",
+
+  "Mimz naman oh HAHAHA.",
+
+  "One coffee lang. Promise. ♡",
+
+  "Okay... I'll wait. 🥹",
+
+  "So... yes? 👀"
+
+];
+
+
+maybeBtn.addEventListener("click", () => {
+
+  maybeIndex++;
+
+  if (
+    maybeIndex >=
+    maybeMessages.length
+  ) {
+
+    maybeIndex = 0;
+
+  }
 
   maybeBtn.textContent =
     maybeMessages[maybeIndex];
 
-  maybeIndex++;
 
-  if (maybeIndex >= maybeMessages.length) {
-    maybeIndex = 0;
-  }
+  changeKiligMessage(
+    maybeMessages[maybeIndex]
+  );
 
 });
 
 
-/* =================================
-   HEART ANIMATION
-================================= */
+/* =====================================================
+   CONFIRM
+===================================================== */
 
-function createHearts() {
+yesBtn.addEventListener(
+  "click",
+  () => {
 
-  const hearts = [
+    const selectedDate =
+      dateInput.value;
+
+    const selectedTime =
+      timeInput.value;
+
+
+    if (
+      !selectedDate ||
+      !selectedTime
+    ) {
+
+      dateHint.textContent =
+        "Hoyyy, date and time muna please. 😂♡";
+
+      changeKiligMessage(
+        "Hindi pa complete ang booking form, Mimz. 👀"
+      );
+
+      dateInput.focus();
+
+      return;
+
+    }
+
+
+    const dateObject =
+      new Date(
+        `${selectedDate}T${selectedTime}`
+      );
+
+
+    const formattedDate =
+      dateObject.toLocaleDateString(
+        "en-PH",
+        {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric"
+        }
+      );
+
+
+    const formattedTime =
+      dateObject.toLocaleTimeString(
+        "en-PH",
+        {
+          hour: "numeric",
+          minute: "2-digit"
+        }
+      );
+
+
+    ticketDate.textContent =
+      formattedDate;
+
+
+    ticketTime.textContent =
+      formattedTime;
+
+
+    const message =
+      messageInput.value.trim();
+
+
+    if (message) {
+
+      ticketMessage.innerHTML =
+        `"${escapeHTML(message)}" ♡`;
+
+    } else {
+
+      ticketMessage.textContent =
+        "No message needed. I'll see you there. ♡";
+
+    }
+
+
+    localStorage.setItem(
+      "coffeeConfirmed",
+      "true"
+    );
+
+
+    successOverlay.classList.add(
+      "show"
+    );
+
+
+    createCelebration();
+
+
+    setTimeout(() => {
+
+      changeKiligMessage(
+        "AYAN NA. DATE NA TALAGA. 😭♡"
+      );
+
+    }, 500);
+
+  }
+);
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   CELEBRATION
+===================================================== */
+
+function createCelebration() {
+
+  const symbols = [
     "♡",
     "♥",
-    "♡",
     "✿",
+    "✧",
+    "☕",
     "♡",
-    "♥",
-    "♡"
+    "✿"
   ];
 
 
-  hearts.forEach(function (symbol, index) {
+  for (
+    let i = 0;
+    i < 35;
+    i++
+  ) {
 
-    const heart =
+    const item =
       document.createElement("div");
 
-    heart.textContent =
-      symbol;
 
-    heart.style.position =
-      "fixed";
-
-    heart.style.left =
-      Math.random() * 100 + "%";
-
-    heart.style.bottom =
-      "-30px";
-
-    heart.style.fontSize =
-      (18 + Math.random() * 18) + "px";
-
-    heart.style.color =
-      "#72b5cc";
-
-    heart.style.zIndex =
-      "200";
-
-    heart.style.pointerEvents =
-      "none";
-
-    heart.style.transition =
-      "transform 3s ease, opacity 3s ease";
-
-    document.body.appendChild(heart);
+    item.className =
+      "celebration";
 
 
-    setTimeout(function () {
-
-      heart.style.transform =
-        `translateY(-${300 + Math.random() * 300}px)
-         rotate(${Math.random() * 80 - 40}deg)`;
-
-      heart.style.opacity =
-        "0";
-
-    }, index * 120);
+    item.textContent =
+      symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
 
 
-    setTimeout(function () {
+    item.style.left =
+      Math.random() * 100 + "vw";
 
-      heart.remove();
+
+    item.style.top =
+      70 +
+      Math.random() * 30 +
+      "vh";
+
+
+    item.style.animationDelay =
+      Math.random() * .8 + "s";
+
+
+    item.style.fontSize =
+      15 +
+      Math.random() * 25 +
+      "px";
+
+
+    document.body.appendChild(item);
+
+
+    setTimeout(() => {
+
+      item.remove();
 
     }, 3500);
 
-  });
+  }
 
 }
+
+
+/* =====================================================
+   CLOSE TICKET
+===================================================== */
+
+closeTicket.addEventListener(
+  "click",
+  () => {
+
+    successOverlay.classList.remove(
+      "show"
+    );
+
+
+    changeKiligMessage(
+      "Okay... so when are we getting coffee? 👀♡"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   KEYBOARD SUPPORT
+===================================================== */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key === "Escape" &&
+      successOverlay.classList.contains("show")
+    ) {
+
+      successOverlay.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
