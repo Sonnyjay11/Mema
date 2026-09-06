@@ -1,29 +1,59 @@
+/* =========================================================
+   FOR CARMINA ♡
+   Romantic Coffee Invitation
+========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
   /* =======================================================
      ELEMENTS
   ======================================================== */
 
-  const page1 = document.getElementById("page1");
-  const page2 = document.getElementById("page2");
-  const waitScreen = document.getElementById("waitScreen");
-  const confirmation = document.getElementById("confirmation");
+  const letterPage =
+    document.getElementById("letterPage");
 
-  const letterBtn = document.getElementById("letterBtn");
-  const buttonText = document.getElementById("buttonText");
-  const buttonArrow = document.getElementById("buttonArrow");
+  const datePage =
+    document.getElementById("datePage");
 
-  const paperLetter = document.getElementById("paperLetter");
-  const hintText = document.getElementById("hintText");
+  const waitPage =
+    document.getElementById("waitPage");
 
-  const song = document.getElementById("song");
-  const musicButton = document.getElementById("musicButton");
+  const confirmationPage =
+    document.getElementById("confirmationPage");
 
-  const dateInput = document.getElementById("dateInput");
-  const timeInput = document.getElementById("timeInput");
 
-  const selectionPreview =
-    document.getElementById("selectionPreview");
+  const letter =
+    document.getElementById("letter");
+
+  const letterButton =
+    document.getElementById("letterButton");
+
+  const letterButtonText =
+    document.getElementById("letterButtonText");
+
+  const letterButtonArrow =
+    document.getElementById("letterButtonArrow");
+
+  const letterHint =
+    document.getElementById("letterHint");
+
+
+  const song =
+    document.getElementById("song");
+
+  const musicButton =
+    document.getElementById("musicButton");
+
+
+  const dateInput =
+    document.getElementById("dateInput");
+
+  const timeInput =
+    document.getElementById("timeInput");
+
+
+  const datePreview =
+    document.getElementById("datePreview");
 
   const previewDate =
     document.getElementById("previewDate");
@@ -31,8 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const previewTime =
     document.getElementById("previewTime");
 
-  const selectionHint =
-    document.getElementById("selectionHint");
+  const selectionMessage =
+    document.getElementById("selectionMessage");
+
 
   const yesButton =
     document.getElementById("yesButton");
@@ -40,29 +71,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const maybeButton =
     document.getElementById("maybeButton");
 
+
   const confirmedDate =
     document.getElementById("confirmedDate");
 
   const confirmedTime =
     document.getElementById("confirmedTime");
 
+
   const calendarButton =
     document.getElementById("calendarButton");
 
-  const secretHeart =
-    document.getElementById("secretHeart");
+
+  const secretButton =
+    document.getElementById("secretButton");
 
   const secretMessage =
     document.getElementById("secretMessage");
 
+
+  const memoryImage =
+    document.getElementById("memoryImage");
+
+  const memoryFallback =
+    document.getElementById("memoryFallback");
+
+
   const heartContainer =
     document.getElementById("heartContainer");
-
-  const memoryPhoto =
-    document.getElementById("memoryPhoto");
-
-  const photoFallback =
-    document.getElementById("photoFallback");
 
 
   /* =======================================================
@@ -73,34 +109,37 @@ document.addEventListener("DOMContentLoaded", () => {
   let musicStarted = false;
   let maybeClicks = 0;
   let secretClicks = 0;
-  let bookingLocked = false;
+  let bookingStarted = false;
 
 
   /* =======================================================
-     DATE HELPERS
+     DATE
   ======================================================== */
 
-  function getLocalDateString() {
+  function getToday() {
 
-    const now = new Date();
+    const today = new Date();
 
-    const year = now.getFullYear();
+    const year =
+      today.getFullYear();
 
-    const month = String(
-      now.getMonth() + 1
-    ).padStart(2, "0");
+    const month =
+      String(
+        today.getMonth() + 1
+      ).padStart(2, "0");
 
-    const day = String(
-      now.getDate()
-    ).padStart(2, "0");
+    const day =
+      String(
+        today.getDate()
+      ).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
   }
 
 
-  function setMinimumDate() {
+  function setupDate() {
 
-    dateInput.min = getLocalDateString();
+    dateInput.min = getToday();
 
   }
 
@@ -109,25 +148,21 @@ document.addEventListener("DOMContentLoaded", () => {
      FRIENDLY DATE
   ======================================================== */
 
-  function formatFriendlyDate(value) {
+  function formatDate(value) {
 
     if (!value) {
       return "Choose a day ♡";
     }
 
-    const parts = value.split("-");
-
-    if (parts.length !== 3) {
-      return value;
-    }
-
-    const year = Number(parts[0]);
-    const month = Number(parts[1]) - 1;
-    const day = Number(parts[2]);
+    const [
+      year,
+      month,
+      day
+    ] = value.split("-").map(Number);
 
     const date = new Date(
       year,
-      month,
+      month - 1,
       day
     );
 
@@ -146,28 +181,29 @@ document.addEventListener("DOMContentLoaded", () => {
      FRIENDLY TIME
   ======================================================== */
 
-  function formatFriendlyTime(value) {
+  function formatTime(value) {
 
     if (!value) {
       return "Choose a time ☕";
     }
 
-    const parts = value.split(":");
+    let [
+      hour,
+      minute
+    ] = value.split(":").map(Number);
 
-    let hour = Number(parts[0]);
-    const minute = parts[1];
+    const period =
+      hour >= 12
+        ? "PM"
+        : "AM";
 
-    const suffix = hour >= 12
-      ? "PM"
-      : "AM";
-
-    hour = hour % 12;
+    hour %= 12;
 
     if (hour === 0) {
       hour = 12;
     }
 
-    return `${hour}:${minute} ${suffix}`;
+    return `${hour}:${String(minute).padStart(2, "0")} ${period}`;
   }
 
 
@@ -181,32 +217,35 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    musicStarted = true;
-
     song.volume = 0.45;
 
-    const playPromise = song.play();
+    const play =
+      song.play();
 
-    if (playPromise !== undefined) {
-
-      playPromise
-        .then(() => {
-
-          musicButton.classList.add("playing");
-
-          musicButton.setAttribute(
-            "aria-pressed",
-            "true"
-          );
-
-        })
-        .catch(() => {
-
-          musicStarted = false;
-
-        });
-
+    if (!play) {
+      return;
     }
+
+    play
+      .then(() => {
+
+        musicStarted = true;
+
+        musicButton.classList.add(
+          "playing"
+        );
+
+        musicButton.setAttribute(
+          "aria-pressed",
+          "true"
+        );
+
+      })
+      .catch(() => {
+
+        musicStarted = false;
+
+      });
 
   }
 
@@ -255,34 +294,34 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 
-  song.addEventListener(
-    "ended",
-    () => {
-
-      musicButton.classList.remove(
-        "playing"
-      );
-
-      musicButton.setAttribute(
-        "aria-pressed",
-        "false"
-      );
-
-    }
-  );
-
-
   /* =======================================================
-     PAGE SWITCHING
+     PAGE TRANSITION
   ======================================================== */
 
-  function switchPage(from, to) {
+  function showPage(
+    currentPage,
+    nextPage
+  ) {
 
-    from.classList.remove("active");
-    from.setAttribute("aria-hidden", "true");
+    currentPage.classList.remove(
+      "active"
+    );
 
-    to.classList.add("active");
-    to.setAttribute("aria-hidden", "false");
+    currentPage.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+
+    nextPage.classList.add(
+      "active"
+    );
+
+    nextPage.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
 
     window.scrollTo({
       top: 0,
@@ -293,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     FLYING HEARTS
+     HEARTS
   ======================================================== */
 
   function createHearts(amount = 10) {
@@ -305,7 +344,11 @@ document.addEventListener("DOMContentLoaded", () => {
       "✦"
     ];
 
-    for (let i = 0; i < amount; i++) {
+    for (
+      let i = 0;
+      i < amount;
+      i++
+    ) {
 
       const heart =
         document.createElement("span");
@@ -320,14 +363,16 @@ document.addEventListener("DOMContentLoaded", () => {
           )
         ];
 
+
       const x =
-        (Math.random() - 0.5) * 420;
+        (Math.random() - 0.5) * 450;
 
       const y =
-        -120 - Math.random() * 300;
+        -100 - Math.random() * 330;
 
       const rotation =
-        (Math.random() - 0.5) * 50;
+        (Math.random() - 0.5) * 55;
+
 
       heart.style.setProperty(
         "--x",
@@ -340,26 +385,31 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       heart.style.setProperty(
-        "--r",
+        "--rotation",
         `${rotation}deg`
       );
+
 
       heart.style.left =
         `${35 + Math.random() * 30}%`;
 
       heart.style.top =
-        `${50 + Math.random() * 15}%`;
+        `${52 + Math.random() * 10}%`;
+
 
       heart.style.animationDelay =
-        `${Math.random() * .25}s`;
+        `${Math.random() * .2}s`;
+
 
       heartContainer.appendChild(
         heart
       );
 
-      setTimeout(() => {
-        heart.remove();
-      }, 1900);
+
+      setTimeout(
+        () => heart.remove(),
+        1900
+      );
 
     }
 
@@ -367,10 +417,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     LETTER
+     LETTER OPENING
   ======================================================== */
 
-  letterBtn.addEventListener(
+  letterButton.addEventListener(
     "click",
     () => {
 
@@ -380,17 +430,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         startMusic();
 
-        paperLetter.classList.add("open");
+        letter.classList.add(
+          "open"
+        );
 
-        letterBtn.classList.add("opened");
-
-        buttonText.textContent =
+        letterButtonText.textContent =
           "Okay, next...";
 
-        buttonArrow.textContent =
+        letterButtonArrow.textContent =
           "☕";
 
-        hintText.textContent =
+        letterHint.textContent =
           "Take your time. ♡";
 
         createHearts(10);
@@ -399,9 +449,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       }
 
-      switchPage(
-        page1,
-        page2
+
+      showPage(
+        letterPage,
+        datePage
       );
 
     }
@@ -409,7 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     DATE/TIME PREVIEW
+     DATE PREVIEW
   ======================================================== */
 
   function updatePreview() {
@@ -420,70 +471,56 @@ document.addEventListener("DOMContentLoaded", () => {
     const hasTime =
       Boolean(timeInput.value);
 
-    if (hasDate) {
 
-      previewDate.textContent =
-        formatFriendlyDate(
-          dateInput.value
-        );
-
-    } else {
-
-      previewDate.textContent =
-        "Choose a day ♡";
-
-    }
+    previewDate.textContent =
+      hasDate
+        ? formatDate(dateInput.value)
+        : "Choose a day ♡";
 
 
-    if (hasTime) {
-
-      previewTime.textContent =
-        formatFriendlyTime(
-          timeInput.value
-        );
-
-    } else {
-
-      previewTime.textContent =
-        "Choose a time ☕";
-
-    }
+    previewTime.textContent =
+      hasTime
+        ? formatTime(timeInput.value)
+        : "Choose a time ☕";
 
 
-    if (hasDate && hasTime) {
+    if (
+      hasDate &&
+      hasTime
+    ) {
 
-      selectionPreview.classList.add(
+      datePreview.classList.add(
         "ready"
       );
 
-      selectionHint.textContent =
+      selectionMessage.textContent =
         "Okay... I'm already looking forward to this. ♡";
 
     } else if (hasDate) {
 
-      selectionPreview.classList.remove(
+      datePreview.classList.remove(
         "ready"
       );
 
-      selectionHint.textContent =
+      selectionMessage.textContent =
         "Cute. Now tell me what time. 👀";
 
     } else if (hasTime) {
 
-      selectionPreview.classList.remove(
+      datePreview.classList.remove(
         "ready"
       );
 
-      selectionHint.textContent =
+      selectionMessage.textContent =
         "We have a time... now pick a day. ♡";
 
     } else {
 
-      selectionPreview.classList.remove(
+      datePreview.classList.remove(
         "ready"
       );
 
-      selectionHint.textContent =
+      selectionMessage.textContent =
         "Your move. 👀";
 
     }
@@ -491,15 +528,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  function animateHint() {
+  function animateMessage() {
 
-    selectionHint.classList.remove(
+    selectionMessage.classList.remove(
       "pop"
     );
 
-    void selectionHint.offsetWidth;
+    void selectionMessage.offsetWidth;
 
-    selectionHint.classList.add(
+    selectionMessage.classList.add(
       "pop"
     );
 
@@ -511,7 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
     () => {
 
       updatePreview();
-      animateHint();
+      animateMessage();
 
     }
   );
@@ -522,14 +559,14 @@ document.addEventListener("DOMContentLoaded", () => {
     () => {
 
       updatePreview();
-      animateHint();
+      animateMessage();
 
     }
   );
 
 
   /* =======================================================
-     PLAYFUL MAYBE BUTTON
+     MAYBE BUTTON
   ======================================================== */
 
   const maybeMessages = [
@@ -544,7 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "...pero sana yes. ♡",
 
-    "Last na talaga... please? 🥹"
+    "Okay last na talaga... 🥹"
 
   ];
 
@@ -555,23 +592,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       maybeClicks++;
 
+
       const index =
         Math.min(
           maybeClicks - 1,
           maybeMessages.length - 1
         );
 
+
       maybeButton.textContent =
         maybeMessages[index];
 
-      animateHint();
 
-      if (maybeClicks >= 4) {
-
-        maybeButton.style.transform =
-          "rotate(-3deg)";
-
-      }
+      animateMessage();
 
     }
   );
@@ -581,16 +614,16 @@ document.addEventListener("DOMContentLoaded", () => {
      VALIDATION
   ======================================================== */
 
-  function validateSelection() {
+  function validateDate() {
 
     if (!dateInput.value) {
 
-      selectionHint.textContent =
+      selectionMessage.textContent =
         "Pick a day first, please. ♡";
 
       dateInput.focus();
 
-      animateHint();
+      animateMessage();
 
       return false;
 
@@ -599,12 +632,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!timeInput.value) {
 
-      selectionHint.textContent =
+      selectionMessage.textContent =
         "And what time should I save for you? ☕";
 
       timeInput.focus();
 
-      animateHint();
+      animateMessage();
 
       return false;
 
@@ -617,75 +650,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     YES BUTTON
+     CONFIRMATION
+  ======================================================== */
+
+  function prepareConfirmation() {
+
+    confirmedDate.textContent =
+      formatDate(
+        dateInput.value
+      );
+
+    confirmedTime.textContent =
+      formatTime(
+        timeInput.value
+      );
+
+  }
+
+
+  /* =======================================================
+     YES
   ======================================================== */
 
   yesButton.addEventListener(
     "click",
     () => {
 
-      if (bookingLocked) {
+      if (bookingStarted) {
         return;
       }
 
-      if (!validateSelection()) {
+
+      if (!validateDate()) {
         return;
       }
 
-      bookingLocked = true;
 
-      createHearts(16);
+      bookingStarted = true;
 
-      switchPage(
-        page2,
-        waitScreen
+
+      prepareConfirmation();
+
+      createHearts(15);
+
+
+      showPage(
+        datePage,
+        waitPage
       );
 
 
-      setTimeout(() => {
+      setTimeout(
+        () => {
 
-        showConfirmation();
+          showPage(
+            waitPage,
+            confirmationPage
+          );
 
-      }, 2500);
+          createHearts(22);
+
+        },
+        2500
+      );
 
     }
   );
-
-
-  /* =======================================================
-     CONFIRMATION
-  ======================================================== */
-
-  function showConfirmation() {
-
-    const friendlyDate =
-      formatFriendlyDate(
-        dateInput.value
-      );
-
-    const friendlyTime =
-      formatFriendlyTime(
-        timeInput.value
-      );
-
-    confirmedDate.textContent =
-      friendlyDate;
-
-    confirmedTime.textContent =
-      friendlyTime;
-
-    switchPage(
-      waitScreen,
-      confirmation
-    );
-
-    setTimeout(() => {
-
-      createHearts(22);
-
-    }, 250);
-
-  }
 
 
   /* =======================================================
@@ -704,16 +734,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
 
-      const [year, month, day] =
-        dateInput.value
-          .split("-")
-          .map(Number);
+      const [
+        year,
+        month,
+        day
+      ] = dateInput.value
+        .split("-")
+        .map(Number);
 
 
-      const [hour, minute] =
-        timeInput.value
-          .split(":")
-          .map(Number);
+      const [
+        hour,
+        minute
+      ] = timeInput.value
+        .split(":")
+        .map(Number);
 
 
       const start =
@@ -733,7 +768,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-      function calendarFormat(date) {
+      function calendarDate(date) {
 
         const y =
           date.getFullYear();
@@ -758,21 +793,22 @@ document.addEventListener("DOMContentLoaded", () => {
             date.getMinutes()
           ).padStart(2, "0");
 
-        const s = "00";
-
-        return `${y}${m}${d}T${h}${min}${s}`;
+        return (
+          `${y}${m}${d}` +
+          `T${h}${min}00`
+        );
 
       }
 
 
-      const startString =
-        calendarFormat(start);
+      const startTime =
+        calendarDate(start);
 
-      const endString =
-        calendarFormat(end);
+      const endTime =
+        calendarDate(end);
 
 
-      const calendarUrl =
+      const url =
         "https://calendar.google.com/calendar/render" +
         "?action=TEMPLATE" +
         "&text=" +
@@ -780,9 +816,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "Coffee date ☕♡"
         ) +
         "&dates=" +
-        startString +
-        "/" +
-        endString +
+        `${startTime}/${endTime}` +
         "&details=" +
         encodeURIComponent(
           "A little coffee date. ♡\n\n" +
@@ -795,7 +829,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       window.open(
-        calendarUrl,
+        url,
         "_blank"
       );
 
@@ -804,14 +838,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     SECRET EASTER EGG
+     SECRET MESSAGE
   ======================================================== */
 
-  secretHeart.addEventListener(
+  secretButton.addEventListener(
     "click",
     () => {
 
       secretClicks++;
+
 
       if (secretClicks >= 3) {
 
@@ -819,10 +854,10 @@ document.addEventListener("DOMContentLoaded", () => {
           "show"
         );
 
-        createHearts(8);
-
-        secretHeart.textContent =
+        secretButton.textContent =
           "♥";
+
+        createHearts(8);
 
       }
 
@@ -834,14 +869,14 @@ document.addEventListener("DOMContentLoaded", () => {
      PHOTO FALLBACK
   ======================================================== */
 
-  memoryPhoto.addEventListener(
+  memoryImage.addEventListener(
     "error",
     () => {
 
-      memoryPhoto.style.display =
+      memoryImage.style.display =
         "none";
 
-      photoFallback.style.display =
+      memoryFallback.style.display =
         "flex";
 
     }
@@ -849,7 +884,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     TAB VISIBILITY
+     PAUSE MUSIC WHEN LEAVING TAB
   ======================================================== */
 
   document.addEventListener(
@@ -879,38 +914,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     INITIAL STATE
+     INITIALIZE
   ======================================================== */
 
-  setMinimumDate();
+  setupDate();
 
   updatePreview();
 
-  page1.classList.add("active");
 
-  page2.classList.remove("active");
-  waitScreen.classList.remove("active");
-  confirmation.classList.remove("active");
+  const pages = [
+    letterPage,
+    datePage,
+    waitPage,
+    confirmationPage
+  ];
 
-  page1.setAttribute(
-    "aria-hidden",
-    "false"
+
+  pages.forEach(
+    (page) => {
+
+      if (page !== letterPage) {
+
+        page.classList.remove(
+          "active"
+        );
+
+        page.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+      }
+
+    }
   );
 
-  page2.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  waitScreen.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-  confirmation.setAttribute(
-    "aria-hidden",
-    "true"
-  );
 
   song.volume = 0.45;
 
