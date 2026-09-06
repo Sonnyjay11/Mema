@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
 
@@ -8,14 +9,19 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
 
-  <meta name="theme-color" content="#c9eafa">
+  <meta
+    name="theme-color"
+    content="#c8eafa"
+  >
+
   <meta
     name="description"
-    content="A little coffee invitation for Carmina ♡"
+    content="A little something for Carmina ♡"
   >
 
   <title>For Carmina ♡</title>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -27,66 +33,59 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-  <!-- =====================================================
+  <!-- ==================================================
        BACKGROUND
-  ====================================================== -->
+  =================================================== -->
 
-  <div class="sky">
+  <div class="background" aria-hidden="true">
 
     <div class="sun"></div>
 
-    <div class="cloud cloud-one"></div>
-    <div class="cloud cloud-two"></div>
-    <div class="cloud cloud-three"></div>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
 
-    <div class="soft-glow glow-one"></div>
-    <div class="soft-glow glow-two"></div>
+    <div class="background-heart heart-1">♡</div>
+    <div class="background-heart heart-2">♡</div>
+    <div class="background-heart heart-3">♡</div>
+    <div class="background-heart heart-4">♡</div>
 
-    <div class="sky-heart heart-one">♡</div>
-    <div class="sky-heart heart-two">♡</div>
-    <div class="sky-heart heart-three">♡</div>
-    <div class="sky-heart heart-four">♡</div>
-
-    <div class="sparkle sparkle-one">✦</div>
-    <div class="sparkle sparkle-two">✧</div>
-    <div class="sparkle sparkle-three">✦</div>
-    <div class="sparkle sparkle-four">✧</div>
+    <div class="sparkle sparkle-1">✦</div>
+    <div class="sparkle sparkle-2">✧</div>
+    <div class="sparkle sparkle-3">✦</div>
 
   </div>
 
 
-  <!-- =====================================================
+  <!-- ==================================================
        MUSIC
-  ====================================================== -->
+  =================================================== -->
 
   <audio
     id="song"
     src="Love Is.mp3"
     preload="auto"
-    playsinline
   ></audio>
 
   <button
     id="musicButton"
-    class="music-player"
+    class="music-button"
     type="button"
     aria-label="Toggle music"
     aria-pressed="false"
   >
 
-    <span class="music-disc">
-      ♫
-    </span>
+    <span class="music-icon">♫</span>
 
-    <span class="music-details">
+    <span class="music-info">
       <strong>Love Is</strong>
       <small>The Ridleys</small>
     </span>
 
-    <span class="music-bars">
-      <i></i>
+    <span class="equalizer">
       <i></i>
       <i></i>
       <i></i>
@@ -96,104 +95,104 @@
   </button>
 
 
-  <!-- =====================================================
-       MAIN
-  ====================================================== -->
+  <!-- ==================================================
+       APP
+  =================================================== -->
 
   <main class="app">
 
 
-    <!-- ===================================================
-         PAGE 1
-    ==================================================== -->
+    <!-- ==================================================
+         PAGE 1 — LETTER
+    =================================================== -->
 
     <section
-      id="page1"
-      class="page page-one active"
+      id="letterPage"
+      class="page active"
       aria-hidden="false"
     >
 
-      <div class="intro-card">
+      <div class="card letter-card">
 
-        <div class="tiny-label">
-          a little something for you
-        </div>
+        <p class="eyebrow">
+          A LITTLE SOMETHING FOR YOU
+        </p>
 
-        <div class="top-heart">
+        <div class="title-heart">
           ♡
         </div>
 
-        <h1 class="intro-title">
+        <h1>
           Hi, Carmina.
         </h1>
 
-        <p class="intro-subtitle">
+        <p class="intro-text">
           I made something for you.
         </p>
 
-        <p class="intro-small">
+        <p class="intro-note">
           It's a little embarrassing...
           <br>
           but I made it anyway.
         </p>
 
 
-        <!-- LETTER -->
+        <!-- Letter -->
 
-        <div
-          id="paperLetter"
-          class="paper-letter"
+        <article
+          id="letter"
+          class="letter"
         >
 
-          <div class="paper-tape tape-left"></div>
-          <div class="paper-tape tape-right"></div>
+          <div class="tape tape-left"></div>
+          <div class="tape tape-right"></div>
 
-          <div class="paper-inner">
+          <div class="letter-content">
 
-            <div class="paper-heading">
-              a tiny letter
-              <span>♡</span>
-            </div>
+            <p class="letter-label">
+              a tiny letter ♡
+            </p>
 
-            <div class="paper-line"></div>
+            <div class="letter-divider"></div>
 
-            <p class="letter-greeting">
+            <p class="greeting">
               Hello, Carmina &lt;3
             </p>
 
             <p>
-              Pagpasensyahan mo na tong kabaliwan ko HAHAHA.
-              I could've just asked you normally,
+              Pagpasensyahan mo na tong kabaliwan ko
+              HAHAHA. I could've just asked you normally,
               pero naisip ko...
               bakit hindi ko gawing mas memorable?
             </p>
 
             <p>
-              I really appreciate every time you make time for me.
-              Kahit busy ka, kahit sandali lang,
-              those little moments with you mean more to me
-              than I probably say.
+              I really appreciate every time you make
+              time for me. Kahit busy ka, kahit sandali
+              lang, those little moments with you mean
+              more to me than I probably say.
             </p>
 
             <p>
               And honestly...
             </p>
 
-            <p class="letter-emphasis">
+            <p class="handwritten">
               I like spending time with you.
             </p>
 
             <p>
               Yung simpleng kwentuhan, tawanan,
               kahit wala naman tayong ginagawa masyado.
-              Somehow, those are the moments I end up remembering.
+              Somehow, those are the moments I end up
+              remembering.
             </p>
 
             <p>
               Kaya naisip ko...
             </p>
 
-            <p class="letter-emphasis">
+            <p class="handwritten">
               Pwede bang coffee ulit?
             </p>
 
@@ -202,39 +201,35 @@
               Ako na bahala sa coffee. ☕
             </p>
 
-            <p class="letter-soft">
+            <p class="soft-text">
               No pressure, promise.
               I just really want to see you again. ♡
             </p>
 
-            <p class="letter-signature">
+            <p class="signature">
               — Jay ♡
             </p>
 
           </div>
 
-        </div>
+        </article>
 
 
-        <!-- OPEN BUTTON -->
+        <!-- Letter button -->
 
         <button
-          id="letterBtn"
-          class="open-button"
+          id="letterButton"
+          class="primary-button"
           type="button"
         >
 
-          <span class="button-shine"></span>
+          <span class="button-icon">♡</span>
 
-          <span class="open-icon">
-            ♡
-          </span>
-
-          <span id="buttonText">
+          <span id="letterButtonText">
             Buksan mo
           </span>
 
-          <span id="buttonArrow">
+          <span id="letterButtonArrow">
             →
           </span>
 
@@ -242,7 +237,7 @@
 
 
         <p
-          id="hintText"
+          id="letterHint"
           class="hint"
         >
           Promise, mabilis lang. :)
@@ -254,47 +249,43 @@
 
 
 
-    <!-- ===================================================
-         PAGE 2
-    ==================================================== -->
+    <!-- ==================================================
+         PAGE 2 — DATE
+    =================================================== -->
 
     <section
-      id="page2"
-      class="page page-two"
+      id="datePage"
+      class="page"
       aria-hidden="true"
     >
 
-      <div class="date-card">
+      <div class="card date-card">
 
+        <p class="eyebrow">
+          ONE LITTLE QUESTION
+        </p>
 
-        <div class="question-top">
-          <span>one little question...</span>
-          <b>♡</b>
-        </div>
-
-
-        <h2 class="date-title">
+        <h2>
           Mimz...
         </h2>
 
-
-        <p class="date-question">
+        <p class="big-question">
           Pwede bang coffee ulit?
         </p>
 
 
-        <div class="coffee-drawing">
+        <!-- Coffee illustration -->
 
-          <div class="coffee-cup">
+        <div class="coffee">
 
-            <div class="coffee-liquid"></div>
+          <div class="steam steam-1"></div>
+          <div class="steam steam-2"></div>
 
-            <div class="coffee-steam steam-a"></div>
-            <div class="coffee-steam steam-b"></div>
-
+          <div class="cup">
+            <div class="coffee"></div>
           </div>
 
-          <div class="coffee-handle"></div>
+          <div class="cup-handle"></div>
 
         </div>
 
@@ -306,46 +297,45 @@
         </p>
 
 
-        <!-- PHOTO -->
+        <!-- Memory -->
 
-        <div class="memory-wrapper">
+        <div class="memory">
 
-          <div class="photo-tape"></div>
+          <div class="memory-tape"></div>
 
-          <div class="photo-card">
+          <div class="memory-photo">
 
             <img
-              id="memoryPhoto"
+              id="memoryImage"
               src="photo.jpg"
               alt="A little memory"
-              loading="lazy"
             >
 
             <div
-              id="photoFallback"
-              class="photo-fallback"
+              id="memoryFallback"
+              class="memory-fallback"
             >
               ♡
             </div>
 
           </div>
 
-          <span class="photo-caption">
+          <p>
             maybe another memory soon? ♡
-          </span>
+          </p>
 
         </div>
 
 
-        <!-- DATE -->
+        <!-- Date -->
 
-        <div class="input-card">
+        <div class="selection">
 
-          <div class="input-icon">
+          <div class="selection-icon">
             ♡
           </div>
 
-          <div class="input-label">
+          <div class="selection-label">
 
             <strong>
               Pick a day
@@ -360,21 +350,20 @@
           <input
             id="dateInput"
             type="date"
-            aria-label="Pick a date"
           >
 
         </div>
 
 
-        <!-- TIME -->
+        <!-- Time -->
 
-        <div class="input-card">
+        <div class="selection">
 
-          <div class="input-icon coffee-icon">
+          <div class="selection-icon">
             ☕
           </div>
 
-          <div class="input-label">
+          <div class="selection-label">
 
             <strong>
               Pick a time
@@ -389,20 +378,19 @@
           <input
             id="timeInput"
             type="time"
-            aria-label="Pick a time"
           >
 
         </div>
 
 
-        <!-- PREVIEW -->
+        <!-- Live preview -->
 
         <div
-          id="selectionPreview"
-          class="selection-preview"
+          id="datePreview"
+          class="date-preview"
         >
 
-          <span class="preview-small">
+          <span>
             OUR LITTLE PLAN
           </span>
 
@@ -410,41 +398,32 @@
             Choose a day ♡
           </strong>
 
-          <span id="previewTime">
+          <small id="previewTime">
             Choose a time ☕
-          </span>
+          </small>
 
         </div>
 
 
-        <div
-          id="selectionHint"
-          class="selection-hint"
+        <p
+          id="selectionMessage"
+          class="selection-message"
         >
           Your move. 👀
-        </div>
+        </p>
 
 
-        <!-- BUTTONS -->
+        <!-- Choices -->
 
-        <div class="choice-area">
+        <div class="choices">
 
           <button
             id="yesButton"
             class="yes-button"
             type="button"
           >
-
-            <span>
-              Sige, coffee tayo
-            </span>
-
-            <b>
-              ☕♡
-            </b>
-
+            Sige, coffee tayo ☕♡
           </button>
-
 
           <button
             id="maybeButton"
@@ -467,23 +446,23 @@
 
 
 
-    <!-- ===================================================
-         WAIT SCREEN
-    ==================================================== -->
+    <!-- ==================================================
+         PAGE 3 — WAIT
+    =================================================== -->
 
     <section
-      id="waitScreen"
-      class="page wait-page"
+      id="waitPage"
+      class="page"
       aria-hidden="true"
     >
 
-      <div class="wait-card">
+      <div class="wait-content">
 
         <div class="wait-heart">
           ♡
         </div>
 
-        <p class="wait-small">
+        <p>
           WAIT...
         </p>
 
@@ -492,17 +471,23 @@
           said yes?
         </h2>
 
-        <p class="wait-text">
-          HAHAHA okay.
+        <div class="typing">
+
+          <span>
+            HAHAHA
+          </span>
+
+          <i></i>
+          <i></i>
+          <i></i>
+
+        </div>
+
+        <p class="wait-message">
+          Okay...
           <br>
           I'm really happy right now. ♡
         </p>
-
-        <div class="wait-dots">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
 
       </div>
 
@@ -510,40 +495,47 @@
 
 
 
-    <!-- ===================================================
-         CONFIRMATION
-    ==================================================== -->
+    <!-- ==================================================
+         PAGE 4 — CONFIRMATION
+    =================================================== -->
 
     <section
-      id="confirmation"
-      class="page confirmation-page"
+      id="confirmationPage"
+      class="page"
       aria-hidden="true"
     >
 
-      <div class="confirmation-card">
+      <div class="card confirmation-card">
 
+
+        <!-- Celebration -->
 
         <div class="celebration">
 
-          <span class="celebrate-heart ch-one">♡</span>
-          <span class="celebrate-heart ch-two">♡</span>
-          <span class="celebrate-heart ch-three">♡</span>
+          <span class="celebration-heart c-heart-1">
+            ♡
+          </span>
 
-          <div class="final-coffee">
+          <span class="celebration-heart c-heart-2">
+            ♡
+          </span>
 
-            <div class="final-steam final-steam-one"></div>
-            <div class="final-steam final-steam-two"></div>
+          <span class="celebration-heart c-heart-3">
+            ♡
+          </span>
 
-            <span>
-              ☕
-            </span>
+          <div class="final-cup">
 
+            <div class="final-steam"></div>
+            <div class="final-steam second"></div>
+
+            ☕
           </div>
 
         </div>
 
 
-        <p class="confirmed-eyebrow">
+        <p class="eyebrow">
           IT'S HAPPENING ♡
         </p>
 
@@ -553,23 +545,27 @@
         </h2>
 
 
-        <p class="confirmation-subtitle">
+        <p class="confirmation-text">
           And somehow...
           <br>
           that made my day.
         </p>
 
 
-        <div class="date-divider">
+        <div class="divider">
+
           <span></span>
           <b>♡</b>
           <span></span>
+
         </div>
 
 
+        <!-- Selected date -->
+
         <div class="confirmed-details">
 
-          <div class="confirmed-box">
+          <div>
 
             <small>
               DATE
@@ -581,8 +577,7 @@
 
           </div>
 
-
-          <div class="confirmed-box">
+          <div>
 
             <small>
               TIME
@@ -597,43 +592,40 @@
         </div>
 
 
-        <div class="its-a-date">
+        <p class="date-result">
           It's a date. ☕
-        </div>
+        </p>
 
 
-        <p class="thank-you">
+        <p class="see-you">
           See you soon, Carmina. ♡
         </p>
 
 
-        <p class="late-message">
+        <p class="pickup">
           And yes... susunduin kita HAHAHA.
         </p>
 
+
+        <!-- Calendar -->
 
         <button
           id="calendarButton"
           class="calendar-button"
           type="button"
         >
-
-          <span>
-            +
-          </span>
-
+          <span>+</span>
           Add to Google Calendar
-
         </button>
 
 
-        <!-- SECRET -->
+        <!-- Secret -->
 
         <button
-          id="secretHeart"
-          class="secret-heart"
+          id="secretButton"
+          class="secret-button"
           type="button"
-          aria-label="Secret message"
+          aria-label="Open secret message"
         >
           ♡
         </button>
@@ -648,27 +640,29 @@
             Secret message unlocked 👀
           </strong>
 
-          <span>
-            Okay, this part wasn't supposed to be here HAHAHA.
-          </span>
+          <p>
+            Okay, this part wasn't supposed
+            to be here HAHAHA.
+          </p>
 
-          <span>
+          <p>
             I don't really know how to say this
             without making things awkward...
-          </span>
+          </p>
 
-          <b>
+          <p>
             But I genuinely enjoy having you around.
-          </b>
+          </p>
 
-          <span>
-            And every time we get to spend time together,
-            I end up wishing we had a little more time.
-          </span>
+          <p>
+            And every time we get to spend time
+            together, I end up wishing we had
+            a little more time.
+          </p>
 
-          <b>
+          <strong>
             So... I'm really glad you said yes. ♡
-          </b>
+          </strong>
 
         </div>
 
@@ -679,9 +673,7 @@
   </main>
 
 
-  <!-- =====================================================
-       FLYING HEARTS
-  ====================================================== -->
+  <!-- Flying hearts -->
 
   <div
     id="heartContainer"
